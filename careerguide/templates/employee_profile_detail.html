@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Profile</title>
+</head>
+
+<body>
+
+<h2>My Profile</h2>
+
+
+{% if profile.profile_image %}
+<img src="{{ profile.profile_image.url }}"
+     width="150"
+     height="150">
+<br>
+{% endif %}
+
+
+<h3>Personal Information</h3>
+
+<p>
+    Full Name:
+    {{ profile.full_name }}
+</p>
+
+<p>
+    Email:
+    {{ employee.email }}
+</p>
+
+<p>
+    Phone:
+    {{ profile.phone }}
+</p>
+
+<p>
+    Gender:
+    {{ profile.gender }}
+</p>
+
+<p>
+    Date of Birth:
+    {{ profile.date_of_birth }}
+</p>
+
+<p>
+    Address:
+    {{ profile.address }}
+</p>
+
+<p>
+    Summary:
+    {{ profile.summary }}
+</p>
+
+
+
+<h3>Education</h3>
+
+{% for edu in employee.education_set.all %}
+
+<p>
+Institution:
+{{ edu.institution }}
+</p>
+
+<p>
+Degree:
+{{ edu.degree }}
+</p>
+
+<p>
+Field:
+{{ edu.field_of_study }}
+</p>
+
+<p>
+Year:
+{{ edu.start_year }} - {{ edu.end_year }}
+</p>
+
+{% endfor %}
+
+
+
+
+<h3>Experience</h3>
+
+{% for exp in employee.experience_set.all %}
+
+<p>
+Company:
+{{ exp.company_name }}
+</p>
+
+<p>
+Position:
+{{ exp.position }}
+</p>
+
+<p>
+Date:
+{{ exp.start_date }} - {{ exp.end_date }}
+</p>
+
+<p>
+Description:
+{{ exp.description }}
+</p>
+
+{% endfor %}
+
+
+
+
+<h3>Skills</h3>
+
+{% for skill in employee.skill_set.all %}
+
+<p>
+{{ skill.skill_name }} - {{ skill.proficiency }}
+</p>
+
+{% endfor %}
+
+
+
+
+<br>
+
+<a href="{% url 'edit_employee_profile' employee.id %}">
+    <button>
+        Edit Profile
+    </button>
+</a>
+
+
+</body>
+</html>

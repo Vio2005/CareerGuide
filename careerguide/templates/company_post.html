@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Post a Job</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="job_type">Job Type:</label>
+ 
+
+<select name="job_type">
+    <option value="Full Time">Full Time</option>
+    <option value="Part Time">Part Time</option>
+    <option value="Remote">Remote</option>
+    <option value="Internship">Internship</option>
+</select>
+        <br>
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required></textarea>
+        <br>
+        <label for="vacancy">Vacancy:</label>
+        <input type="number" name="vacancy" id="vacancy" required>
+        <br>
+        <label for="salary">Salary:</label>
+        <input type="text" name="salary" id="salary" required>
+        <br>
+        <label for="requirements">Requirements:</label>
+        <textarea name="requirements" id="requirements" required></textarea>
+        <br>
+        <label for="city">City:</label>
+        <input type="text" name="city" id="city" required>
+        <br>
+        <label for="position">Position:</label>
+        <input type="text" name="position" id="position" required>
+        <br>
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location">
+        <br>
+        <button type="submit">Post Job</button>
+    </form>
+</body>
+</html>

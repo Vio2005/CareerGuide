@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h2>Company Profile</h2>
+
+    {% if company.profile_image %}
+        <img src="{{ company.profile_image.url }}" alt="Profile Image" width="150" height="150">
+    {% endif %}
+
+    <p><strong>Company Name:</strong> {{ company.company_name }}</p>
+    <p><strong>Email:</strong> {{ company.email }}</p>
+    <p><strong>Phone:</strong> {{ company.phone }}</p>
+    <p><strong>Address:</strong> {{ company.address }}</p>
+    <p><strong>Description:</strong> {{ company.description }}</p>
+    <p><strong>Website:</strong> {{ company.website }}</p>
+
+    <br>
+
+    <a href="{% url 'editcompanyprofile' company.id %}">
+        <button type="button">Edit Profile</button>
+    </a>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Job Applications</p>
+    {% for i in job_applications %}
+    {{i.employee}}
+    {{i.job.position}}
+    {{i.status}}
+    <br>
+    <a href="{% url 'viewapply' i.id %}"><button>View Application</button></a>
+    {% endfor %}
+    <br>
+    <a href="{% url 'companyprofile' company.id %}"><button>Profile</button></a>
+    <a href="{% url 'companypost' %}"><button>Post a Job</button></a>
+    <a href="{% url 'companypostview' company.id %}"><button>Jobs</button></a>
+    <a href="{% url 'companylogout' %}"><button>Log out</button></a>
+
+    
+</body>
+</html>

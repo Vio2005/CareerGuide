@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for i in jobs %}
+        <div>
+            {{ i.position }}
+            {{ i.description }}
+            {{ i.vacancy }}
+            {{ i.salary }}
+            {{ i.requirements }}
+            {{ i.location }}
+            {{ i.city.city_name }}
+            <a href="{% url 'editpost' i.id %}"><button>Edit Post</button></a>
+            <a href="{% url 'deletepost' i.id %}"><button>Delete Post</button></a>
+        </div>
+        {% empty %}
+    <p>No jobs posted yet.</p>
+    {% endfor %}
+    
+
+</body>
+</html>

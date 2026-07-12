@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="card">
+
+
+<label>Job Type</label>
+<input type="text"
+       name="job_type"
+       value="{{ job.job_type }}"
+       required>
+
+
+
+
+
+<label>Vacancy</label>
+<input type="number"
+       name="vacancy"
+       value="{{ job.vacancy }}"
+       required>
+
+
+
+<label>Salary</label>
+<input type="number"
+       name="salary"
+       value="{{ job.salary }}"
+       required>
+
+
+
+<label>Requirements</label>
+<textarea name="requirements">
+{{ job.requirements }}
+</textarea>
+
+
+       <label>Location</label>
+<input type="text"
+       name="location"
+       value="{{ job.location }}">
+
+
+
+<label>Description</label>
+
+<textarea name="description">
+{{ job.description }}
+</textarea>
+
+
+</div>
+
+
+
+<label>City</label>
+
+<input type="text"
+       name="city"
+       value="{{ city.city_name }}">
+
+
+
+<label>Position</label>
+
+<input type="text"
+       name="position"
+       value="{{ position.position_name }}">
+
+
+
+
+<button type="submit">
+Update Profile
+</button>
+
+
+</form> 
+</body>
+</html>

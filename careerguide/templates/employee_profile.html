@@ -1,0 +1,122 @@
+  {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+
+<form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <h2>Create Profile</h2>
+
+    <input type="text" name="full_name" placeholder="Full Name" required><br>
+
+
+    <input type="text" name="phone" placeholder="Phone" required><br>
+
+    <select name="gender">
+        <option>Male</option>
+        <option>Female</option>
+    </select><br>
+
+    <input type="date" name="date_of_birth"><br>
+
+
+    <textarea name="address" placeholder="Address"></textarea><br>
+
+
+
+    <textarea name="summary"
+              placeholder="About yourself"></textarea>
+    <br>
+
+
+    <label>Profile Image</label>
+    <input type="file" name="profile_image"><br>
+    <!-- Education Section -->
+<h3>Education</h3>
+
+<input type="text" 
+       name="institution" 
+       placeholder="Institution Name">
+<br>
+
+<input type="text" 
+       name="degree" 
+       placeholder="Degree">
+<br>
+
+<input type="text" 
+       name="field_of_study" 
+       placeholder="Field of Study">
+<br>
+
+<label>Start Year</label>
+<input type="number" 
+       name="start_year">
+<br>
+
+<label>End Year</label>
+<input type="number" 
+       name="end_year">
+<br>
+
+
+<!-- Experience Section -->
+<h3>Experience</h3>
+
+<input type="text" 
+       name="company_name" 
+       placeholder="Company Name">
+<br>
+
+<input type="text" 
+       name="position" 
+       placeholder="Position">
+<br>
+
+<label>Start Date</label>
+<input type="date" 
+       name="start_date">
+<br>
+
+<label>End Date</label>
+<input type="date" 
+       name="end_date">
+<br>
+
+<textarea name="description"
+          placeholder="Job Description"></textarea>
+<br>
+
+
+<!-- Skill Section -->
+<h3>Skills</h3>
+
+<input type="text"
+       name="skill_name"
+       placeholder="Skill Name">
+<br>
+
+<select name="skill_level">
+    <option value="Beginner">Beginner</option>
+    <option value="Intermediate">Intermediate</option>
+    <option value="Advanced">Advanced</option>
+</select>
+
+<br>
+
+
+    <button type="submit">
+        Save Profile
+    </button>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    {{app.employee.full_name}}
+    {{app.employee.email}}
+    {{app.employee.phone}}
+    {{app.status}}
+    {{app.job.position}}
+   
+    <select name="status">
+<option value="Pending"
+{% if app.status == "Pending" %}selected{% endif %}>
+Pending
+</option>
+
+<option value="Shortlisted"
+{% if app.status == "Shortlisted" %}selected{% endif %}>
+Shortlisted
+</option>
+
+<option value="Rejected"
+{% if app.status == "Rejected" %}selected{% endif %}>
+Rejected
+</option>
+
+<option value="Accepted"
+{% if app.status == "Accepted" %}selected{% endif %}>
+Accepted
+</option>
+
+</select>
+<button type="submit">
+Save
+</button>
+
+</form>
+</body>
+</html>
