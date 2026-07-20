@@ -1,122 +1,524 @@
-  {% load static %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Edit Employee Profile</title>
+
+
+<link rel="stylesheet" href="{% static 'css/edit_employee_profile.css' %}">
+
 </head>
+
+
 <body>
-  
+
 
 <form method="POST" enctype="multipart/form-data">
 
-    {% csrf_token %}
 
-    <h2>Create Profile</h2>
-
-    <input type="text" name="full_name" placeholder="Full Name" required><br>
-
-
-    <input type="text" name="phone" placeholder="Phone" required><br>
-
-    <select name="gender">
-        <option>Male</option>
-        <option>Female</option>
-    </select><br>
-
-    <input type="date" name="date_of_birth"><br>
-
-
-    <textarea name="address" placeholder="Address"></textarea><br>
+{% csrf_token %}
 
 
 
-    <textarea name="summary"
-              placeholder="About yourself"></textarea>
-    <br>
+<div class="profile-edit-layout">
 
 
-    <label>Profile Image</label>
-    <input type="file" name="profile_image"><br>
-    <!-- Education Section -->
-<h3>Education</h3>
 
-<input type="text" 
-       name="institution" 
-       placeholder="Institution Name">
-<br>
-
-<input type="text" 
-       name="degree" 
-       placeholder="Degree">
-<br>
-
-<input type="text" 
-       name="field_of_study" 
-       placeholder="Field of Study">
-<br>
-
-<label>Start Year</label>
-<input type="number" 
-       name="start_year">
-<br>
-
-<label>End Year</label>
-<input type="number" 
-       name="end_year">
-<br>
+<!-- ================= LEFT SIDE ================= -->
 
 
-<!-- Experience Section -->
-<h3>Experience</h3>
-
-<input type="text" 
-       name="company_name" 
-       placeholder="Company Name">
-<br>
-
-<input type="text" 
-       name="position" 
-       placeholder="Position">
-<br>
-
-<label>Start Date</label>
-<input type="date" 
-       name="start_date">
-<br>
-
-<label>End Date</label>
-<input type="date" 
-       name="end_date">
-<br>
-
-<textarea name="description"
-          placeholder="Job Description"></textarea>
-<br>
+<div class="left-profile-section">
 
 
-<!-- Skill Section -->
-<h3>Skills</h3>
+<div class="edit-card">
+
+
+<h2>Personal Information</h2>
+
+
+
+<label>Full Name</label>
 
 <input type="text"
-       name="skill_name"
-       placeholder="Skill Name">
-<br>
+name="full_name"
 
-<select name="skill_level">
-    <option value="Beginner">Beginner</option>
-    <option value="Intermediate">Intermediate</option>
-    <option value="Advanced">Advanced</option>
+required>
+
+
+
+
+
+<label>Email</label>
+
+<input type="email"
+value="{{ employee.email }}"
+readonly>
+
+
+
+
+
+<label>Phone</label>
+
+<input type="text"
+name="phone"
+required>
+
+
+
+
+
+<label>Gender</label>
+
+
+<select name="gender">
+
+
+<option value="Male">
+Male
+</option>
+
+
+<option value="Female">
+Female
+</option>
+
+
 </select>
 
-<br>
 
 
-    <button type="submit">
-        Save Profile
-    </button>
+
+
+
+<label>Date of Birth</label>
+
+
+<input type="date"
+name="date_of_birth"
+>
+
+
+
+
+<label>Address</label>
+
+
+<textarea name="address">
+
+</textarea>
+
+
+
+
+
+<label>About Yourself</label>
+
+
+<textarea name="summary">
+
+</textarea>
+
+
+
+
+
+<label>Profile Image</label>
+
+
+
+<div class="image-preview-container">
+
+
+
+
+<div>
+
+<p>Image</p>
+
+
+
+
+<img id="new-image-preview"
+src="{% static 'images/default-profile.png' %}"
+class="preview-img">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<input type="file"
+name="profile_image"
+id="profile-image-input"
+accept="image/*">
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= RIGHT SIDE ================= -->
+
+
+<div class="right-profile-section">
+
+
+
+
+
+<!-- EDUCATION -->
+
+
+<div class="edit-card">
+
+
+<h2>Education</h2>
+
+
+
+<label>Institution</label>
+
+
+<input type="text"
+name="institution"
+>
+
+
+
+
+
+<label>Degree</label>
+
+
+<input type="text"
+name="degree"
+>
+
+
+
+
+
+<label>Field of Study</label>
+
+
+<input type="text"
+name="field_of_study"
+>
+
+
+
+
+
+<label>Start Year</label>
+
+
+<input type="number"
+name="start_year"
+>
+
+
+
+
+
+<label>End Year</label>
+
+
+<input type="number"
+name="end_year"
+>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- EXPERIENCE -->
+
+
+<div class="edit-card">
+
+
+<h2>Experience</h2>
+
+
+
+
+<label>Company Name</label>
+
+
+<input type="text"
+name="company_name"
+>
+
+
+
+
+
+<label>Position</label>
+
+
+<input type="text"
+name="position"
+>
+
+
+
+
+
+<label>Start Date</label>
+
+
+<input type="date"
+name="start_date"
+>
+
+
+
+
+
+<label>End Date</label>
+
+
+<input type="date"
+name="end_date"
+>
+
+
+
+
+
+<label>Description</label>
+
+
+<textarea name="description">
+
+
+
+</textarea>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SKILL -->
+
+
+<div class="edit-card">
+
+
+<h2>Skill</h2>
+
+
+
+
+<label>Skill Name</label>
+
+
+<input type="text"
+name="skill_name"
+>
+
+
+
+
+
+
+<label>Skill Level</label>
+
+
+<select name="skill_level">
+
+
+
+<option value="Beginner"
+
+
+
+>
+
+Beginner
+
+</option>
+
+
+
+
+
+<option value="Intermediate"
+
+
+>
+
+Intermediate
+
+</option>
+
+
+
+
+
+<option value="Advanced"
+
+
+
+>
+
+Advanced
+
+</option>
+
+
+
+</select>
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- BUTTONS -->
+
+
+<button type="submit" class="profile-btn">
+
+Save Profile
+
+</button>
+
+
+
+
+
+<a href="{% url 'employeeprofile' %}"
+class="back-btn">
+
+Back
+
+</a>
+
+
+
+
+
 
 </form>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+const imageInput = document.getElementById("profile-image-input");
+
+const previewImage = document.getElementById("new-image-preview");
+
+
+
+imageInput.addEventListener("change", function(){
+
+
+const file = this.files[0];
+
+
+
+if(file){
+
+
+const reader = new FileReader();
+
+
+
+reader.onload=function(e){
+
+
+previewImage.src=e.target.result;
+
+
+}
+
+
+
+reader.readAsDataURL(file);
+
+
+
+}
+
+
+});
+
+
+
+</script>
+
+
+
+
+
+
 </body>
+
 </html>

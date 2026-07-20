@@ -1,90 +1,343 @@
+ {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JobBoard - Edit Job</title>
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/editpost.css' %}">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
+
 </head>
-<body>
-    <form method="POST" enctype="multipart/form-data">
+<body id="top">
+
+
+<div id="overlayer"></div>
+
+<div class="loader">
+<div class="spinner-border text-primary" role="status">
+<span class="sr-only">Loading...</span>
+</div>
+</div>
+
+
+<div class="site-wrap">
+       <section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/company1.jpg' %}');">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-7">
+
+<h1 class="text-white font-weight-bold">
+Edit Job Post
+</h1>
+
+
+<div class="custom-breadcrumbs">
+
+<a href="{% url 'company_index' %}">
+Home
+</a>
+
+<span class="mx-2 slash">/</span>
+
+<span class="text-white">
+<strong>Edit Job</strong>
+</span>
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+    <!-- EDIT JOB FORM -->
+
+<section class="site-section">
+<div class="container">
+
+<div class="row mb-5">
+<div class="col-lg-12">
+
+
+<form method="POST" class="p-4 p-md-5 border rounded">
 
 {% csrf_token %}
 
-<div class="card">
 
+<h3 class="text-black mb-5 border-bottom pb-2">
+    Job Details
+</h3>
+
+
+
+<div class="form-group">
+<label>Job Title</label>
+
+<input type="text"
+name="position"
+class="form-control"
+value="{{ position.position_name }}"
+required>
+
+</div>
+
+
+
+
+<div class="form-group">
 
 <label>Job Type</label>
-<input type="text"
-       name="job_type"
-       value="{{ job.job_type }}"
-       required>
+
+<select name="job_type"
+class="selectpicker border rounded"
+data-width="100%">
+
+
+<option selected>
+{{ job.job_type }}
+</option>
+
+
+<option>Full Time</option>
+<option>Part Time</option>
+<option>Remote</option>
+<option>Internship</option>
+
+
+</select>
+
+</div>
 
 
 
 
+
+<div class="form-group">
 
 <label>Vacancy</label>
+
 <input type="number"
-       name="vacancy"
-       value="{{ job.vacancy }}"
-       required>
+name="vacancy"
+class="form-control"
+value="{{ job.vacancy }}"
+required>
+
+</div>
 
 
+
+
+
+<div class="form-group">
+
+<label>Location</label>
+
+<input type="text"
+name="location"
+class="form-control"
+value="{{ job.location }}">
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+<label>City</label>
+
+<input type="text"
+name="city"
+class="form-control"
+value="{{ city.city_name }}"
+required>
+
+</div>
+
+
+
+
+
+<div class="form-group">
 
 <label>Salary</label>
-<input type="number"
-       name="salary"
-       value="{{ job.salary }}"
-       required>
+
+<input type="text"
+name="salary"
+class="form-control"
+value="{{ job.salary }}">
+
+</div>
 
 
+
+
+
+<div class="form-group">
+
+<label>Job Description</label>
+
+
+<textarea 
+id="summernote"
+name="description"
+class="form-control">{{ job.description|safe }}</textarea>
+
+</div>
+
+
+
+
+
+<div class="form-group">
 
 <label>Requirements</label>
-<textarea name="requirements">
-{{ job.requirements }}
-</textarea>
 
 
-       <label>Location</label>
-<input type="text"
-       name="location"
-       value="{{ job.location }}">
-
-
-
-<label>Description</label>
-
-<textarea name="description">
-{{ job.description }}
-</textarea>
+<textarea
+name="requirements"
+class="form-control"
+rows="5">{{ job.requirements }}</textarea>
 
 
 </div>
 
 
 
-<label>City</label>
-
-<input type="text"
-       name="city"
-       value="{{ city.city_name }}">
 
 
+<button type="submit"
+class="btn btn-primary btn-md px-4">
 
-<label>Position</label>
+Update Job
 
-<input type="text"
-       name="position"
-       value="{{ position.position_name }}">
-
-
-
-
-<button type="submit">
-Update Profile
 </button>
 
+<a href="javascript:history.back()"
+class="btn btn-secondary btn-md px-4">
+Back
+</a>
 
-</form> 
+
+</form>
+
+
+</div>
+</div>
+
+</div>
+</section>
+
+
+</div> <!-- close site-wrap -->
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/stickyfill.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"></script>
+
+<script>
+$(document).ready(function(){
+
+$('#summernote').summernote({
+
+height:300,
+
+toolbar:[
+['style',['bold','italic','underline','clear']],
+['para',['ul','ol','paragraph']],
+['view',['codeview']]
+]
+
+});
+
+});
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+
+document.querySelector("form").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+let form=this;
+
+
+Swal.fire({
+    title:'Are you sure?',
+    text:'Do you want to update this job?',
+    icon:'question',
+    showCancelButton:true,
+    confirmButtonText:'Update',
+    cancelButtonText:'Cancel',
+    confirmButtonColor:'#3085d6',
+    cancelButtonColor:'#d33'
+
+}).then((result)=>{
+
+    if(result.isConfirmed){
+
+        Swal.fire({
+            icon:'success',
+            title:'Job Updated Successfully!',
+            showConfirmButton:false,
+            timer:1500
+
+        }).then(()=>{
+
+            form.submit();
+
+        });
+
+    }
+
+});
+
+});
+
+</script>
+
+
 </body>
 </html>

@@ -1,0 +1,248 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Employee Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/employeeprofileview.css' %}">
+    
+</head>
+
+
+<body>
+
+
+<section class="site-section">
+
+<div class="container">
+
+<div class="employee-profile-card">
+
+
+    <!-- Profile Header -->
+
+    <div class="employee-profile-header text-center">
+
+
+        {% if profile and profile.profile_image %}
+
+<img src="{{ profile.profile_image.url }}"
+     class="employee-profile-image">
+
+{% else %}
+
+<img src="{% static 'images/default-profile.png' %}"
+     class="employee-profile-image">
+
+{% endif %}
+
+
+
+        <h2 class="mt-3">
+
+            {% if profile and profile.full_name %}
+    {{ profile.full_name }}
+{% else %}
+    {{ employee.username }}
+{% endif %}
+
+        </h2>
+
+
+        <p class="text-muted">
+            {{ employee.email }}
+        </p>
+
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <!-- Personal Information -->
+
+    <div class="employee-section">
+
+    <h4>Personal Information</h4>
+
+    <div class="info-card">
+
+        {% if profile %}
+
+        <p>
+            <strong>Phone:</strong>
+            {{ profile.phone }}
+        </p>
+
+        <p>
+            <strong>Gender:</strong>
+            {{ profile.gender }}
+        </p>
+
+        <p>
+            <strong>Date of Birth:</strong>
+            {{ profile.date_of_birth }}
+        </p>
+
+        <p>
+            <strong>Address:</strong>
+            {{ profile.address }}
+        </p>
+
+        <p>
+            <strong>About:</strong>
+            {{ profile.summary }}
+        </p>
+
+        {% else %}
+
+        <p>No profile information available.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+    <hr>
+
+
+
+    <!-- Education -->
+
+    <div class="employee-section">
+
+        <h4>Education</h4>
+
+
+        {% for e in education %}
+
+        <div class="info-card">
+
+            <h5>{{ e.degree }}</h5>
+
+            <p>
+                {{ e.institution }}
+            </p>
+
+            <p>
+                {{ e.field_of_study }}
+            </p>
+
+            <small>
+                {{ e.start_year }} - {{ e.end_year }}
+            </small>
+
+        </div>
+
+
+        {% empty %}
+
+        <p>No education information.</p>
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <!-- Experience -->
+
+    <div class="employee-section">
+
+        <h4>Experience</h4>
+
+
+        {% for ex in experience %}
+
+        <div class="info-card">
+
+
+            <h5>{{ ex.position }}</h5>
+
+
+            <p>
+                {{ ex.company_name }}
+            </p>
+
+
+            <small>
+                {{ ex.start_date }} -
+                {{ ex.end_date }}
+            </small>
+
+
+            <p>
+                {{ ex.description }}
+            </p>
+
+
+        </div>
+
+
+        {% empty %}
+
+        <p>No experience information.</p>
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+    <hr>
+
+
+
+    <!-- Skills -->
+
+    <div class="employee-section">
+
+    <h4>Skills</h4>
+
+    {% for s in skills %}
+
+    <div class="skill-item">
+        <div class="info-card">
+
+    <strong>{{ s.skill_name }}</strong>
+
+    <p>
+        Proficiency: {{ s.proficiency }}
+    </p>
+
+</div>
+    </div>
+
+    {% empty %}
+
+    <p>No skills information.</p>
+
+    {% endfor %}
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</body>
+
+</html>

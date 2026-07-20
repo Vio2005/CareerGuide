@@ -1,0 +1,251 @@
+body {
+    background: linear-gradient(135deg,#f5f7fa,#e8f1ff);
+    font-family: "Nunito", sans-serif;
+}
+
+
+/* Main Card */
+
+.employee-profile-card {
+
+    background: white;
+    max-width: 850px;
+    margin: 60px auto;
+    padding: 40px;
+
+    border-radius: 25px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+/* Profile Header */
+
+.employee-profile-header {
+
+    padding-bottom: 20px;
+
+}
+
+
+.employee-profile-image {
+
+    width: 150px;
+    height: 150px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 5px solid #fff;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+
+.employee-profile-header h2 {
+
+    margin-top: 20px;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color:#333;
+
+}
+
+
+.employee-profile-header p {
+
+    color:#777;
+
+    font-size:16px;
+
+}
+
+
+
+/* Section */
+
+.employee-section,
+.employee-profile-section {
+
+    margin-top:30px;
+
+}
+
+
+.employee-section h4,
+.employee-profile-section h4 {
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#333;
+
+    margin-bottom:20px;
+
+    border-left:5px solid #0d6efd;
+
+    padding-left:12px;
+
+}
+
+
+
+.employee-section p {
+
+    font-size:16px;
+
+    color:#555;
+
+    line-height:1.8;
+
+}
+
+
+
+.employee-section strong {
+
+    color:#222;
+
+}
+
+
+
+/* Education and Experience Cards */
+
+
+.info-card {
+
+    background:#f8faff;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    border:1px solid #e5eaf5;
+
+}
+
+
+
+.info-card h5 {
+
+    color:#0d6efd;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.info-card p {
+
+    margin:5px 0;
+
+    color:#555;
+
+}
+
+
+
+.info-card small {
+
+    color:#888;
+
+}
+
+
+
+/* Skill Badge */
+
+
+.skill-badge {
+
+    display:inline-block;
+
+    background:#0d6efd;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:20px;
+
+    margin:5px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+
+/* Divider */
+
+hr {
+
+    margin:35px 0;
+
+    border:none;
+
+    height:1px;
+
+    background:#eee;
+
+}
+
+
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .employee-profile-card{
+
+        margin:20px;
+
+        padding:25px;
+
+    }
+
+
+    .employee-profile-image{
+
+        width:120px;
+
+        height:120px;
+
+    }
+
+
+    .employee-profile-header h2{
+
+        font-size:24px;
+
+    }
+
+}
+
+.skill-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+.skill-item span {
+    color: #777;
+    margin-left: 10px;
+}

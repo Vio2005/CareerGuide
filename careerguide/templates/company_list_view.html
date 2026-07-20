@@ -1,0 +1,1014 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<title>Career Bridge - Company List</title>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+
+<!-- CSS -->
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+</head>
+
+
+
+<body id="top">
+
+
+<div id="overlayer"></div>
+
+
+<div class="loader">
+
+<div class="spinner-border text-primary" role="status">
+
+<span class="sr-only">
+Loading...
+</span>
+
+</div>
+
+</div>
+
+
+
+
+<div class="site-wrap">
+
+
+
+
+
+<!-- MOBILE MENU -->
+
+
+<div class="site-mobile-menu site-navbar-target">
+
+
+<div class="site-mobile-menu-header">
+
+
+<div class="site-mobile-menu-close mt-3">
+
+
+<span class="icon-close2 js-menu-toggle"></span>
+
+
+</div>
+
+
+</div>
+
+
+<div class="site-mobile-menu-body"></div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- NAVBAR -->
+
+
+<header class="site-navbar mt-3">
+
+
+<div class="container-fluid">
+
+
+<div class="row align-items-center">
+
+
+
+<div class="site-logo col-6">
+
+
+<a href="{% url 'homeview' %}">
+Career Bridge
+</a>
+
+
+</div>
+
+
+
+
+
+<nav class="mx-auto site-navigation">
+
+
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+
+
+<li>
+<a href="{% url 'homeview' %}">
+Home
+</a>
+</li>
+
+
+
+
+<li>
+<a href="{% url 'company_list_view' %}" class="nav-link active">
+Company
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'applied_job'  %}">
+Applied Job
+</a>
+</li>
+
+
+
+
+
+
+<li>
+<a href="{% url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+
+
+
+
+
+<li class="d-lg-none">
+
+<a href="{% url 'employeelogout' %}">
+Log Out
+</a>
+
+</li>
+
+
+
+</ul>
+
+
+</nav>
+
+
+
+
+
+
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+
+
+<div class="ml-auto">
+
+
+<a href="{% url 'employeelogout' %}"
+class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+
+
+<span class="mr-2 icon-lock_outline"></span>
+
+Log Out
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+<a href="#"
+class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+
+
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+
+
+</a>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+<!-- HERO SECTION -->
+
+
+<section class="section-hero overlay inner-page bg-image"
+
+style="background-image:url('{% static 'images/hero.jpg' %}');"
+
+id="home-section">
+
+
+
+<div class="container">
+
+
+<div class="row">
+
+
+<div class="col-md-7">
+
+
+<h1 class="text-white font-weight-bold">
+
+Company List
+
+</h1>
+
+
+
+
+
+<div class="custom-breadcrumbs">
+
+
+<a href="{% url 'homeview' %}">
+Home
+</a>
+
+
+
+<span class="mx-2 slash">
+/
+</span>
+
+
+
+
+<span class="text-white">
+
+<strong>
+Company
+</strong>
+
+</span>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+<!-- COMPANY LIST SECTION -->
+
+<section class="site-section" id="company-section">
+
+
+<div class="container">
+
+
+
+<!-- TITLE -->
+
+<div class="row mb-5 justify-content-center">
+
+
+<div class="col-md-7 text-center">
+
+
+<h2 class="section-title mb-2">
+
+Available Companies
+
+</h2>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- COMPANY LIST -->
+
+
+<ul class="job-listings mb-5">
+
+
+
+{% for company in companies %}
+
+
+
+<li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-start">
+
+
+
+
+
+<!-- COMPANY LOGO -->
+
+
+<div class="job-listing-logo">
+
+
+
+{% if company.profile_image %}
+
+
+<img src="{{ company.profile_image.url }}"
+
+alt="{{ company.company_name }}"
+
+class="img-fluid">
+
+
+{% else %}
+
+
+
+<img src="{% static 'images/default-profile.jpg' %}"
+
+alt="Company Logo"
+
+class="img-fluid">
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- COMPANY INFORMATION -->
+
+
+<div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+
+
+
+
+
+<!-- LEFT SIDE -->
+
+
+<div class="job-listing-position custom-width w-75">
+
+
+
+
+
+<h2>
+
+{{ company.company_name }}
+
+</h2>
+
+
+
+
+
+<strong>
+
+{{ company.email }}
+
+</strong>
+
+
+
+
+
+
+
+<div class="mt-2 job-info">
+
+
+
+
+
+<span class="icon-phone"></span>
+
+{{ company.phone }}
+
+
+
+<br>
+
+
+
+
+
+<span class="icon-room"></span>
+
+{{ company.address }}
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mt-3">
+
+
+<h6>
+
+<strong>
+Company Description
+</strong>
+
+</h6>
+
+
+
+<p>
+
+{{ company.description|truncatewords:25 }}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- RIGHT SIDE -->
+
+
+<div class="job-listing-location custom-width w-25 text-right">
+
+
+
+
+
+<a href="#"
+
+class="btn btn-primary btn-sm d-block mb-2">
+
+
+View Company
+
+
+</a>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</li>
+
+
+
+
+
+
+{% empty %}
+
+
+
+<li class="text-center py-5">
+
+
+<h5>
+
+No companies found.
+
+</h5>
+
+
+</li>
+
+
+
+
+{% endfor %}
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<!-- PAGINATION -->
+
+
+<div class="row pagination-wrap">
+
+
+
+<div class="col-md-12 text-right">
+
+
+<div class="custom-pagination ml-auto">
+
+
+
+
+
+{% if companies.has_previous %}
+
+
+<a href="?page={{ companies.previous_page_number }}"
+
+class="prev">
+
+Prev
+
+</a>
+
+
+{% endif %}
+
+
+
+
+
+
+
+<div class="d-inline-block">
+
+
+
+
+
+{% for num in companies.paginator.page_range %}
+
+
+
+
+
+{% if companies.number == num %}
+
+
+
+<a href="?page={{ num }}"
+
+class="active">
+
+{{ num }}
+
+</a>
+
+
+
+
+{% else %}
+
+
+
+<a href="?page={{ num }}">
+
+{{ num }}
+
+</a>
+
+
+
+
+{% endif %}
+
+
+
+
+{% endfor %}
+
+
+
+
+</div>
+
+
+
+
+
+
+
+{% if companies.has_next %}
+
+
+
+<a href="?page={{ companies.next_page_number }}"
+
+class="next">
+
+Next
+
+</a>
+
+
+
+{% endif %}
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</section>
+<!-- FOOTER -->
+
+<footer class="site-footer">
+
+
+<a href="#top" class="smoothscroll scroll-top">
+
+<span class="icon-keyboard_arrow_up"></span>
+
+</a>
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="row mb-5">
+
+
+
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+
+
+<h3>
+Search Trending
+</h3>
+
+
+
+<ul class="list-unstyled">
+
+
+<li><a href="#">Web Design</a></li>
+
+<li><a href="#">Graphic Design</a></li>
+
+<li><a href="#">Web Developers</a></li>
+
+<li><a href="#">Python</a></li>
+
+<li><a href="#">HTML5</a></li>
+
+<li><a href="#">CSS3</a></li>
+
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+
+
+<h3>
+Career Bridge
+</h3>
+
+
+
+<ul class="list-unstyled">
+
+
+<li><a href="#">About Us</a></li>
+
+<li><a href="#">Career</a></li>
+
+<li><a href="#">Blog</a></li>
+
+<li><a href="#">Resources</a></li>
+
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+
+
+<h3>
+Support
+</h3>
+
+
+
+<ul class="list-unstyled">
+
+
+<li><a href="#">Support</a></li>
+
+<li><a href="#">Privacy</a></li>
+
+<li><a href="#">Terms of Service</a></li>
+
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+
+
+<h3>
+Contact Us
+</h3>
+
+
+
+
+<div class="footer-social">
+
+
+<a href="#">
+<span class="icon-facebook"></span>
+</a>
+
+
+<a href="#">
+<span class="icon-twitter"></span>
+</a>
+
+
+<a href="#">
+<span class="icon-instagram"></span>
+</a>
+
+
+<a href="#">
+<span class="icon-linkedin"></span>
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="row text-center">
+
+
+<div class="col-12">
+
+
+<p class="copyright">
+
+
+<small>
+
+
+Copyright &copy;
+
+
+<script>
+
+document.write(new Date().getFullYear());
+
+</script>
+
+
+All rights reserved
+
+
+
+</small>
+
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+</div>
+<!-- END SITE WRAP -->
+
+
+
+
+
+
+
+
+<!-- SCRIPTS -->
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+
+
+<script src="{% static 'js/stickyfill.min.js' %}"></script>
+
+
+<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+
+
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+
+
+
+
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+
+
+<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+
+
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+
+
+<script src="{% static 'js/custom.js' %}"></script>
+
+
+
+
+</body>
+
+</html>

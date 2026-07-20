@@ -1,46 +1,338 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Post a Job</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="job_type">Job Type:</label>
- 
 
-<select name="job_type">
-    <option value="Full Time">Full Time</option>
-    <option value="Part Time">Part Time</option>
-    <option value="Remote">Remote</option>
-    <option value="Internship">Internship</option>
-</select>
-        <br>
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" required></textarea>
-        <br>
-        <label for="vacancy">Vacancy:</label>
-        <input type="number" name="vacancy" id="vacancy" required>
-        <br>
-        <label for="salary">Salary:</label>
-        <input type="text" name="salary" id="salary" required>
-        <br>
-        <label for="requirements">Requirements:</label>
-        <textarea name="requirements" id="requirements" required></textarea>
-        <br>
-        <label for="city">City:</label>
-        <input type="text" name="city" id="city" required>
-        <br>
-        <label for="position">Position:</label>
-        <input type="text" name="position" id="position" required>
-        <br>
-        <label for="location">Location:</label>
-        <input type="text" name="location" id="location">
-        <br>
-        <button type="submit">Post Job</button>
-    </form>
+<head>
+    <title>JobBoard - Post A Job</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+    <!-- Same CSS as home -->
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+/* Add red * after every label */
+form label::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+/* Exclude labels with this class */
+label.no-required::after {
+    content: "";
+}
+</style>
+
+<style>
+.site-menu a.btn.active {
+    color: white !important;
+}
+</style>
+</head>
+
+
+<body id="top">
+
+
+<div id="overlayer"></div>
+
+<div class="loader">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
+
+<div class="site-wrap">
+
+
+<!-- MOBILE MENU -->
+<div class="site-mobile-menu site-navbar-target">
+
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+    </div>
+
+    <div class="site-mobile-menu-body"></div>
+
+</div>
+
+
+
+<!-- NAVBAR -->
+<header class="site-navbar mt-3">
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="site-logo col-6">
+    <a href="{% url 'company_index' %}">
+        Career Bridge
+    </a>
+</div>
+
+<nav class="mx-auto site-navigation">
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+    <li><a href="{% url 'company_index' %}" class="nav-link">Home</a></li>
+    <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
+    <li><a href="#">Candidate</a></li>
+    <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
+    <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
+    <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block active">
+        <span class="mr-2 icon-add"></span>Post a Job</a></li>
+    <li class="d-lg-none"><a href="#">Log Out</a></li>
+</ul>
+</nav>
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+<div class="ml-auto">
+    <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+    <span class="mr-2 icon-lock_outline"></span>Log Out</a>
+</div>
+    <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+    <span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+</div>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/company1.jpg' %}');"
+id="home-section">
+
+<div class="container">
+<div class="row">
+<div class="col-md-7">
+<h1 class="text-white font-weight-bold">Post A Job</h1>
+
+<div class="custom-breadcrumbs">
+<a href="{% url 'company_index' %}">Home</a>
+<span class="mx-2 slash">/</span>
+<span class="text-white"><strong>Post Job</strong></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<!-- JOB FORM -->
+
+<section class="site-section">
+<div class="container">
+<div class="row mb-5">
+<div class="col-lg-12">
+<form id="jobForm" method="POST" enctype="multipart/form-data" class="p-4 p-md-5 border rounded">
+{% csrf_token %}
+<h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+
+
+<div class="form-group"><label>Job Title</label>
+    <input type="text" name="position" class="form-control" placeholder="Software Developer" required>
+</div>
+
+<div class="form-group"><label>Job Type</label>
+    <select name="job_type" class="selectpicker border rounded" data-width="100%">
+        <option>Full Time</option>
+        <option>Part Time</option>
+        <option>Remote</option>
+        <option>Internship</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Vacancy</label>
+    <input type="number" name="vacancy" class="form-control" required>
+</div>
+
+<div class="form-group">
+    <label>Location </label>
+     <input type="text" name="location" class="form-control" placeholder="Yangon">
+</div>
+
+<div class="form-group">
+    <label>City</label>
+    <input type="text" name="city" class="form-control" placeholder="City" required>
+</div>
+
+<div class="form-group">
+    <label>Salary</label>
+    <input type="text" name="salary" class="form-control" placeholder="500000 MMK">
+</div>
+
+<div class="form-group">
+        <label>Job Description</label>
+        <textarea id="summernote" name="description" required></textarea>
+</div>
+
+<div class="form-group">
+    <label>Requirements</label>
+    <textarea name="requirements" class="form-control" rows="5" placeholder="Required skills..." required></textarea>
+</div>
+
+<button type="submit" id="saveBtn" class="btn btn-primary btn-md px-4">
+    Save Job
+</button>
+
+</form>
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+
+<footer class="site-footer">
+<a href="#top" class="smoothscroll scroll-top"><span class="icon-keyboard_arrow_up"></span></a>
+
+<div class="container">
+<div class="row mb-5">
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <h3>Search Trending</h3>
+        <ul class="list-unstyled">
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Developers</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">HTML5</a></li>
+            <li><a href="#">CSS3</a></li>
+        </ul>
+</div>
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <h3>Company</h3>
+        <ul class="list-unstyled">  
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Resources</a></li>
+        </ul>
+</div>
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <h3>Support</h3>
+    <ul class="list-unstyled">
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+    </ul>
+</div>
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+    <h3>Contact Us</h3>
+    <div class="footer-social">
+        <a href="#"><span class="icon-facebook"></span></a>
+        <a href="#"><span class="icon-twitter"></span></a>
+        <a href="#"><span class="icon-instagram"></span></a>
+        <a href="#"><span class="icon-linkedin"></span></a>
+    </div>
+</div>
+
+</div>
+
+<div class="row text-center">
+<div class="col-12">
+    <p class="copyright"><small>Copyright &copy;<script>document.write(new Date().getFullYear());</script>All rights reserved</small></p>
+</div>
+</div>
+
+</div>
+
+</footer>
+
+</div>
+
+
+<!-- SCRIPTS -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/stickyfill.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"></script>
+
+<script>
+$(window).on('load', function () {
+    $('#summernote').summernote({
+        placeholder: 'Write Job Description!',
+        height: 300,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['view', ['codeview']]
+        ]
+    });
+});
+</script>
+
+<script>
+document.getElementById("jobForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Stop form submission
+
+    const form = this;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to save this job post?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Post Shared Successfully!',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+
+                // Submit the form
+                form.submit();
+
+            });
+
+        }
+
+        // If Cancel is clicked, nothing happens.
+
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
+
 </html>

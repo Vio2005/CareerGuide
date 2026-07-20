@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Company Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/editcompanyprofile.css' %}">
+    
 </head>
 <body>
     <form method="POST" enctype="multipart/form-data">
@@ -55,31 +59,109 @@
 </textarea>
 
 
+    <label>Tagline (Optional)</label>
+    <input type="text"
+           name="tagline"
+           class="form-control"
+           value="{{ company.tagline|default:'' }}"
+           placeholder="e.g. Building better careers">
+
+    <label>Facebook Username (Optional)</label>
+    <input type="text"
+           name="facebook"
+           class="form-control"
+           value="{{ company.facebook|default:'' }}"
+           placeholder="companyname">
+
+
+
+
+    <label>Twitter Username (Optional)</label>
+    <input type="text"
+           name="twitter"
+           class="form-control"
+           value="{{ company.twitter|default:'' }}"
+           placeholder="@companyname">
+
+
+
+
+    <label>LinkedIn Username (Optional)</label>
+    <input type="text"
+           name="linkedin"
+           class="form-control"
+           value="{{ company.linkedin|default:'' }}"
+           placeholder="companyname">
+
 
 <label>Profile Image</label>
 
-{% if company.profile_image %}
+<div class="image-preview-container">
 
-<img src="{{ company.profile_image.url }}"
-     width="120"
-     height="120">
+    {% if company.profile_image %}
+    <div>
+        <p>Current Image</p>
+        <img src="{{ company.profile_image.url }}"
+             class="preview-img">
+    </div>
+    {% endif %}
 
-{% endif %}
 
+    <div>
+        <p>New Image</p>
+        <img id="new-image-preview"
+             src="{% static 'images/default-profile.jpg' %}"
+             class="preview-img">
+    </div>
+
+</div>
 
 <input type="file"
-       name="profile_image">
-
+       name="profile_image"
+       id="profile-image-input"
+       accept="image/*">
 
 </div>
 
 
 
-<button type="submit">
-Update Profile
+<button type="submit" class="profile-btn">
+    Update Profile
 </button>
+
+<a href="{% url 'companyprofile' company.id %}" class="back-btn">
+    Back
+</a>
 
 
 </form>
+
+<script>
+
+const imageInput = document.getElementById("profile-image-input");
+const previewImage = document.getElementById("new-image-preview");
+
+
+imageInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            previewImage.src = e.target.result;
+
+        }
+
+        reader.readAsDataURL(file);
+
+    }
+
+});
+
+</script>
 </body>
 </html>

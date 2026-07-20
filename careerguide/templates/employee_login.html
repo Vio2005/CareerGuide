@@ -1,35 +1,175 @@
-  {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Employee Login</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            font-family: 'Nunito Sans', sans-serif;
+            align-items:center;
+
+            background:
+                linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+                url("{% static 'images/hero.jpg' %}");
+
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+        }
+
+        .login-card{
+            width:400px;
+            padding:40px;
+
+            background:rgba(255,255,255,.12);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,.2);
+
+            border-radius:20px;
+
+            box-shadow:0 10px 40px rgba(0,0,0,.4);
+
+            text-align:center;
+        }
+
+        .login-card h2{
+            color:#fff;
+            margin-bottom:30px;
+            font-size:32px;
+            font-weight:700;
+        }
+
+        .login-card input{
+            width:100%;
+            padding:15px;
+            margin-bottom:20px;
+
+            border:none;
+            outline:none;
+
+            border-radius:10px;
+
+            background:rgba(255,255,255,.2);
+            color:#fff;
+            font-size:16px;
+        }
+
+        .login-card input::placeholder{
+            color:#eee;
+        }
+
+        .login-card button{
+            width:100%;
+            padding:15px;
+
+            border:none;
+            border-radius:10px;
+
+            background:#074f85;
+            color:white;
+            font-size:17px;
+            font-weight:bold;
+
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .login-card button:hover{
+            background:#0056d2;
+            transform:translateY(-2px);
+        }
+
+        .login-card p{
+            margin-top:20px;
+            color:white;
+        }
+
+        .login-card a{
+            color:#ffd54f;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .login-card a:hover{
+            text-decoration:underline;
+        }
+
+        .error{
+            color:#ffb3b3;
+            margin-bottom:15px;
+            font-weight:bold;
+        }
+
+        @media(max-width:450px){
+
+            .login-card{
+                width:90%;
+                padding:30px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-   
+
+<div class="login-card">
+
 <form method="POST">
+
     {% csrf_token %}
 
     <h2>Employee Login</h2>
 
     {% if error %}
-        <p style="color:red;">{{ error }}</p>
+        <div class="error">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <input type="email" name="email" placeholder="Email" required><br><br>
+    <input
+        type="email"
+        name="email"
+        placeholder="Enter Email"
+        required>
 
-    <input type="password" name="password" placeholder="Password" required><br><br>
+    <input
+        type="password"
+        name="password"
+        placeholder="Enter Password"
+        required>
 
-    <button type="submit">Login</button>
+    <button type="submit">
+        Login
+    </button>
 
     <p>
         Don't have an account?
-        <a href="{% url 'employeeregister' %}">Register</a>
+        <a href="{% url 'employeeregister' %}">
+            Register
+        </a>
     </p>
+
 </form>
-```
+
+</div>
 
 </body>
 </html>

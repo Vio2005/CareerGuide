@@ -1,0 +1,643 @@
+{% extends 'admin.html' %}
+{% block content %}
+{% load static %}
+
+<main class="dashboard-content">
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+
+<!-- Heading -->
+
+<div class="page-heading">
+
+    <div class="page-heading-copy">
+
+        <span class="page-icon">
+            <i class="bi bi-building"></i>
+        </span>
+
+        <div>
+            <p class="eyebrow mb-1">Management</p>
+
+            <h1 class="h3 mb-1">
+                Company Details
+            </h1>
+
+            <p class="text-muted mb-0">
+                View company profile and recruitment activity.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="heading-actions">
+
+        <a class="btn btn-outline-secondary btn-sm"
+           href="{% url 'companylist' %}">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Companies
+
+        </a>
+         <form method="POST"
+          action="{% url 'delete_company' company.id %}"
+          style="display:inline;">
+
+        {% csrf_token %}
+
+        <button type="submit"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Are you sure you want to delete this company?');">
+
+            <i class="bi bi-trash"></i>
+            Delete
+
+        </button>
+
+    </form>
+
+    </div>
+
+</div>
+
+
+
+
+
+<section class="row g-3">
+
+
+
+<!-- LEFT SIDE -->
+
+<div class="col-12 col-xl-4">
+
+
+<!-- Profile Card -->
+
+<div class="panel text-center profile-card">
+
+
+<div class="profile-hero">
+
+
+{% if company.profile_image %}
+
+<img class="avatar-img avatar-xl profile-photo"
+src="{{ company.profile_image.url }}"
+alt="{{ company.company_name }}">
+
+
+{% else %}
+
+
+<img class="avatar-img avatar-xl profile-photo"
+src="{% static 'assets/images/companydefault.jpg' %}"
+alt="Default">
+
+
+{% endif %}
+
+
+
+<h2 class="h5 mb-1">
+
+{{ company.company_name }}
+
+</h2>
+
+
+<p class="text-muted mb-3">
+
+Company Account
+
+</p>
+
+
+
+<span class="badge text-bg-success">
+
+Active Company
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+<div class="info-list mt-4 text-start">
+
+
+
+<div>
+
+<span>Email</span>
+
+<strong>
+{{ company.email }}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<span>Phone</span>
+
+<strong>
+{{ company.phone }}
+</strong>
+
+</div>
+
+
+
+
+
+<div>
+
+<span>Website</span>
+
+<strong>
+
+
+{% if company.website %}
+{{company.website}}
+<!--<a href="{{ company.website }}"
+target="_blank">
+
+Visit Website
+
+</a>
+-->
+
+{% else %}
+
+No Website
+
+
+{% endif %}
+
+
+</strong>
+
+</div>
+
+
+
+
+
+<div>
+
+<span>Address</span>
+
+<strong>
+
+{{ company.address }}
+
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- Company Description -->
+
+<div class="panel mt-3">
+
+
+<div class="panel-header">
+
+<h2 class="h5 mb-0 section-title">
+
+<i class="bi bi-info-circle"></i>
+
+Company Description
+
+</h2>
+
+
+</div>
+
+
+
+
+<p class="mb-0">
+
+
+{% if company.description %}
+
+{{ company.description }}
+
+
+{% else %}
+
+No description added.
+
+
+{% endif %}
+
+
+
+</p>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- RIGHT SIDE -->
+
+
+<div class="col-12 col-xl-8">
+
+
+
+
+
+
+<!-- Statistics -->
+
+
+<div class="panel mb-3">
+
+
+<div class="panel-header">
+
+
+<h2 class="h5 mb-0 section-title">
+
+<i class="bi bi-bar-chart"></i>
+
+Recruitment Statistics
+
+</h2>
+
+
+</div>
+
+
+
+
+
+<div class="row g-3">
+
+
+
+<div class="col-md-4">
+
+<div class="mini-card">
+
+<span>
+Jobs Posted
+</span>
+
+<strong>
+{{ job_count }}
+</strong>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="mini-card">
+
+<span>
+Accepted
+</span>
+
+<strong>
+{{ accepted_count }}
+</strong>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="mini-card">
+
+<span>
+Shortlisted
+</span>
+
+<strong>
+{{ shortlisted_count }}
+</strong>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="mini-card">
+
+<span>
+Pending
+</span>
+
+<strong>
+{{ pending_count }}
+</strong>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="mini-card">
+
+<span>
+Rejected
+</span>
+
+<strong>
+{{ rejected_count }}
+</strong>
+
+</div>
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Posted Jobs -->
+
+
+<div class="panel" id="posts">
+
+
+<div class="panel-header">
+
+
+<h2 class="h5 mb-0 section-title">
+
+<i class="bi bi-briefcase"></i>
+
+Posted Jobs
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+<div class="table-responsive">
+
+
+<table class="table align-middle mb-0">
+
+
+<thead>
+
+<tr>
+
+<th>
+Position
+</th>
+
+
+<th>
+Type
+</th>
+
+
+<th>
+City
+</th>
+
+
+<th>
+Vacancy
+</th>
+
+
+<th>
+Posted Date
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+<tbody>
+
+
+
+{% for job in obj %}
+
+
+<tr>
+
+
+<td>
+
+{{ job.position }}
+
+</td>
+
+
+
+<td>
+
+{{ job.job_type }}
+
+</td>
+
+
+
+<td>
+
+{{ job.city }}
+
+</td>
+
+
+
+<td>
+
+{{ job.vacancy }}
+
+</td>
+
+
+
+<td>
+
+{{ job.posted_date|date:"M d, Y" }}
+
+</td>
+
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No jobs posted.
+
+</td>
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+
+</table>
+<nav aria-label="Page navigation example" class="pt-3">
+    <ul class="pagination">
+      
+      {% if obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ obj.previous_page_number }}#posts" aria-label="Previous">
+          <span aria-hidden="true">&laquo; Previous</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-label="Previous">&laquo; Previous</span>
+      </li>
+      {% endif %}
+  
+      <!-- Current page as active -->
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">
+          {{ obj.number }}
+        </span>
+      </li>
+  
+      {% if obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ obj.next_page_number }}#posts" aria-label="Next">
+          <span aria-hidden="true">Next &raquo;</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-label="Next">Next &raquo;</span>
+      </li>
+      {% endif %}
+  
+    </ul>
+  </nav>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+</div>
+
+
+</main>
+
+
+{% endblock content %}

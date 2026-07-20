@@ -1,142 +1,811 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Employee Profile</title>
+
+<title>JobBoard - Employee Profile</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/employ_profile_detail.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
 </head>
 
-<body>
-
-<h2>My Profile</h2>
 
 
-{% if profile.profile_image %}
-<img src="{{ profile.profile_image.url }}"
-     width="150"
-     height="150">
-<br>
-{% endif %}
+<body id="top">
 
 
-<h3>Personal Information</h3>
+<div id="overlayer"></div>
 
-<p>
-    Full Name:
-    {{ profile.full_name }}
-</p>
-
-<p>
-    Email:
-    {{ employee.email }}
-</p>
-
-<p>
-    Phone:
-    {{ profile.phone }}
-</p>
-
-<p>
-    Gender:
-    {{ profile.gender }}
-</p>
-
-<p>
-    Date of Birth:
-    {{ profile.date_of_birth }}
-</p>
-
-<p>
-    Address:
-    {{ profile.address }}
-</p>
-
-<p>
-    Summary:
-    {{ profile.summary }}
-</p>
-
-
-
-<h3>Education</h3>
-
-{% for edu in employee.education_set.all %}
-
-<p>
-Institution:
-{{ edu.institution }}
-</p>
-
-<p>
-Degree:
-{{ edu.degree }}
-</p>
-
-<p>
-Field:
-{{ edu.field_of_study }}
-</p>
-
-<p>
-Year:
-{{ edu.start_year }} - {{ edu.end_year }}
-</p>
-
-{% endfor %}
+<div class="loader">
+<div class="spinner-border text-primary" role="status">
+<span class="sr-only">Loading...</span>
+</div>
+</div>
 
 
 
 
-<h3>Experience</h3>
+<div class="site-wrap">
 
-{% for exp in employee.experience_set.all %}
 
-<p>
-Company:
-{{ exp.company_name }}
-</p>
 
-<p>
-Position:
-{{ exp.position }}
-</p>
+<!-- MOBILE MENU -->
 
-<p>
-Date:
-{{ exp.start_date }} - {{ exp.end_date }}
-</p>
+<div class="site-mobile-menu site-navbar-target">
 
-<p>
-Description:
-{{ exp.description }}
-</p>
+<div class="site-mobile-menu-header">
 
-{% endfor %}
+<div class="site-mobile-menu-close mt-3">
+
+<span class="icon-close2 js-menu-toggle"></span>
+
+</div>
+
+</div>
+
+
+<div class="site-mobile-menu-body"></div>
+
+</div>
 
 
 
 
-<h3>Skills</h3>
 
-{% for skill in employee.skill_set.all %}
+<!-- NAVBAR -->
 
-<p>
-{{ skill.skill_name }} - {{ skill.proficiency }}
-</p>
+<header class="site-navbar mt-3">
 
-{% endfor %}
+<div class="container-fluid">
 
+<div class="row align-items-center">
 
 
 
-<br>
+<div class="site-logo col-6">
 
-<a href="{% url 'edit_employee_profile' employee.id %}">
-    <button>
-        Edit Profile
-    </button>
+<a href="{% url 'homeview' %}">
+Career Bridge
+</a>
+
+</div>
+
+
+
+
+<nav class="mx-auto site-navigation">
+
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+
+<li>
+<a href="{% url 'homeview' %}" class="nav-link">
+Home
+</a>
+</li>
+
+
+<li>
+<a href="{% url 'company_list_view' %}">
+Company
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'applied_job' %}">
+Applied Job
+</a>
+</li>
+
+
+
+<li>
+<a href="{%url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+
+
+<li class="d-lg-none">
+
+<a href="{% url 'employeelogout' %}">
+Log Out
+</a>
+
+</li>
+
+
+</ul>
+
+</nav>
+
+
+
+
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+
+<div class="ml-auto">
+
+<a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+
+<span class="mr-2 icon-lock_outline"></span>
+
+Log Out
+
+</a>
+
+</div>
+
+
+
+<a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+
 </a>
 
 
+</div>
+
+
+
+</div>
+
+</div>
+
+</header>
+
+
+
+
+
+
+<!-- HERO -->
+
+
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/hero.jpg' %}');"
+id="home-section">
+
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-7">
+
+
+<h1 class="text-white font-weight-bold">
+Employee Profile
+</h1>
+
+
+
+<div class="custom-breadcrumbs">
+
+<a href="{% url 'homeview' %}">
+Home
+</a>
+
+
+<span class="mx-2 slash">
+/
+</span>
+
+
+<span class="text-white">
+<strong>
+Profile
+</strong>
+</span>
+
+
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<!-- PROFILE SECTION -->
+
+
+<section class="profile-section">
+
+
+<div class="container">
+
+
+<div class="profile-card">
+
+
+
+<h2 class="profile-title">
+My Profile
+</h2>
+
+
+
+
+
+<div class="row align-items-center">
+
+
+
+
+
+<!-- IMAGE -->
+
+
+<div class="col-md-4 text-center">
+
+
+{% if profile.profile_image %}
+
+<img src="{{ profile.profile_image.url }}"
+class="profile-image"
+alt="Profile Image"
+onclick="showImage(this.src)">
+
+
+{% else %}
+
+
+<img src="{% static 'images/default-profile.jpg' %}"
+class="profile-image"
+alt="Default Profile"
+onclick="showImage(this.src)">
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PERSONAL INFO -->
+
+
+<div class="col-md-8 profile-info">
+
+
+<h4>
+{{ profile.full_name }}
+</h4>
+
+
+
+<p>
+<strong>Email:</strong>
+{{ employee.email }}
+</p>
+
+
+<p>
+<strong>Phone:</strong>
+{{ profile.phone }}
+</p>
+
+
+<p>
+<strong>Gender:</strong>
+{{ profile.gender }}
+</p>
+
+
+<p>
+<strong>Date of Birth:</strong>
+{{ profile.date_of_birth }}
+</p>
+
+
+
+<p>
+<strong>Address:</strong>
+{{ profile.address }}
+</p>
+
+
+
+<p>
+<strong>Summary:</strong>
+{{ profile.summary }}
+</p>
+
+
+
+<a href="{% url 'edit_employee_profile' employee.id %}"
+class="profile-btn">
+
+Edit Profile
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+<!-- EDUCATION -->
+
+
+<h3 class="section-title">
+Education
+</h3>
+
+
+{% for edu in employee.education_set.all %}
+
+
+<div class="detail-box">
+
+
+<p>
+<strong>Institution:</strong>
+{{ edu.institution }}
+</p>
+
+
+<p>
+<strong>Degree:</strong>
+{{ edu.degree }}
+</p>
+
+
+<p>
+<strong>Field:</strong>
+{{ edu.field_of_study }}
+</p>
+
+
+
+<p>
+<strong>Year:</strong>
+{{ edu.start_year }} - {{ edu.end_year }}
+</p>
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+
+
+
+
+
+<!-- EXPERIENCE -->
+
+
+<h3 class="section-title">
+Experience
+</h3>
+
+
+
+{% for exp in employee.experience_set.all %}
+
+
+<div class="detail-box">
+
+
+<p>
+<strong>Company:</strong>
+{{ exp.company_name }}
+</p>
+
+
+<p>
+<strong>Position:</strong>
+{{ exp.position }}
+</p>
+
+
+<p>
+<strong>Date:</strong>
+{{ exp.start_date }} - {{ exp.end_date }}
+</p>
+
+
+<p>
+<strong>Description:</strong>
+{{ exp.description }}
+</p>
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+
+
+
+
+
+<!-- SKILLS -->
+
+
+<h3 class="section-title">
+Skills
+</h3>
+
+
+
+<div class="skills-box">
+
+
+{% for skill in employee.skill_set.all %}
+
+
+<p>
+
+<span class="icon-check_circle mr-2"></span>
+
+{{ skill.skill_name }}
+
+-
+
+{{ skill.proficiency }}
+
+</p>
+
+
+{% endfor %}
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<!-- FOOTER -->
+
+<footer class="site-footer">
+
+
+<a href="#top" class="smoothscroll scroll-top">
+
+<span class="icon-keyboard_arrow_up"></span>
+
+</a>
+
+
+
+<div class="container">
+
+
+<div class="row mb-5">
+
+
+<div class="col-6 col-md-3 mb-4 mb-md-0">
+
+
+<h3>
+Search Trending
+</h3>
+
+
+<ul class="list-unstyled">
+
+<li>
+<a href="#">Web Design</a>
+</li>
+
+<li>
+<a href="#">Python</a>
+</li>
+
+<li>
+<a href="#">HTML</a>
+</li>
+
+<li>
+<a href="#">CSS</a>
+</li>
+
+
+</ul>
+
+</div>
+
+
+
+
+<div class="col-6 col-md-3">
+
+
+<h3>
+Company
+</h3>
+
+
+<ul class="list-unstyled">
+
+<li>
+<a href="#">About Us</a>
+</li>
+
+<li>
+<a href="#">Career</a>
+</li>
+
+<li>
+<a href="#">Blog</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+
+
+<div class="col-6 col-md-3">
+
+
+<h3>
+Support
+</h3>
+
+
+<ul class="list-unstyled">
+
+<li>
+<a href="#">Support</a>
+</li>
+
+<li>
+<a href="#">Privacy</a>
+</li>
+
+<li>
+<a href="#">Terms</a>
+</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+<div class="col-6 col-md-3">
+
+
+<h3>
+Contact Us
+</h3>
+
+
+<div class="footer-social">
+
+<a href="#">
+<span class="icon-facebook"></span>
+</a>
+
+
+<a href="#">
+<span class="icon-twitter"></span>
+</a>
+
+
+<a href="#">
+<span class="icon-linkedin"></span>
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="row text-center">
+
+<div class="col-12">
+
+
+<p class="copyright">
+
+<small>
+
+Copyright &copy;
+<script>
+document.write(new Date().getFullYear());
+</script>
+
+All rights reserved
+
+</small>
+
+
+</p>
+
+
+</div>
+
+</div>
+
+
+
+
+</div>
+
+</footer>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- IMAGE MODAL -->
+
+
+<div id="imageModal" class="image-modal">
+
+
+<span class="close-image" onclick="closeImage()">
+
+&times;
+
+</span>
+
+
+<img id="popupImage" class="popup-image">
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+function showImage(src){
+
+document.getElementById("imageModal").style.display="flex";
+
+document.getElementById("popupImage").src=src;
+
+}
+
+
+
+function closeImage(){
+
+document.getElementById("imageModal").style.display="none";
+
+}
+
+
+
+document.getElementById("imageModal").onclick=function(e){
+
+if(e.target.id==="imageModal"){
+
+closeImage();
+
+}
+
+}
+
+
+</script>
+
+
+
+
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+
+
 </body>
+
 </html>

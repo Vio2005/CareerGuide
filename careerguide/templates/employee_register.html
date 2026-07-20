@@ -1,37 +1,197 @@
-  {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Employee Register</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:
+                linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+                url("{% static 'images/hero.jpg' %}");
+
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+        }
+
+        .register-card{
+
+            width:430px;
+            padding:40px;
+
+            background:rgba(255,255,255,.12);
+            backdrop-filter:blur(15px);
+
+            border:1px solid rgba(255,255,255,.2);
+
+            border-radius:20px;
+
+            box-shadow:0 10px 40px rgba(0,0,0,.4);
+
+            text-align:center;
+        }
+
+        .register-card h2{
+            color:#fff;
+            margin-bottom:30px;
+            font-size:32px;
+            font-weight:700;
+        }
+
+        .register-card input{
+
+            width:100%;
+            padding:15px;
+            margin-bottom:20px;
+
+            border:none;
+            outline:none;
+
+            border-radius:10px;
+
+            background:rgba(255,255,255,.2);
+
+            color:#fff;
+            font-size:16px;
+        }
+
+        .register-card input::placeholder{
+            color:#eee;
+        }
+
+        .register-card button{
+
+            width:100%;
+            padding:15px;
+
+            border:none;
+            border-radius:10px;
+
+            background:#074f85;
+            color:white;
+
+            font-size:17px;
+            font-weight:bold;
+
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .register-card button:hover{
+
+            background:#074f85;
+            transform:translateY(-2px);
+
+        }
+
+        .register-card p{
+
+            margin-top:20px;
+            color:white;
+
+        }
+
+        .register-card a{
+
+            color:#ffd54f;
+            text-decoration:none;
+            font-weight:bold;
+
+        }
+
+        .register-card a:hover{
+
+            text-decoration:underline;
+
+        }
+
+        .error{
+
+            color:#ffb3b3;
+            margin-bottom:15px;
+            font-weight:bold;
+
+        }
+
+        @media(max-width:450px){
+
+            .register-card{
+                width:90%;
+                padding:30px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-   
+
+<div class="register-card">
+
 <form method="POST">
+
     {% csrf_token %}
 
     <h2>Employee Register</h2>
 
     {% if error %}
-        <p style="color:red;">{{ error }}</p>
+        <div class="error">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <input type="text" name="username" placeholder="Username" required><br><br>
+    <input
+        type="text"
+        name="username"
+        placeholder="Enter Username"
+        required>
 
-    <input type="email" name="email" placeholder="Email" required><br><br>
+    <input
+        type="email"
+        name="email"
+        placeholder="Enter Email"
+        required>
 
-    <input type="password" name="password" placeholder="Password" required><br><br>
+    <input
+        type="password"
+        name="password"
+        placeholder="Create Password"
+        required>
 
-    <button type="submit">Register</button>
+    <button type="submit">
+        Register
+    </button>
 
     <p>
         Already have an account?
-        <a href="{% url 'employeelogin' %}">Login</a>
+        <a href="{% url 'employeelogin' %}">
+            Login
+        </a>
     </p>
+
 </form>
-```
+
+</div>
 
 </body>
 </html>

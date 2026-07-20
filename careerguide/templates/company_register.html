@@ -1,51 +1,452 @@
-  {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<title>Company Register</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Nunito Sans',sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px 0;
+
+
+    background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("{% static 'images/hero.jpg' %}");
+
+    background-size:cover;
+
+    background-position:center;
+
+}
+
+
+
+.register-card{
+
+    width:480px;
+
+    padding:40px;
+
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    border-radius:20px;
+
+
+    box-shadow:0 10px 40px rgba(0,0,0,.4);
+
+
+}
+
+
+
+.register-card h2{
+
+    text-align:center;
+
+    color:white;
+
+    margin-bottom:30px;
+
+    font-size:32px;
+
+}
+
+
+
+.register-card input,
+.register-card textarea{
+
+
+    width:100%;
+
+    padding:15px;
+
+    margin-bottom:18px;
+
+
+    border:none;
+
+    outline:none;
+
+
+    border-radius:10px;
+
+
+    background:rgba(255,255,255,.25);
+
+    color:white;
+
+
+}
+
+
+
+.register-card textarea{
+
+    height:120px;
+
+    resize:none;
+
+}
+
+
+.register-card input::placeholder,
+.register-card textarea::placeholder{
+
+    color:#eee;
+
+}
+
+
+
+.register-card label{
+
+    color:white;
+
+    font-weight:600;
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+.register-card input[type="file"]::file-selector-button{
+
+    padding:8px 15px;
+
+    margin-right:10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#074f85;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+.register-card input[type="file"]::file-selector-button:hover{
+
+    background:#007bff;
+
+}
+
+
+.register-card input[type="file"]{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:20px;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.25);
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+
+.register-card button{
+
+    width:100%;
+
+    padding:15px;
+
+
+    border:none;
+
+    border-radius:10px;
+
+
+    background:linear-gradient(135deg,#074f85,#007bff);
+
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+
+    cursor:pointer;
+
+}
+
+
+
+.register-card button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+
+
+.register-card p{
+
+    text-align:center;
+
+    color:white;
+
+    margin-top:20px;
+
+}
+
+
+
+.register-card a{
+
+    color:#ffd54f;
+
+    font-weight:bold;
+
+}
+
+
+
+.error{
+
+    color:#ffb3b3;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+
+
+</style>
+
 </head>
+
+
 <body>
-   
-<form method="POST">
-    {% csrf_token %}
-
-    <h2>Company Register</h2>
-
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
-
-    <input type="text" name="company_name" placeholder="Company Name" required><br><br>
-
-    <input type="email" name="email" placeholder="Email" required><br><br>
-
-    <input type="password" name="password" placeholder="Password" required><br><br>
-
-    <input type="text" name="address" placeholder="Address" required><br><br>
-
-    <input type="text" name="phone" placeholder="Phone" required><br><br>
-
-    <input type="text" name="website" placeholder="Website" required><br><br>
-
-    <textarea name="description"
-              placeholder="Description"></textarea>
-    <br>
-
-    <label>Profile Image</label>
-    <input type="file" name="profile_image"><br>
 
 
-    <button type="submit">Register</button>
+<div class="register-card">
 
-    <p>
-        Already have an account?
-        <a href="{% url 'companylogin' %}">Login</a>
-    </p>
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+<h2>Company Register</h2>
+
+
+
+{% if error %}
+
+<div class="error">
+{{ error }}
+</div>
+
+{% endif %}
+
+
+
+
+
+<label>Company Name</label>
+
+<input type="text"
+name="company_name"
+placeholder="Enter Company Name"
+required>
+
+
+
+
+
+<label>Email</label>
+
+<input type="email"
+name="email"
+placeholder="Enter Email"
+required>
+
+
+
+
+
+<label>Password</label>
+
+<input type="password"
+name="password"
+placeholder="Create Password"
+required>
+
+
+
+
+
+<label>Phone</label>
+
+<input type="text"
+name="phone"
+placeholder="Phone Number">
+
+
+
+
+
+<label>Address</label>
+
+<input type="text"
+name="address"
+placeholder="Company Address">
+
+
+
+
+
+<label>Website</label>
+
+<input type="text"
+name="website"
+placeholder="Company Website">
+
+
+
+
+
+<label>Description</label>
+
+<textarea
+name="description"
+placeholder="Company Description"></textarea>
+
+
+
+
+
+<label>Tagline (Optional)</label>
+
+<input type="text"
+name="tagline"
+placeholder="e.g. Building better careers">
+
+
+
+
+
+<label>Facebook Username (Optional)</label>
+
+<input type="text"
+name="facebook"
+placeholder="companyname">
+
+
+
+
+
+<label>Twitter Username (Optional)</label>
+
+<input type="text"
+name="twitter"
+placeholder="@companyname">
+
+
+
+
+
+<label>LinkedIn Username (Optional)</label>
+
+<input type="text"
+name="linkedin"
+placeholder="companyname">
+
+
+
+
+
+<label>Profile Image</label>
+
+<input type="file"
+name="profile_image"
+accept="image/*">
+
+
+
+
+
+<button type="submit">
+
+Register
+
+</button>
+
+
+
+
+<p>
+
+Already have an account?
+
+<a href="{% url 'companylogin' %}">
+Login
+</a>
+
+</p>
+
+
+
 </form>
-```
+
+
+</div>
+
 
 </body>
+
 </html>

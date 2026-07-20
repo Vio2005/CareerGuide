@@ -20,6 +20,11 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+    <style>
+      .detail:hover{
+        text-decoration: none;
+      }
+    </style>
   </head>
   <body id="top">
 
@@ -47,43 +52,22 @@
     <header class="site-navbar mt-3">
       <div class="container-fluid">
         <div class="row align-items-center">
-          <div class="site-logo col-6"><a href="index.html">JobBoard</a></div>
+          <div class="site-logo col-6"><a href="index.html">Career Bridge</a></div>
 
           <nav class="mx-auto site-navigation">
             <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-              <li><a href="index.html" class="nav-link active">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li class="has-children">
-                <a href="job-listings.html">Job Listings</a>
-                <ul class="dropdown">
-                  <li><a href="job-single.html">Job Single</a></li>
-                  <li><a href="post-job.html">Post a Job</a></li>
-                </ul>
-              </li>
-              <li class="has-children">
-                <a href="services.html">Pages</a>
-                <ul class="dropdown">
-                  <li><a href="services.html">Services</a></li>
-                  <li><a href="service-single.html">Service Single</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>
-                  <li><a href="portfolio.html">Portfolio</a></li>
-                  <li><a href="portfolio-single.html">Portfolio Single</a></li>
-                  <li><a href="testimonials.html">Testimonials</a></li>
-                  <li><a href="faq.html">Frequently Ask Questions</a></li>
-                  <li><a href="gallery.html">Gallery</a></li>
-                </ul>
-              </li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-              <li class="d-lg-none"><a href="post-job.html"><span class="mr-2">+</span> Post a Job</a></li>
-              <li class="d-lg-none"><a href="login.html">Log In</a></li>
+              <li><a href="{% url 'homeview' %}" class="nav-link active">Home</a></li>
+              <li><a href="{% url 'company_list_view' %}">Company</a></li>
+               <li><a href="{% url 'careerquiz' %}">Career Match</a></li>
+              <li> <a href="{% url 'applied_job'  %}">Applied Job</a></li>
+              <li><a href="{%url 'employeeprofile' %}">Profile</a></li>
+              <li class="d-lg-none"><a href="{% url 'employeelogout' %}">Log Out</a></li>
             </ul>
           </nav>
           
           <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">
-              <a href="post-job.html" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
-              <a href="login.html" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
+              <a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
             </div>
             <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
           </div>
@@ -94,14 +78,14 @@
 
     <!-- HOME -->
 <section class="home-section section-hero overlay bg-image"
-    style="background-image: url('{% static 'images/hero_1.jpg' %}');"
+    style="background-image: url('{% static 'images/hero.jpg' %}');"
     id="home-section">
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-12">
             <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">The Easiest Way To Get Your Dream Job</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
+              <h1 class="text-white font-weight-bold">The Fastest Way To Get Your Dream Job</h1>
+              <p>Bridging the Gap Between You and Your Next Career Milestone.</p>
             </div>
             <form method="GET" class="search-jobs-form" action="{% url 'homeview' %}">
               <div class="row mb-5">
@@ -141,6 +125,7 @@
 
 
     </section>
+     
 
 
     <section class="site-section">
@@ -148,14 +133,48 @@
 
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">43,167 Job Listed</h2>
+            <h2 class="section-title mb-2">{{jobcount}} Job Listed</h2>
           </div>
         </div>
+        <form method="GET" id="filterForm">
+
+    <!-- City -->
+    <select name="city" onchange="document.getElementById('filterForm').submit();">
+        <option value="">All Cities</option>
+        {% for c in cities %}
+            <option value="{{ c.city_name }}" {% if city == c.city_name %}selected{% endif %}>
+                {{ c.city_name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Position -->
+    <select name="position" onchange="document.getElementById('filterForm').submit();">
+        <option value="">All Positions</option>
+        {% for p in positions %}
+            <option value="{{ p.position_name }}" {% if position == p.position_name %}selected{% endif %}>
+                {{ p.position_name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Job Type -->
+    <select name="job_type" onchange="document.getElementById('filterForm').submit();">
+        <option value="">All Job Types</option>
+        {% for value, label in job_types %}
+            <option value="{{ value }}" {% if job_type == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+
+</form>
         
         <ul class="job-listings mb-5">
-          {% for i in job %}
+          {% for i in page_obj %}
+          <a href="{% url 'jobdetail' i.id %}" class="detail">
           <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-            <a href="{% url 'jobdetail' i.id %}"></a>
+            
             <div class="job-listing-logo">
 {% if i.company.profile_image %}
     <img src="{{ i.company.profile_image.url }}" alt="{{ job.company.company_name }}" class="img-fluid">
@@ -167,17 +186,18 @@
             <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
               <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
                 <h2>{{i.position}}</h2>
-                <strong>{{i.company}}</strong>
+                <strong>{{i.company.company_name}}</strong>
               </div>
               <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
                 <span class="icon-room"></span>{{i.location}}
               </div>
               <div class="job-listing-meta">
-                <span class="badge badge-danger">{{i.job_type}}</span>
+                <span class="badge badge-danger" style="color:#fff">{{i.job_type}}</span>
               </div>
             </div>
-            
+           
           </li>
+           </a>
           {% empty %}
 
 <p>No jobs found.</p>
@@ -185,82 +205,96 @@
      
         </ul>
 
-        <div class="row pagination-wrap">
-          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span>Showing 1-7 Of 43,167 Jobs</span>
-          </div>
-          <div class="col-md-6 text-center text-md-right">
-            <div class="custom-pagination ml-auto">
-              <a href="#" class="prev">Prev</a>
-              <div class="d-inline-block">
-              <a href="#" class="active">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              </div>
-              <a href="#" class="next">Next</a>
+       <div class="row pagination-wrap">
+
+    <div class="col-md-12 text-center text-md-right">
+
+        <div class="custom-pagination ml-auto">
+
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
+                    Prev
+                </a>
+            {% endif %}
+
+            <div class="d-inline-block">
+
+                {% for num in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == num %}
+
+                        <a href="?page={{ num }}" class="active">
+                            {{ num }}
+                        </a>
+
+                    {% else %}
+
+                        <a href="?page={{ num }}">
+                            {{ num }}
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
             </div>
-          </div>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="next">
+                    Next
+                </a>
+            {% endif %}
+
         </div>
+
+    </div>
+
+</div>
 
       </div>
     </section>
-    <a href="{%url 'employeeprofile' %}"><button>Profile</button></a>
-    <a href="{% url 'employeelogout' %}"><button>Log out</button></a>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('images/hero_1.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h2 class="text-white">Looking For A Job?</h2>
-            <p class="mb-0 text-white lead">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
-          </div>
-          <div class="col-md-3 ml-auto">
-            <a href="#" class="btn btn-warning btn-block btn-lg">Sign Up</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     
-    <section class="site-section py-4">
+   <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('images/hero_1.jpg');">
       <div class="container">
-  
-        <div class="row align-items-center">
-          <div class="col-12 text-center mt-4 mb-5">
-            <div class="row justify-content-center">
-              <div class="col-md-7">
-                <h2 class="section-title mb-2">Company We've Helped</h2>
-                <p class="lead">Porro error reiciendis commodi beatae omnis similique voluptate rerum ipsam fugit mollitia ipsum facilis expedita tempora suscipit iste</p>
-              </div>
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-2 text-white">Career Bridge Site Stats</h2>
+            <p class="lead text-white">Fueling career by connecting the right talent with the right companies</p>
+          </div>
+        </div>
+        <div class="row pb-0 block__19738 section-counter">
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+              <strong class="number" data-number="{{employeecount}}">0</strong>
             </div>
-            
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_mailchimp.svg' %}" alt="Image" class="img-fluid logo-1">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_paypal.svg' %}" alt="Image" class="img-fluid logo-2">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_stripe.svg' %}" alt="Image" class="img-fluid logo-3">
-          </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_visa.svg' %}" alt="Image" class="img-fluid logo-4">
+            <span class="caption">Candidates</span>
           </div>
 
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_apple.svg' %}" alt="Image" class="img-fluid logo-5">
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+              <strong class="number" data-number="{{jobcount}}">0</strong>
+            </div>
+            <span class="caption">Jobs Posted</span>
           </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_tinder.svg' %}" alt="Image" class="img-fluid logo-6">
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+              <strong class="number" data-number="{{fillcount}}">0</strong>
+            </div>
+            <span class="caption">Jobs Filled</span>
           </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_sony.svg' %}" alt="Image" class="img-fluid logo-7">
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+              <strong class="number" data-number="{{companycount}}">0</strong>
+            </div>
+            <span class="caption">Companies</span>
           </div>
-          <div class="col-6 col-lg-3 col-md-6 text-center">
-            <img src="{% static 'images/logo_airbnb.svg' %}" alt="Image" class="img-fluid logo-8">
-          </div>
+
+            
         </div>
       </div>
     </section>
@@ -275,12 +309,11 @@
             <div class="row">
               <div class="col-lg-6 align-self-center text-center text-lg-left">
                 <blockquote>
-                  <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                  <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
+                  <p>&ldquo;Showcase your skills, education, projects, and experience in one professional profile. A complete profile increases your chances of connecting with the right companies.&rdquo;</p>
                 </blockquote>
               </div>
               <div class="col-lg-6 align-self-end text-center text-lg-right">
-                <img src="{% static 'images/person_transparent_2.png' %}" alt="Image" class="img-fluid mb-0">
+                <img src="{% static 'images/transparent1.png' %}" alt="Image" class="img-fluid mb-0">
               </div>
             </div>
           </div>
@@ -289,12 +322,11 @@
             <div class="row">
               <div class="col-lg-6 align-self-center text-center text-lg-left">
                 <blockquote>
-                  <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
-                  <p><cite> &mdash; Chris Peters, @Google</cite></p>
+                  <p>&ldquo;Discover thousands of career opportunities from companies looking for talented professionals. Create your profile, explore suitable jobs, and take the next step toward your future.&rdquo;</p>
                 </blockquote>
               </div>
               <div class="col-lg-6 align-self-end text-center text-lg-right">
-                <img src="{% static 'images/person_transparent.png' %}" alt="Image" class="img-fluid mb-0">
+                <img src="{% static 'images/transparent2.png' %}" alt="Image" class="img-fluid mb-0">
               </div>
             </div>
           </div>
@@ -308,7 +340,7 @@
         <div class="row">
           <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
             <h2 class="text-white">Get The Mobile Apps</h2>
-            <p class="mb-5 lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit tempora adipisci impedit.</p>
+            <p class="mb-5 lead text-white">Coming Soon.</p>
             <p class="mb-0">
               <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
               <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
@@ -372,7 +404,7 @@
           <div class="col-12">
             <p class="copyright"><small>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
           </div>
         </div>

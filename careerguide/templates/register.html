@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="adminHMD authentication page">
+  <title>Register | adminHMD</title>
+
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/bootstrap-icons/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+
+<body class="auth-body">
+  <button class="icon-button theme-toggle auth-theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+    <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+  </button>
+  <main class="auth-page">
+    <section class="auth-card">
+      <a class="auth-brand" href="index.html"><span class="brand-icon"><i class="bi bi-person-fill" aria-hidden="true"></i></span><span><strong>Admin</strong><small>Create your adminHMD account.</small></span></a>
+      <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-4">
+          <p class="eyebrow mb-1">Secure Access</p>
+          <h1 class="h3 mb-1">Register</h1>
+          <p class="text-muted mb-0">Create your adminHMD account.</p>
+        </div>
+        <div class="mb-3"><label class="form-label" for="registerName">Username</label><input class="form-control" id="registerName" type="text"  name="username" required><div class="invalid-feedback">Full name is required.</div></div>
+        <div class="mb-3"><label class="form-label" for="registerEmail">Email address</label><input class="form-control" id="registerEmail" type="email" name="email" required><div class="invalid-feedback">Enter a valid email.</div></div>
+        <div class="mb-3"><label class="form-label" for="registerPassword">Password</label><input class="form-control" id="registerPassword" type="password" name="password" minlength="6" required><div class="invalid-feedback">Password must be at least 6 characters.</div></div>
+        <div class="mb-3"><label class="form-label" for="firstName">First name</label><input class="form-control" id="firstName" type="text"  name="fname" required><div class="invalid-feedback">Full name is required.</div></div>
+        <div class="mb-3"><label class="form-label" for="lastName">Last name</label><input class="form-control" id="lastName" type="text"  name="lname" required><div class="invalid-feedback">Full name is required.</div></div>
+       
+        
+        <button class="btn btn-primary w-100" type="submit"><i class="bi bi-person-plus" aria-hidden="true"></i> Create Account</button>
+      </form>
+      
+      <div class="auth-footer">Already have an account? <a href="{% url 'login' %}">Sign in</a></div>
+    </section>
+  </main>
+
+  <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

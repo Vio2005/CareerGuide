@@ -1,27 +1,385 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for i in jobs %}
-        <div>
-            {{ i.position }}
-            {{ i.description }}
-            {{ i.vacancy }}
-            {{ i.salary }}
-            {{ i.requirements }}
-            {{ i.location }}
-            {{ i.city.city_name }}
-            <a href="{% url 'editpost' i.id %}"><button>Edit Post</button></a>
-            <a href="{% url 'deletepost' i.id %}"><button>Delete Post</button></a>
-        </div>
-        {% empty %}
-    <p>No jobs posted yet.</p>
-    {% endfor %}
-    
 
+<head>
+    <title>JobBoard - Company Profile</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+    <!-- Same CSS as home -->
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/companyprofile.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body id="top">
+
+
+<div id="overlayer"></div>
+
+<div class="loader">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
+
+<div class="site-wrap">
+
+
+<!-- MOBILE MENU -->
+<div class="site-mobile-menu site-navbar-target">
+
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+    </div>
+
+    <div class="site-mobile-menu-body"></div>
+
+</div>
+
+
+
+<!-- NAVBAR -->
+<header class="site-navbar mt-3">
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="site-logo col-6">
+    <a href="{% url 'company_index' %}">
+        Career Bridge
+    </a>
+</div>
+
+<nav class="mx-auto site-navigation">
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+    <li><a href="{% url 'company_index' %}">Home</a></li>
+    <li><a href="{% url 'companypostview' company.id %}" class="nav-link active">Job Post</a></li>
+    <li><a href="#">Candidate</a></li>
+    <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
+    <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
+    <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
+     <span class="mr-2 icon-add"></span>Post a Job</a></li>
+    <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
+</ul>
+</nav>
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+<div class="ml-auto">
+    <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+    <span class="mr-2 icon-lock_outline"></span>Log Out</a>
+</div>
+    <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+    <span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+</div>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/company1.jpg' %}');"
+id="home-section">
+
+<div class="container">
+<div class="row">
+<div class="col-md-7">
+<h1 class="text-white font-weight-bold">Job Post</h1>
+
+<div class="custom-breadcrumbs">
+    <a href="{% url 'company_index' %}">Home</a>
+    <span class="mx-2 slash">/</span>
+    <span class="text-white"><strong>Job Post</strong></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+       <section class="site-section" id="job-post-section">
+    <div class="container">
+
+        <!-- Section Title -->
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-7 text-center">
+                <h2 class="section-title mb-2">My Job Posts</h2>
+            </div>
+        </div>
+
+        <!-- Job Listings -->
+        <ul class="job-listings mb-5">
+
+            {% for i in jobs %}
+            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-start">
+
+                <!-- Company Logo -->
+                <div class="job-listing-logo">
+                    {% if company.profile_image %}
+                        <img src="{{ company.profile_image.url }}"
+                             alt="{{ company.company_name }}"
+                             class="img-fluid">
+                    {% else %}
+                        <img src="{% static 'images/job_logo_1.jpg' %}"
+                             alt="Company Logo"
+                             class="img-fluid">
+                    {% endif %}
+                </div>
+
+                <!-- Job Information -->
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+
+                    <!-- Left Side -->
+                    <div class="job-listing-position custom-width w-75">
+
+                        <h2>{{ i.position }}</h2>
+
+                        <strong>{{ company.company_name }}</strong>
+
+                        <div class="mt-2 job-info">
+
+                            <span class="icon-room"></span>
+                            {{ i.location }}, {{ i.city.city_name }}
+
+                            <br>
+
+                            <span class="icon-people"></span>
+                            Vacancy: {{ i.vacancy }}
+
+                            <br>
+
+                            <span class="icon-attach_money"></span>
+                            Salary: {{ i.salary }}
+
+                        </div>
+
+                        <!-- Job Description -->
+                        <div class="mt-3">
+                            <h6><strong>Job Description</strong></h6>
+                            <div class="job-description">
+                                {{ i.description|safe}}
+                            </div>
+                        </div>
+
+                        <!-- Requirements -->
+                        <div class="mt-3">
+                            <h6><strong>Requirements</strong></h6>
+                            <p>{{ i.requirements|linebreaksbr }}</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="job-listing-location custom-width w-25 text-right">
+
+                        <a href="{% url 'editpost' i.id %}"
+                           class="btn btn-warning btn-sm mb-2 d-block">
+                            Edit
+                        </a>
+
+                       <a href="{% url 'deletepost' i.id %}"
+   class="btn btn-danger btn-sm d-block delete-btn">
+    Delete
+</a>
+
+                    </div>
+
+                </div>
+
+            </li>
+
+            {% empty %}
+            <li class="text-center py-5">
+                <h5>No job posts yet.</h5>
+            </li>
+            {% endfor %}
+
+        </ul>
+
+        <div class="row pagination-wrap">
+
+<div class="col-md-6 ml-auto text-right">
+
+<div class="custom-pagination ml-auto">
+
+
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}" class="prev">
+Prev
+</a>
+{% endif %}
+
+
+
+<div class="d-inline-block">
+
+{% for num in page_obj.paginator.page_range %}
+
+{% if page_obj.number == num %}
+
+<a href="?page={{ num }}" class="active">
+{{ num }}
+</a>
+
+{% else %}
+
+<a href="?page={{ num }}">
+{{ num }}
+</a>
+
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}" class="next">
+Next
+</a>
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+</div>
+
+    </div>
+</section>
+
+    </div>
+</section>
+    
+<footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+document.querySelectorAll(".delete-btn").forEach(function(button){
+    button.addEventListener("click", function(e){
+        e.preventDefault();
+        const deleteUrl = this.href;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This job post will be permanently deleted.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6'
+
+        }).then((result)=>{
+            if(result.isConfirmed){
+                Swal.fire({
+                    icon:'success',
+                    title:'Deleted Successfully!',
+                    showConfirmButton:false,
+                    timer:1200
+                }).then(()=>{
+                    window.location.href = deleteUrl;
+                });
+            }
+        });
+    });
+});
+
+</script>
 </body>
 </html>

@@ -1,0 +1,431 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="adminHMD professional admin dashboard template">
+  <title>Blank | adminHMD</title>
+
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/bootstrap-icons/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+ 
+</head>
+
+<body>
+  
+  <div class="admin-shell">
+    <div class="sidebar-backdrop" data-sidebar-close></div>
+
+    <aside class="admin-sidebar" id="adminSidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <a class="brand-mark" aria-label="adminHMD dashboard">
+          <span class="brand-icon"><i class="bi bi-person-fill" aria-hidden="true"></i></span>
+          <span class="brand-copy">
+            <span class="brand-title">Admin Board</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link {% if request.resolver_match.url_name == 'adminview' %}active{% endif %}" href="{% url 'adminview' %}">
+          <span class="nav-icon"><i class="bi bi-speedometer2" aria-hidden="true"></i></span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'employeelist' %}active{% endif %}" href="{% url 'employeelist' %}">
+          <span class="nav-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+          <span class="nav-text">Employee</span>
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'companylist' %}active{% endif %}" href="{% url 'companylist' %}">
+          <span class="nav-icon"><i class="bi bi-building" aria-hidden="true"></i></span>
+          <span class="nav-text">Company</span>
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'application' %}active{% endif %}" href="{% url 'application' %}">
+          <span class="nav-icon"><i class="bi bi-card-list" aria-hidden="true"></i></span>
+          <span class="nav-text">Application</span>
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}">
+          <span class="nav-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+          <span class="nav-text">Profile</span>
+        </a>
+        <a class="nav-link {% if request.resolver_match.url_name == 'chart' %}active{% endif %}" href="{% url 'chart' %}">
+          <span class="nav-icon"><i class="bi bi-bar-chart-line" aria-hidden="true"></i></span>
+          <span class="nav-text">Charts</span>
+        </a>
+        
+        <a class="nav-link {% if request.resolver_match.url_name == 'logout' %}active{% endif %}" href="{% url 'logout' %}" onclick="return confirmLogout()">
+          <span class="nav-icon"><i class="bi bi-box-arrow-left" aria-hidden="true"></i></span>
+          <span class="nav-text">Log out</span>
+        </a>
+        <!--<a class="nav-link" href="components.html">
+          <span class="nav-icon"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i></span>
+          <span class="nav-text">Components</span>
+        </a>
+        <a class="nav-link" href="alerts.html">
+          <span class="nav-icon"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i></span>
+          <span class="nav-text">Alerts</span>
+        </a>
+        <a class="nav-link" href="modals.html">
+          <span class="nav-icon"><i class="bi bi-window-stack" aria-hidden="true"></i></span>
+          <span class="nav-text">Modals</span>
+        </a>
+        <a class="nav-link" href="settings.html">
+          <span class="nav-icon"><i class="bi bi-gear" aria-hidden="true"></i></span>
+          <span class="nav-text">Settings</span>
+        </a>
+        <a class="nav-link" href="blank.html">
+          <span class="nav-icon"><i class="bi bi-file-earmark" aria-hidden="true"></i></span>
+          <span class="nav-text">Blank Page</span>
+        </a>-->
+      </nav>
+
+      
+
+
+      <div class="sidebar-footer">
+        <span class="status-dot"></span>
+        <span class="sidebar-footer-text">System running smoothly</span>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <nav class="navbar admin-navbar navbar-expand bg-white">
+        <div class="container-fluid px-3 px-lg-4">
+          <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="adminSidebar" aria-expanded="true" aria-label="Toggle sidebar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="d-none d-md-flex ms-3 flex-grow-1" style="font-weight: bold; font-size: 20px;">CAREER BRIDGE</div>
+
+          
+
+          <div class="navbar-actions ms-auto">
+            <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+              <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+            </button>
+            <div class="dropdown">
+              <button class="icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
+                <span class="notification-dot"></span>
+                <i class="bi bi-bell" aria-hidden="true"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end notification-menu">
+                <div class="dropdown-header fw-bold text-body">Notifications</div>
+                <a class="dropdown-item" href="users.html">
+                  <span class="notification-title">New user registered</span>
+                  <span class="notification-time">4 minutes ago</span>
+                </a>
+                <a class="dropdown-item" href="charts.html">
+                  <span class="notification-title">Revenue target reached</span>
+                  <span class="notification-time">32 minutes ago</span>
+                </a>
+                <a class="dropdown-item" href="settings.html">
+                  <span class="notification-title">Security review completed</span>
+                  <span class="notification-time">1 hour ago</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="dropdown">
+             <!----<button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="avatar-img avatar-sm" src="{% static 'assets/images/avatar/admin1.jpg' %}" alt="Admin Hasan">
+                <span class="profile-name d-none d-sm-inline">Admin</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html">Account settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="login.html" onclick="return confirmLogout()">Sign out</a></li>
+              </ul>-->
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    
+      {% block content %}
+    {% endblock content %}
+
+    <footer class="admin-footer">
+    <div class="container-fluid">
+        <div class="footer-content">
+
+            <p class="mb-0">
+                © 2026 CareerBridge Admin Dashboard. All Rights Reserved.
+            </p>
+
+            <p class="mb-0">
+                Logged in as 
+                <strong>
+                    {{ request.user.first_name }} {{ request.user.last_name }}
+                </strong>
+            </p>
+
+        </div>
+    </div>
+</footer>
+    </div>
+  </div>
+
+  <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+      const navLinks = document.querySelectorAll('.nav-link');
+    
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    </script>
+    <!-- Chart.js -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+
+<script>
+
+
+// Monthly Applications Bar Chart
+
+new Chart(document.getElementById('monthlyChart'), {
+
+
+    type: 'bar',
+
+
+    data: {
+
+        labels: {{ month_labels|safe }},
+
+        datasets: [{
+
+            label: 'Applications',
+
+            data: {{ month_data|safe }},
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+
+    options: {
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        scales: {
+
+            y: {
+
+                beginAtZero:true
+
+            }
+
+        }
+
+    }
+
+
+});
+
+
+
+
+
+// Popular Positions Doughnut Chart
+
+new Chart(document.getElementById('positionChart'), {
+
+
+    type:'doughnut',
+
+
+    data: {
+
+
+        labels: {{ position_labels|safe }},
+
+
+        datasets:[{
+
+            label:'Applications',
+
+            data: {{ position_data|safe }},
+
+            borderWidth:1
+
+        }]
+
+    },
+
+
+    options: {
+
+        responsive:true,
+
+        plugins:{
+
+            legend:{
+
+                position:'bottom'
+
+            }
+
+        }
+
+    }
+
+
+});
+
+
+
+
+
+
+// Last 30 Days Line Chart
+
+new Chart(document.getElementById('dailyChart'), {
+
+
+    type:'line',
+
+
+    data:{
+
+
+        labels: {{ daily_labels|safe }},
+
+
+        datasets:[{
+
+
+            label:'Applications',
+
+
+            data: {{ daily_data|safe }},
+
+
+            tension:0.3,
+
+
+            borderWidth:2
+
+
+        }]
+
+
+    },
+
+
+    options:{
+
+
+        responsive:true,
+
+
+        maintainAspectRatio:false,
+
+
+        scales:{
+
+
+            y:{
+
+
+                beginAtZero:true
+
+
+            }
+
+        }
+
+
+    }
+
+
+});
+
+
+
+
+
+// Application Status Pie Chart
+
+new Chart(document.getElementById('statusChart'), {
+
+
+    type:'pie',
+
+
+    data:{
+
+
+        labels: {{ status_labels|safe }},
+
+
+        datasets:[{
+
+
+            label:'Applications',
+
+
+            data: {{ status_data|safe }},
+
+
+            borderWidth:1
+
+
+        }]
+
+
+    },
+
+
+    options:{
+
+
+        responsive:true,
+
+
+        plugins:{
+
+
+            legend:{
+
+
+                position:'bottom'
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+});
+
+
+
+</script>
+
+<script>
+function confirmLogout() {
+    return confirm("Are you sure you want to log out?");
+}
+</script>
+
+
+</body>
+</html>

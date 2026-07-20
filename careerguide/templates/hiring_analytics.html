@@ -1,0 +1,536 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>JobBoard &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Free-Template.co" />
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <style>
+        .analytics-section{
+    background:#f8f9fa;
+}
+
+
+.analytics-card{
+
+    background:white;
+    border-radius:15px;
+    padding:25px;
+
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+
+}
+
+
+
+.analytics-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.analytics-card .icon{
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:30px;
+
+    color:white;
+
+}
+
+
+
+.analytics-card h3{
+
+    font-size:35px;
+    font-weight:700;
+
+    margin:0;
+
+}
+
+
+
+.analytics-card p{
+
+    margin:0;
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+
+
+/* Colors */
+
+.jobs-card .icon{
+
+    background:#2563eb;
+
+}
+
+
+
+.application-card .icon{
+
+    background:#15a9ac;
+
+}
+
+
+
+.accepted-card .icon{
+
+    background:#16a34a;
+
+}
+
+
+
+.pending-card .icon{
+
+    background:#f59e0b;
+
+}
+
+
+
+.shortlist-card .icon{
+
+    background:#8b5cf6;
+
+}
+
+
+
+.rejected-card .icon{
+
+    background:#dc2626;
+
+}
+    </style>   
+  </head>
+  <body id="top">
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+    
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+    
+
+    <!-- NAVBAR -->
+    <header class="site-navbar mt-3">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="site-logo col-6"><a href="#">Career Bridge</a></div>
+
+          <nav class="mx-auto site-navigation">
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+              <li><a href="{% url 'company_index' %}" >Home</a></li>
+              <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
+              <li><a href="candidate.html">Candidate</a></li>
+              <li><a href="{% url 'hiring_analytics' %}" class="nav-link active">Hiring Analytic</a></li>
+              <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
+              <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
+                <span class="mr-2 icon-add"></span>Post a Job
+              </a></li>
+              <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
+            </ul>
+          </nav>
+          
+          <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
+            <div class="ml-auto">
+              <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
+            </div>
+            <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+          </div>
+
+        </div>
+      </div>
+    </header>
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/company1.jpg' %}');"
+id="home-section">
+
+<div class="container">
+<div class="row">
+<div class="col-md-7">
+<h1 class="text-white font-weight-bold">Hiring Analytics</h1>
+
+<div class="custom-breadcrumbs">
+    <a href="{% url 'company_index' %}">Home</a>
+    <span class="mx-2 slash">/</span>
+    <span class="text-white"><strong>Hiring Analytics</strong></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="analytics-section py-5">
+
+<div class="container">
+
+<div class="row mb-4">
+    <div class="col-md-12 text-center">
+        <h2 class="section-title">
+            Hiring Analytics
+        </h2>
+        <p>
+            Monitor your recruitment performance.
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+
+
+<!-- Total Jobs -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card jobs-card">
+
+        <div class="icon">
+            <span class="icon-briefcase"></span>
+        </div>
+
+        <div>
+            <h3>{{ total_jobs }}</h3>
+            <p>Total Jobs Posted</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Applications -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card application-card">
+
+        <div class="icon">
+            <span class="icon-users"></span>
+        </div>
+
+        <div>
+            <h3>{{ total_applications }}</h3>
+            <p>Total Applications</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Accepted -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card accepted-card">
+
+        <div class="icon">
+            <span class="icon-check"></span>
+        </div>
+
+        <div>
+            <h3>{{ hired }}</h3>
+            <p>Accepted</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- Pending -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card pending-card">
+
+        <div class="icon">
+            <span class="icon-clock-o"></span>
+        </div>
+
+        <div>
+            <h3>{{ pending }}</h3>
+            <p>Pending</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- Shortlisted -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card shortlist-card">
+
+        <div class="icon">
+            <span class="icon-star"></span>
+        </div>
+
+        <div>
+            <h3>{{ short }}</h3>
+            <p>Shortlisted</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- Rejected -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="analytics-card rejected-card">
+
+        <div class="icon">
+            <span class="icon-close"></span>
+        </div>
+
+        <div>
+            <h3>{{ reject }}</h3>
+            <p>Rejected</p>
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+<section class="site-section">
+
+<div class="container">
+
+
+<div class="row mb-5 justify-content-center">
+
+<div class="col-md-7 text-center">
+
+<h2 class="section-title">
+Monthly Applications
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="col-lg-10 mx-auto">
+
+<div class="card p-4 shadow">
+
+<canvas id="applicationChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+    
+    <footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+<div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+const ctx = document.getElementById(
+    'applicationChart'
+);
+
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+
+        {% for month in months %}
+            "{{ month }}",
+        {% endfor %}
+
+        ],
+
+
+        datasets: [{
+
+            label: 'Applications',
+
+            data: [
+
+            {% for total in totals %}
+                {{ total }},
+            {% endfor %}
+
+            ],
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+
+});
+
+</script>
+
+     
+  </body>
+</html>

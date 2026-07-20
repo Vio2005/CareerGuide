@@ -2,81 +2,127 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Employee Profile</title>
 
-   
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Edit Employee Profile</title>
+
+
+<link rel="stylesheet" href="{% static 'css/edit_employee_profile.css' %}">
+
 </head>
+
 
 <body>
 
-<div class="container">
 
 <form method="POST" enctype="multipart/form-data">
+
 
 {% csrf_token %}
 
 
-<!-- Personal Information -->
 
-<div class="card">
+<div class="profile-edit-layout">
+
+
+
+<!-- ================= LEFT SIDE ================= -->
+
+
+<div class="left-profile-section">
+
+
+<div class="edit-card">
+
 
 <h2>Personal Information</h2>
 
 
+
 <label>Full Name</label>
+
 <input type="text"
-       name="full_name"
-       value="{{ profile.full_name }}"
-       required>
+name="full_name"
+value="{{ profile.full_name }}"
+required>
+
+
+
 
 
 <label>Email</label>
+
 <input type="email"
-       value="{{ employee.email }}"
-       readonly>
+value="{{ employee.email }}"
+readonly>
+
+
+
 
 
 <label>Phone</label>
+
 <input type="text"
-       name="phone"
-       value="{{ profile.phone }}">
+name="phone"
+value="{{ profile.phone }}">
+
+
+
 
 
 <label>Gender</label>
 
+
 <select name="gender">
+
 
 <option value="Male"
 {% if profile.gender == "Male" %}selected{% endif %}>
 Male
 </option>
 
+
 <option value="Female"
 {% if profile.gender == "Female" %}selected{% endif %}>
 Female
 </option>
 
+
 </select>
+
+
+
+
 
 
 <label>Date of Birth</label>
 
+
 <input type="date"
-       name="date_of_birth"
-       value="{{ profile.date_of_birth|date:'Y-m-d' }}">
+name="date_of_birth"
+value="{{ profile.date_of_birth|date:'Y-m-d' }}">
+
+
 
 
 <label>Address</label>
+
 
 <textarea name="address">
 {{ profile.address }}
 </textarea>
 
 
+
+
+
 <label>About Yourself</label>
+
 
 <textarea name="summary">
 {{ profile.summary }}
@@ -84,19 +130,49 @@ Female
 
 
 
+
+
 <label>Profile Image</label>
+
+
+
+<div class="image-preview-container">
+
 
 {% if profile.profile_image %}
 
+
+<div>
+
+<p>Current Image</p>
+
+
 <img src="{{ profile.profile_image.url }}"
-     width="120"
-     height="120">
+class="preview-img">
+
+
+</div>
+
 
 {% endif %}
 
 
-<input type="file"
-       name="profile_image">
+
+
+
+<div>
+
+
+<p>New Image</p>
+
+
+<img id="new-image-preview"
+src="{% static 'images/default-profile.png' %}"
+class="preview-img">
+
+
+</div>
+
 
 
 </div>
@@ -104,50 +180,95 @@ Female
 
 
 
-<!-- Education -->
 
-<div class="card">
+<input type="file"
+name="profile_image"
+id="profile-image-input"
+accept="image/*">
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= RIGHT SIDE ================= -->
+
+
+<div class="right-profile-section">
+
+
+
+
+
+<!-- EDUCATION -->
+
+
+<div class="edit-card">
+
 
 <h2>Education</h2>
 
 
+
 <label>Institution</label>
 
+
 <input type="text"
-       name="institution"
-       value="{{ education.institution }}">
+name="institution"
+value="{{ education.institution }}">
+
+
 
 
 
 <label>Degree</label>
 
+
 <input type="text"
-       name="degree"
-       value="{{ education.degree }}">
+name="degree"
+value="{{ education.degree }}">
+
+
 
 
 
 <label>Field of Study</label>
 
+
 <input type="text"
-       name="field_of_study"
-       value="{{ education.field_of_study }}">
+name="field_of_study"
+value="{{ education.field_of_study }}">
+
+
 
 
 
 <label>Start Year</label>
 
+
 <input type="number"
-       name="start_year"
-       value="{{ education.start_year }}">
+name="start_year"
+value="{{ education.start_year }}">
+
+
 
 
 
 <label>End Year</label>
 
+
 <input type="number"
-       name="end_year"
-       value="{{ education.end_year }}">
+name="end_year"
+value="{{ education.end_year }}">
+
 
 
 </div>
@@ -156,50 +277,74 @@ Female
 
 
 
-<!-- Experience -->
 
-<div class="card">
+
+
+
+<!-- EXPERIENCE -->
+
+
+<div class="edit-card">
+
 
 <h2>Experience</h2>
 
 
+
+
 <label>Company Name</label>
 
+
 <input type="text"
-       name="company_name"
-       value="{{ experience.company_name }}">
+name="company_name"
+value="{{ experience.company_name }}">
+
+
 
 
 
 <label>Position</label>
 
+
 <input type="text"
-       name="position"
-       value="{{ experience.position }}">
+name="position"
+value="{{ experience.position }}">
+
+
 
 
 
 <label>Start Date</label>
 
+
 <input type="date"
-       name="start_date"
-       value="{{ experience.start_date|date:'Y-m-d' }}">
+name="start_date"
+value="{{ experience.start_date|date:'Y-m-d' }}">
+
+
 
 
 
 <label>End Date</label>
 
+
 <input type="date"
-       name="end_date"
-       value="{{ experience.end_date|date:'Y-m-d' }}">
+name="end_date"
+value="{{ experience.end_date|date:'Y-m-d' }}">
+
+
 
 
 
 <label>Description</label>
 
+
 <textarea name="description">
+
 {{ experience.description }}
+
 </textarea>
+
 
 
 </div>
@@ -209,61 +354,204 @@ Female
 
 
 
-<!-- Skill -->
 
-<div class="card">
+
+
+<!-- SKILL -->
+
+
+<div class="edit-card">
+
 
 <h2>Skill</h2>
 
 
+
+
 <label>Skill Name</label>
 
+
 <input type="text"
-       name="skill_name"
-       value="{{ skill.skill_name }}">
+name="skill_name"
+value="{{ skill.skill_name }}">
+
+
+
 
 
 
 <label>Skill Level</label>
 
+
 <select name="skill_level">
 
 
+
 <option value="Beginner"
-{% if skill.proficiency == "Beginner" %}selected{% endif %}>
+
+{% if skill.proficiency == "Beginner" %}
+
+selected
+
+{% endif %}
+
+>
+
 Beginner
+
 </option>
+
+
+
 
 
 <option value="Intermediate"
-{% if skill.proficiency == "Intermediate" %}selected{% endif %}>
+
+{% if skill.proficiency == "Intermediate" %}
+
+selected
+
+{% endif %}
+
+>
+
 Intermediate
+
 </option>
+
+
+
 
 
 <option value="Advanced"
-{% if skill.proficiency == "Advanced" %}selected{% endif %}>
+
+{% if skill.proficiency == "Advanced" %}
+
+selected
+
+{% endif %}
+
+>
+
 Advanced
+
 </option>
+
 
 
 </select>
 
 
+
+
 </div>
 
 
 
 
 
-<button type="submit">
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- BUTTONS -->
+
+
+<button type="submit" class="profile-btn">
+
 Update Profile
+
 </button>
+
+
+
+
+
+<a href="{% url 'employeeprofile' %}"
+class="back-btn">
+
+Back
+
+</a>
+
+
+
+
 
 
 </form>
 
-</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+const imageInput = document.getElementById("profile-image-input");
+
+const previewImage = document.getElementById("new-image-preview");
+
+
+
+imageInput.addEventListener("change", function(){
+
+
+const file = this.files[0];
+
+
+
+if(file){
+
+
+const reader = new FileReader();
+
+
+
+reader.onload=function(e){
+
+
+previewImage.src=e.target.result;
+
+
+}
+
+
+
+reader.readAsDataURL(file);
+
+
+
+}
+
+
+});
+
+
+
+</script>
+
+
+
+
+
 
 </body>
+
 </html>

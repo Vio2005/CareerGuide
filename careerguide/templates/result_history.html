@@ -1,0 +1,832 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>JobBoard &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/quill.snow.css' %}">
+    
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    <style>
+.result-card{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid #e8eef7;
+    transition:all .35s ease;
+    height:100%;
+    position:relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.result-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(37, 99, 235, 0.15);
+}
+
+.result-header{
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+    padding:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+}
+
+.result-header small{
+    opacity:.8;
+    font-size:14px;
+}
+
+.result-header h4{
+    color:#fff;
+    margin-top:8px;
+    margin-bottom:0;
+    font-weight:700;
+}
+
+.result-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+}
+
+.result-body{
+    padding:28px;
+}
+
+.match-title{
+    font-size:14px;
+    color:#777;
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-weight:600;
+}
+
+.best-match-box{
+    background:#eff6ff;
+    border-left:5px solid #074f85;
+    padding:16px 20px;
+    border-radius:12px;
+    color:#074f85;
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.similar-title{
+    font-size:14px;
+    color:#777;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.similar-box{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:18px;
+    line-height:1.9;
+    color:#444;
+    border:1px solid #edf2f7;
+}
+
+.empty-card{
+    background:#fff;
+    border-radius:20px;
+    padding:60px 30px;
+    text-align:center;
+    border:2px dashed #dbeafe;
+}
+
+.empty-card span{
+    color:#3b82f6;
+}
+
+.empty-card h3{
+    margin-top:20px;
+}
+
+.section-title{
+    font-weight:700;
+}
+
+@media(max-width:991px){
+
+    .result-header{
+        padding:20px;
+    }
+
+    .result-body{
+        padding:22px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .result-icon{
+        width:55px;
+        height:55px;
+        font-size:22px;
+    }
+
+    .best-match-box{
+        font-size:18px;
+    }
+
+}
+
+
+.result-carousel-wrapper{
+    position:relative;
+    padding-bottom:20px;
+    
+}
+
+.result-carousel{
+    display:flex;
+    gap:30px;
+    overflow-x:hidden;
+    overflow-y:visible;
+    scroll-behavior:smooth;
+    padding:15px 15px 30px;
+}
+
+.result-slide{
+    min-width:calc(50% - 15px);
+    padding:10px;
+}
+
+
+
+/* Arrow buttons */
+
+.carousel-btn{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+
+    color:white;
+
+    font-size:24px;
+
+    z-index:10;
+
+    cursor:pointer;
+
+}
+
+
+.carousel-btn:hover{
+
+    background:linear-gradient(135deg,#05365c,#0099cc);
+
+}
+
+
+.carousel-prev{
+
+    left:-5px;
+
+}
+
+
+.carousel-next{
+
+    right:-5px;
+
+}
+
+.carousel-btn:disabled{
+    background:#cbd5e1;
+    cursor:not-allowed;
+    opacity:.6;
+}
+
+.carousel-btn:disabled:hover{
+    background:#cbd5e1;
+}
+
+
+
+@media(max-width:768px){
+
+    .result-slide{
+
+        min-width:100%;
+
+    }
+
+
+    .carousel-prev{
+
+        left:5px;
+
+    }
+
+
+    .carousel-next{
+
+        right:5px;
+
+    }
+
+}
+.back-btn{
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:linear-gradient(135deg,#063b63,#0099cc);
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,198,255,.3);
+}
+.btn-container{
+    text-align: center;
+}
+    </style>
+    
+  </head>
+  <body id="top">
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+    
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+    
+
+    <!-- NAVBAR -->
+<header class="site-navbar mt-3">
+
+
+<div class="container-fluid">
+
+
+<div class="row align-items-center">
+
+
+
+<div class="site-logo col-6">
+
+
+<a href="{% url 'homeview' %}">
+Career Bridge
+</a>
+
+
+</div>
+
+
+
+
+
+<nav class="mx-auto site-navigation">
+
+
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+
+
+<li>
+<a href="{% url 'homeview' %}">
+Home
+</a>
+</li>
+
+
+
+
+<li>
+<a href="{% url 'company_list_view' %}" >
+Company
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}" class="nav-link active">
+Career Match
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'applied_job'  %}">
+Applied Job
+</a>
+</li>
+
+
+
+
+
+
+<li>
+<a href="{% url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+
+
+
+
+
+<li class="d-lg-none">
+
+<a href="{% url 'employeelogout' %}">
+Log Out
+</a>
+
+</li>
+
+
+
+</ul>
+
+
+</nav>
+
+
+
+
+
+
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+
+
+<div class="ml-auto">
+
+
+<a href="{% url 'employeelogout' %}"
+class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+
+
+<span class="mr-2 icon-lock_outline"></span>
+
+Log Out
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+<a href="#"
+class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+
+
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+
+
+</a>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+<!-- HERO SECTION -->
+
+
+<section class="section-hero overlay inner-page bg-image"
+
+style="background-image:url('{% static 'images/hero.jpg' %}');"
+
+id="home-section">
+
+
+
+<div class="container">
+
+
+<div class="row">
+
+
+<div class="col-md-7">
+
+
+<h1 class="text-white font-weight-bold">
+
+Career Match History
+
+</h1>
+
+
+
+
+
+<div class="custom-breadcrumbs">
+
+
+<a href="{% url 'homeview' %}">
+Home
+</a>
+
+
+
+<span class="mx-2 slash">
+/
+</span>
+
+
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+
+
+<span class="mx-2 slash">
+/
+</span>
+
+<span class="text-white">
+
+<strong>
+Career Match History
+</strong>
+
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+ <section class="site-section bg-light">
+    <div class="container">
+
+        <div class="row mb-5">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-title">Quiz Result History</h2>
+                <p class="text-muted">
+                    Review your previous career assessment results.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="result-carousel-wrapper">
+
+           <button class="carousel-btn carousel-prev" id="prevBtn" disabled>
+    ❮
+</button>
+
+
+            <div class="result-carousel" id="resultCarousel">
+
+
+                {% for result in history %}
+
+
+                <div class="result-slide">
+
+
+                    <div class="result-card">
+
+
+                        <div class="result-header">
+
+                            <div>
+                                <small>Quiz #{{ forloop.counter }}</small>
+                                <h4>{{ result.created_at|date:"d M Y" }}</h4>
+                            </div>
+
+
+                            <div class="result-icon">
+                                <span class="icon-briefcase"></span>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="result-body">
+
+
+                            <div class="match-title">
+                                ⭐ Best Career Match
+                            </div>
+
+
+                            <div class="best-match-box">
+                                {{ result.best_match }}
+                            </div>
+
+
+
+                            <div class="similar-title">
+                                Similar Career Matches
+                            </div>
+
+
+
+                            <div class="similar-box">
+                                {{ result.similar_matches }}
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                {% empty %}
+
+
+                <div class="empty-card">
+
+                    <span class="icon-clipboard display-4 mb-3"></span>
+
+                    <h3>No Quiz History</h3>
+
+                    <p>
+                        You haven't completed any career quizzes yet.
+                    </p>
+
+                </div>
+
+
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+            <button class="carousel-btn carousel-next" id="nextBtn">
+                ❯
+            </button>
+
+
+        </div>
+       
+
+
+    </div>
+     <div class="btn-container"><button onclick="history.back()" class="back-btn">
+    Back
+</button></div>
+    
+</section>
+
+  
+    <footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/quill.min.js' %}"></script>
+    
+    
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    
+    <script src="{% static 'js/custom.js' %}"></script>
+   <script>
+
+const resultCarousel = document.querySelector(".result-carousel");
+
+
+document.querySelector(".carousel-next").onclick = function(){
+
+    resultCarousel.scrollLeft += resultCarousel.clientWidth;
+
+};
+
+
+document.querySelector(".carousel-prev").onclick = function(){
+
+    resultCarousel.scrollLeft -= resultCarousel.clientWidth;
+
+};
+
+
+
+const carousel = document.getElementById("resultCarousel");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+
+
+function getCardWidth(){
+
+    const card = document.querySelector(".result-slide");
+
+    return card.offsetWidth + 30; // card width + gap
+
+}
+
+
+nextBtn.addEventListener("click",()=>{
+
+    carousel.scrollBy({
+        left:getCardWidth(),
+        behavior:"smooth"
+    });
+
+});
+
+
+prevBtn.addEventListener("click",()=>{
+
+    carousel.scrollBy({
+        left:-getCardWidth(),
+        behavior:"smooth"
+    });
+
+});
+
+
+function updateButtons(){
+
+    let maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+
+    // previous
+    if(carousel.scrollLeft <= 5){
+        prevBtn.disabled = true;
+    }
+    else{
+        prevBtn.disabled = false;
+    }
+
+
+    // next
+    if(carousel.scrollLeft >= maxScroll - 5){
+        nextBtn.disabled = true;
+    }
+    else{
+        nextBtn.disabled = false;
+    }
+
+}
+
+
+carousel.addEventListener("scroll",updateButtons);
+
+window.addEventListener("resize",updateButtons);
+
+updateButtons();
+
+
+</script>
+   
+     
+  </body>
+</html>

@@ -35,8 +35,12 @@ class Company(models.Model):
     website = models.URLField(blank=True)
     address = models.TextField()
     profile_image = models.ImageField(upload_to='profile/', blank=True, null=True)
+    tagline = models.CharField(max_length=255, blank=True, null=True)
+    facebook = models.CharField(max_length=255, blank=True, null=True)
+    twitter = models.CharField(max_length=255, blank=True, null=True)
+    linkedin = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
+    def str(self):
         return self.company_name
     
 class Education(models.Model):
@@ -134,5 +138,38 @@ class JobApplication(models.Model):
         default='Pending'
     )
 
+    def __str__(self):
+        return f"{self.employee} - {self.job}"
+    
+
+
+
+class EmployeeCareerResult(models.Model):
+
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE
+    )
+
+    best_match = models.CharField(
+        max_length=100
+    )
+
+    similar_matches = models.TextField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    def __str__(self):
+        return self.best_match
+    
+class SaveJob(models.Model):
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE
+    )
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.employee} - {self.job}"

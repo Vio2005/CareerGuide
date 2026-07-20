@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800');
+
+
+/* Background */
+body {
+    font-family: Nunito, sans-serif;
+    background:#f8f9fa;
+}
+
+
+/* Form box */
+.edit-job-container {
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:12px;
+
+    border:1px solid #e5e5e5;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+/* Heading */
+.edit-job-container h3 {
+
+    color:#2c3e50;
+
+    font-weight:700;
+
+    font-size:28px;
+
+}
+
+
+/* Labels */
+
+.edit-job-container label {
+
+    font-weight:700;
+
+    color:#333;
+
+    margin-bottom:8px;
+
+}
+
+
+/* Inputs */
+
+.edit-job-container .form-control {
+
+    height:48px;
+
+    border-radius:6px;
+
+    border:1px solid #ddd;
+
+    font-size:15px;
+
+}
+
+
+.edit-job-container textarea.form-control {
+
+    height:150px;
+
+    resize:none;
+
+}
+
+
+
+/* Focus */
+
+.edit-job-container .form-control:focus {
+
+    border-color:#007bff;
+
+    box-shadow:
+    0 0 0 .2rem rgba(0,123,255,.15);
+
+}
+
+
+
+/* Button */
+
+.edit-job-btn {
+
+    background:#074f85;
+
+    border:none;
+
+    padding:12px 35px;
+
+    border-radius:5px;
+
+    color:white;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+
+.edit-job-btn:hover {
+
+    background:#053b63;
+
+    color:white;
+
+}
+
+
+
+/* Required star */
+
+label::after {
+
+    content:" *";
+
+    color:red;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.edit-job-container{
+
+    padding:25px;
+
+}
+
+}
+
+/* Edit Post Form */
+
+.site-section form {
+
+    background:white;
+
+    border-radius:10px;
+
+    border:1px solid #e5e5e5 !important;
+
+}
+
+
+.site-section h3 {
+
+    font-size:28px;
+    font-weight:700;
+
+}
+
+
+
+.form-group label {
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+
+.form-control {
+
+    height:48px;
+
+    border-radius:5px;
+
+}
+
+
+textarea.form-control {
+
+    height:auto;
+
+}
+
+
+
+.btn-primary {
+
+    background:#074f85;
+
+    border:none;
+
+}
+
+
+.btn-primary:hover {
+
+    background:#053b63;
+
+}
