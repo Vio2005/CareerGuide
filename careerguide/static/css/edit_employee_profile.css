@@ -3,14 +3,7 @@
 
 body {
 
-    min-height:100vh;
-
-    background-image:
-    linear-gradient(
-        rgba(255,255,255,0.75),
-        rgba(255,255,255,0.75)
-    ),
-    url("../images/hero.jpg");
+    
 
     background-size:cover;
 
@@ -79,6 +72,7 @@ form {
     position:relative;
 
     margin-bottom:50px;
+    overflow:hidden;
 }
 
 
@@ -219,7 +213,30 @@ input[type="file"] {
     padding:12px;
 
 }
+.add-btn{
 
+background:#074f85;
+color:white;
+border:none;
+border-radius:50%;
+width:35px;
+height:35px;
+font-size:22px;
+cursor:pointer;
+
+}
+
+
+.remove-btn{
+
+margin-top:15px;
+background:#dc3545;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+
+}
 
 
 /* Button */

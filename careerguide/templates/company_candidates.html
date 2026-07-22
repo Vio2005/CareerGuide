@@ -24,6 +24,32 @@
 <link rel="stylesheet" href="{% static 'css/companyprofile.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+<style>
+    .candidate-box{
+
+    background:#f8fafc;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    border:1px solid #e5e7eb;
+
+}
+
+
+.candidate-box h6{
+
+    font-weight:700;
+    margin-bottom:5px;
+
+}
+
+
+.candidate-box p{
+
+    margin-bottom:10px;
+
+}
+</style>
 </head>
 
 
@@ -132,7 +158,7 @@ Job Post
 <a href="{% url 'company_candidates' %}" 
 class="nav-link active">
 
-Candidate
+Applicant
 
 </a>
 
@@ -277,7 +303,7 @@ style="background-image:url('{% static 'images/company1.jpg' %}');">
 
 <h1 class="text-white font-weight-bold">
 
-Candidates
+Applicant
 
 </h1>
 
@@ -287,7 +313,7 @@ Candidates
 <div class="custom-breadcrumbs">
 
 
-<a href="{% url 'company_index' %}">
+<a href="{% url 'company_index' %}" class="dec">
 Home
 </a>
 
@@ -300,7 +326,7 @@ Home
 <span class="text-white">
 
 <strong>
-Candidates
+Applicant
 </strong>
 
 </span>
@@ -328,73 +354,49 @@ Candidates
 
 <div class="container">
 
+<div class="result-carousel-wrapper">
 
-<div class="row mb-5 justify-content-center">
 
-<div class="col-md-7 text-center">
-
-<h2 class="section-title mb-2">
-Available Candidates
-</h2>
-
-</div>
-
-</div>
+    <button class="carousel-btn carousel-prev" id="prevBtn">
+        ❮
+    </button>
 
 
 
-<ul class="job-listings mb-5">
+    <div class="result-carousel" id="resultCarousel">
 
 
-{% for i in job_applications %}
+{% for job in jobs %}
 
 
-<li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+<div class="result-slide">
 
 
-<!-- Employee Image -->
+<div class="result-card">
 
-<div class="job-listing-logo">
 
-{% if i.employee.employeeprofile.profile_image %}
+<!-- JOB HEADER -->
 
-<img src="{{ i.employee.employeeprofile.profile_image.url }}"
-class="img-fluid">
+<div class="result-header">
 
-{% else %}
+<div>
 
-<img src="{% static 'images/job_logo_1.jpg' %}"
-class="img-fluid">
+<small>
+Job #{{forloop.counter}}
+</small>
 
-{% endif %}
+
+<h4>
+{{job.position}}
+</h4>
+
 
 </div>
 
 
+<div class="result-icon">
 
-
-<div class="job-listing-about d-flex w-100 justify-content-between mx-4 align-items-center">
-
-
-<!-- Employee Info -->
-
-<div class="job-listing-position w-50">
-
-
-<h2>
-{{ i.employee.username }}
-</h2>
-
-
-<strong>
-Applied For: {{ i.job.position }}
-</strong>
-
-
-<div class="mt-2">
-
-<span class="icon-mail"></span>
-{{ i.employee.email }}
+<span class="icon-briefcase"></span>
 
 </div>
 
@@ -404,99 +406,105 @@ Applied For: {{ i.job.position }}
 
 
 
+<!-- JOB DETAILS -->
 
-<!-- Status -->
+<div class="result-body">
 
-<div class="w-25 text-center">
-
-
-{% if i.status == "Accepted" %}
-
-<span class="btn btn-success">
-{{ i.status }}
-</span>
-
-
-{% elif i.status == "Rejected" %}
-
-<span class="btn btn-danger">
-{{ i.status }}
-</span>
-
-
-{% elif i.status == "Shortlisted" %}
-
-<span class="btn btn-primary">
-{{ i.status }}
-</span>
-
-
-{% elif i.status == "Pending" %}
-
-<span class="btn btn-warning">
-{{ i.status }}
-</span>
-
-
-{% else %}
-
-<span class="btn btn-primary">
-{{ i.status }}
-</span>
-
-
-{% endif %}
-
-
-</div>
-
-
-
-
-
-<!-- Profile Button -->
-
-<div class="w-25 text-right">
-
-
-<a href="{% url 'employeeprofileview' i.employee.id %}"
-class="btn btn-secondary">
-
-View Details
-
-</a>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-</li>
-
-
-{% empty %}
-
-
-<li class="text-center py-5">
 
 <h5>
-No candidates found.
+{{job.position}}
 </h5>
 
-</li>
+<p>
+<strong>Location:</strong>
+{{job.location}}
+</p>
 
+<p>
+<strong>Vacancy:</strong>
+{{job.vacancy}}
+</p>
+
+<p>
+<strong>Salary:</strong>
+{{job.salary}}
+</p>
+
+
+
+
+
+
+
+<button 
+class="btn btn-primary view-btn"
+data-job="{{job.id}}"
+data-title="{{job.position}}">
+
+View Applicants
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<!-- STORE APPLICANTS DATA -->
+
+<script type="application/json" id="job-{{job.id}}">
+
+[
+{% for application in job.jobapplication_set.all %}
+
+{
+"name":"{{application.employee.username|escapejs}}",
+"email":"{{application.employee.email|escapejs}}",
+"status":"{{application.status}}",
+"id":"{{application.employee.id}}",
+"cover_letter":"{{application.cover_letter|escapejs}}",
+"application_id":"{{application.id}}"
+}
+
+{% if not forloop.last %},{% endif %}
+
+{% endfor %}
+]
+
+</script>
 
 {% endfor %}
 
 
-</ul>
+</div>
 
 
+
+    <button class="carousel-btn carousel-next" id="nextBtn">
+        ❯
+    </button>
+
+
+</div>
+
+<div id="applicantSection">
+
+
+<h3 id="jobTitle"></h3>
+
+
+<div id="applicantList"></div>
+
+
+</div>
 </div>
 
 </section>
@@ -688,8 +696,523 @@ Copyright © 2026 All rights reserved
 
 <script src="{% static 'js/custom.js' %}"></script>
 
+<script>
+
+const carousel = document.getElementById("resultCarousel");
+
+const nextBtn = document.getElementById("nextBtn");
+
+const prevBtn = document.getElementById("prevBtn");
 
 
+nextBtn.onclick = function(){
+    carousel.scrollLeft += carousel.clientWidth;
+};
+
+
+prevBtn.onclick = function(){
+    carousel.scrollLeft -= carousel.clientWidth;
+};
+
+
+
+</script>
+
+<script>
+    
+</script>
+
+<style>
+    .dec:hover{
+        text-decoration: none;
+    }
+    .result-card{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid #e8eef7;
+    transition:all .35s ease;
+    height:100%;
+    position:relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.result-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(37, 99, 235, 0.15);
+}
+
+.result-header{
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+}
+
+.result-header small{
+    opacity:.8;
+    font-size:14px;
+}
+
+.result-header h4{
+    color:#fff;
+    margin-top:5px;
+    margin-bottom:0;
+    font-weight:700;
+    font-size:18px;
+}
+
+.result-icon{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+}
+
+.result-body{
+    padding:20px;
+}
+
+.match-title{
+    font-size:14px;
+    color:#777;
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-weight:600;
+}
+
+.best-match-box{
+    background:#eff6ff;
+    border-left:5px solid #074f85;
+    padding:16px 20px;
+    border-radius:12px;
+    color:#074f85;
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.similar-title{
+    font-size:14px;
+    color:#777;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.similar-box{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:18px;
+    line-height:1.9;
+    color:#444;
+    border:1px solid #edf2f7;
+}
+
+.empty-card{
+    background:#fff;
+    border-radius:20px;
+    padding:60px 30px;
+    text-align:center;
+    border:2px dashed #dbeafe;
+}
+
+.empty-card span{
+    color:#3b82f6;
+}
+
+.empty-card h3{
+    margin-top:20px;
+}
+
+.section-title{
+    font-weight:700;
+}
+
+@media(max-width:991px){
+
+    .result-header{
+        padding:20px;
+    }
+
+    .result-body{
+        padding:22px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .result-icon{
+        width:55px;
+        height:55px;
+        font-size:22px;
+    }
+
+    .best-match-box{
+        font-size:18px;
+    }
+
+}
+
+
+.result-carousel-wrapper{
+    position:relative;
+    padding-bottom:20px;
+    
+}
+
+.result-carousel{
+    display:flex;
+    gap:30px;
+    overflow-x:hidden;
+    overflow-y:visible;
+    scroll-behavior:smooth;
+    padding:15px 15px 30px;
+}
+
+.result-slide{
+    min-width:calc(33.333% - 20px);
+    padding:10px;
+}
+
+
+
+/* Arrow buttons */
+
+.carousel-btn{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+
+    color:white;
+
+    font-size:24px;
+
+    z-index:10;
+
+    cursor:pointer;
+
+}
+
+
+.carousel-btn:hover{
+
+    background:linear-gradient(135deg,#05365c,#0099cc);
+
+}
+
+
+.carousel-prev{
+
+    left:-5px;
+
+}
+
+
+.carousel-next{
+
+    right:-5px;
+
+}
+
+.carousel-btn:disabled{
+    background:#cbd5e1;
+    cursor:not-allowed;
+    opacity:.6;
+}
+
+.carousel-btn:disabled:hover{
+    background:#cbd5e1;
+}
+
+
+
+@media(max-width:768px){
+
+    .result-slide{
+        min-width:calc(50% - 15px);
+    }
+
+
+
+    .carousel-prev{
+
+        left:5px;
+
+    }
+
+
+    .carousel-next{
+
+        right:5px;
+
+    }
+
+}
+.back-btn{
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:linear-gradient(135deg,#063b63,#0099cc);
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,198,255,.3);
+}
+.btn-container{
+    text-align: center;
+}
+
+#applicantSection{
+
+display:none;
+
+margin-top:50px;
+
+background:white;
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+.candidate-box{
+
+background:#f8fafc;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-bottom:15px;
+
+border:1px solid #e5e7eb;
+
+}
+
+
+.candidate-box h6{
+
+font-weight:700;
+
+}
+
+
+.candidate-box p{
+
+margin-bottom:10px;
+
+}
+
+.status-badge{
+
+    display:inline-block;
+    padding:7px 18px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+    text-transform:capitalize;
+    margin-right:10px;
+
+}
+
+
+/* Pending */
+
+.status-badge.pending{
+
+    background:#fef3c7;
+    color:#92400e;
+
+}
+
+
+/* Accepted */
+
+.status-badge.accepted{
+
+    background:#dcfce7;
+    color:#166534;
+
+}
+
+
+/* Rejected */
+
+.status-badge.rejected{
+
+    background:#fee2e2;
+    color:#991b1b;
+    
+
+}
+
+.status-badge.shortlisted{
+
+    background:#bdd9de;
+    color:#1f5263;
+    
+
+}
+</style>
+
+<script>
+document.querySelectorAll(".view-btn").forEach(button=>{
+
+
+button.addEventListener("click",function(){
+
+
+let jobId=this.dataset.job;
+
+let title=this.dataset.title;
+
+
+
+let applicantData=document.getElementById(
+"job-"+jobId
+);
+
+
+
+let applicants=JSON.parse(
+applicantData.textContent
+);
+
+
+
+let section=document.getElementById(
+"applicantSection"
+);
+
+
+let jobTitle=document.getElementById(
+"jobTitle"
+);
+
+
+let list=document.getElementById(
+"applicantList"
+);
+
+
+
+section.style.display="block";
+
+
+jobTitle.innerHTML =
+title+" Applicants";
+
+
+list.innerHTML="";
+
+
+
+if(applicants.length===0){
+
+
+list.innerHTML=
+`
+<p>
+No applicants yet.
+</p>
+`;
+
+
+}
+
+else{
+
+
+applicants.forEach(app=>{
+
+
+list.innerHTML +=
+`
+
+<div class="candidate-box">
+
+
+<h6>
+${app.name}
+</h6>
+
+
+<p>
+${app.email}
+</p>
+
+
+<span class="status-badge ${app.status.toLowerCase()}">
+
+${app.status}
+
+</span>
+
+
+<a href="/job_applicants/${app.application_id}/"
+
+class="btn btn-primary">
+
+View Profile
+
+</a>
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+});
+
+
+
+});
+</script>
 </body>
 
 </html>

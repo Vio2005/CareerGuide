@@ -1,29 +1,33 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>JobBoard - Company Profile</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>JobBoard - Employee Profile</title>
 
-    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Same CSS as home -->
-    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/companyprofile.css' %}">
+<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/employ_profile_detail.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 
 </head>
+
 
 
 <body id="top">
@@ -32,81 +36,171 @@
 <div id="overlayer"></div>
 
 <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
+<div class="spinner-border text-primary" role="status">
+<span class="sr-only">Loading...</span>
 </div>
+</div>
+
 
 
 
 <div class="site-wrap">
 
 
+
 <!-- MOBILE MENU -->
+
 <div class="site-mobile-menu site-navbar-target">
 
-    <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-    </div>
+<div class="site-mobile-menu-header">
 
-    <div class="site-mobile-menu-body"></div>
+<div class="site-mobile-menu-close mt-3">
+
+<span class="icon-close2 js-menu-toggle"></span>
 
 </div>
+
+</div>
+
+
+<div class="site-mobile-menu-body"></div>
+
+</div>
+
+
 
 
 
 <!-- NAVBAR -->
+
 <header class="site-navbar mt-3">
+
 <div class="container-fluid">
+
 <div class="row align-items-center">
+
+
+
 <div class="site-logo col-6">
-    <a href="{% url 'company_index' %}">
-        Career Bridge
-    </a>
+
+<a href="{% url 'homeview' %}">
+Career Bridge
+</a>
+
 </div>
+
+
+
 
 <nav class="mx-auto site-navigation">
+
 <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-    <li><a href="{% url 'company_index' %}" class="nav-link">Home</a></li>
-    <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
-    <li><a href="{% url 'company_candidates' %}">Applicant</a></li>
-    <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
-    <li><a href="{% url 'companyprofile' company.id %}" class="nav-link active">Profile</a></li>
-    <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
-     <span class="mr-2 icon-add"></span>Post a Job</a></li>
-    <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
+
+
+<li>
+<a href="{% url 'homeview' %}" class="nav-link">
+Home
+</a>
+</li>
+
+
+<li>
+<a href="{% url 'company_list_view' %}" class="nav-link active">
+Company
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'applied_job' %}">
+Applied Job
+</a>
+</li>
+
+
+
+<li>
+<a href="{%url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+
+
+<li class="d-lg-none">
+
+<a href="{% url 'employeelogout' %}">
+Log Out
+</a>
+
+</li>
+
+
 </ul>
+
 </nav>
 
+
+
+
+
 <div class="right-cta-menu text-right d-flex align-items-center col-6">
+
 <div class="ml-auto">
-    <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
-    <span class="mr-2 icon-lock_outline"></span>Log Out</a>
+
+<a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+
+<span class="mr-2 icon-lock_outline"></span>
+
+Log Out
+
+</a>
+
 </div>
-    <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
-    <span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+
+
+
+<a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+
+</a>
+
+
 </div>
+
+
+
 </div>
+
 </div>
+
 </header>
 
-<!-- HERO -->
-
 <section class="section-hero overlay inner-page bg-image"
-style="background-image:url('{% static 'images/company1.jpg' %}');"
+style="background-image:url('{% static 'images/hero.jpg' %}');"
 id="home-section">
 
 <div class="container">
 <div class="row">
 <div class="col-md-7">
-<h1 class="text-white font-weight-bold">Company Profile</h1>
+<h1 class="text-white font-weight-bold">{{company.company_name}}</h1>
 
 <div class="custom-breadcrumbs">
-    <a href="{% url 'company_index' %}" class="dec">Home</a>
+    <a href="{% url 'homeview' %}" class="dec">Home</a>
     <span class="mx-2 slash">/</span>
-    <span class="text-white"><strong>Profile</strong></span>
+    <a href="{% url 'company_list_view' %}" class="dec">Company</a>
+    <span class="mx-2 slash">/</span>
+    <span class="text-white"><strong>{{company.company_name}}</strong></span>
 </div>
 </div>
 </div>
@@ -118,7 +212,7 @@ id="home-section">
     <div class="container">
         <div class="profile-card">
 
-            <h2 class="profile-title">Company Profile</h2>
+            <h2 class="profile-title">{{ company.company_name }}</h2>
 
             <div class="row align-items-center">
 
@@ -137,7 +231,7 @@ id="home-section">
                 </div>
 
                 <div class="col-md-8 profile-info">
-                    <h4>{{ company.company_name }}</h4>
+                    
 
                     <p><strong>Email:</strong> {{ company.email }}</p>
 
@@ -165,11 +259,16 @@ id="home-section">
                     <p><strong>LinkedIn:</strong> {{ company.linkedin }}</p>
                     {% endif %}
 
-                    <a href="{% url 'editcompanyprofile' company.id %}" class="profile-btn">
-                        Edit Profile
-                    </a>
+                    
                 </div>
 
+            </div>
+            <div class="row mt-4 pt-3 border-top">
+                <div class="col-12 text-center ">
+                    <a href="{% url 'showpost' company.id %}" class="profile-btn">
+                        View Posts
+                    </a>
+                </div>
             </div>
 
         </div>

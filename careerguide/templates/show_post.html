@@ -1,0 +1,450 @@
+ {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<title>JobBoard - Employee Profile</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/employ_profile_detail.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+</head>
+
+
+
+<body id="top">
+
+
+<div id="overlayer"></div>
+
+<div class="loader">
+<div class="spinner-border text-primary" role="status">
+<span class="sr-only">Loading...</span>
+</div>
+</div>
+
+
+
+
+<div class="site-wrap">
+
+
+
+<!-- MOBILE MENU -->
+
+<div class="site-mobile-menu site-navbar-target">
+
+<div class="site-mobile-menu-header">
+
+<div class="site-mobile-menu-close mt-3">
+
+<span class="icon-close2 js-menu-toggle"></span>
+
+</div>
+
+</div>
+
+
+<div class="site-mobile-menu-body"></div>
+
+</div>
+
+
+
+
+
+<!-- NAVBAR -->
+
+<header class="site-navbar mt-3">
+
+<div class="container-fluid">
+
+<div class="row align-items-center">
+
+
+
+<div class="site-logo col-6">
+
+<a href="{% url 'homeview' %}">
+Career Bridge
+</a>
+
+</div>
+
+
+
+
+<nav class="mx-auto site-navigation">
+
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+
+<li>
+<a href="{% url 'homeview' %}" class="nav-link">
+Home
+</a>
+</li>
+
+
+<li>
+<a href="{% url 'company_list_view' %}" class="nav-link active">
+Company
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+</li>
+
+
+
+<li>
+<a href="{% url 'applied_job' %}">
+Applied Job
+</a>
+</li>
+
+
+
+<li>
+<a href="{%url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+
+
+<li class="d-lg-none">
+
+<a href="{% url 'employeelogout' %}">
+Log Out
+</a>
+
+</li>
+
+
+</ul>
+
+</nav>
+
+
+
+
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+
+<div class="ml-auto">
+
+<a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+
+<span class="mr-2 icon-lock_outline"></span>
+
+Log Out
+
+</a>
+
+</div>
+
+
+
+<a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+</div>
+
+</header>
+
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/hero.jpg' %}');"
+id="home-section">
+
+<div class="container">
+<div class="row">
+<div class="col-md-7">
+<h1 class="text-white font-weight-bold">{{company.company_name}} Posts</h1>
+
+<div class="custom-breadcrumbs">
+    <a href="{% url 'homeview' %}" class="dec">Home</a>
+    <span class="mx-2 slash">/</span>
+    <a href="{% url 'company_list_view' %}" class="dec">Company</a>
+    <span class="mx-2 slash">/</span>
+    <span class="text-white"><strong>{{company.company_name}} Posts</strong></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+ 
+<section class="site-section pt-4 pb-5" id="job-post-section">
+  <div class="container">
+
+    <!-- Title and Filter Row with refined spacing -->
+    <div class="row align-items-center mb-4 mb-md-5 pt-2">
+      
+      <!-- Spacer for Desktop Balance -->
+      <div class="col-md-3 d-none d-md-block"></div>
+
+      <!-- CENTERED Title without Underline -->
+      <div class="col-12 col-md-6 text-center">
+        <h2 class="section-title mb-3 mb-md-0 no-underline" style="border: none !important;">
+          {{ company.company_name }} Post Lists
+        </h2>
+      </div>
+
+      <!-- RIGHT Filter Dropdown -->
+      <div class="col-12 col-md-3 text-center text-md-right mt-2 mt-md-0">
+        <form method="GET" class="m-0 d-inline-block w-100" style="max-width: 200px;">
+          <select name="status" class="form-control" onchange="this.form.submit()">
+            <option value="">All Jobs</option>
+            <option value="open" {% if status == "open" %}selected{% endif %}>
+              Open
+            </option>
+            <option value="closed" {% if status == "closed" %}selected{% endif %}>
+              Closed
+            </option>
+          </select>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Job Listings start here... -->
+       
+
+        <!-- Job Listings -->
+        <ul class="job-listings mb-3">
+
+  {% for i in jobs %}
+  <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center"
+      onclick="window.location.href='{% url 'jobdetail' i.id %}'"
+      style="cursor:pointer;">
+
+    <!-- Company Logo -->
+    <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
+         style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+      {% if company.profile_image %}
+        <img src="{{ company.profile_image.url }}" alt="{{ company.company_name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% else %}
+        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% endif %}            
+    </div>
+
+    <!-- Job Information Grid -->
+    <div class="row w-100 align-items-center no-gutters mx-0 px-2 px-sm-3">
+
+      <!-- LEFT SIDE: Position & Company Name -->
+      <div class="col-12 col-sm-4 mb-2 mb-sm-0">
+        <h2 class="h3 font-weight-bold mb-1" style="font-size: 1.5rem; color: #074f80;">
+          {{ i.position }}
+        </h2>
+        <strong style="color: #4a5568;">{{ company.company_name }}</strong>
+      </div>
+
+      <!-- MIDDLE: Location, Vacancy & Salary (Left Aligned) -->
+      <div class="col-12 col-sm-5 text-left mb-2 mb-sm-0">
+        <div class="job-info" style="color: #074f80 !important;">
+          <span class="icon-room"></span> {{ i.location }}, {{ i.city.city_name }}
+          <br>
+          {% if i.is_active %}
+            <span class="icon-people"></span> Vacancy: {{ i.vacancy }}
+          {% else %}
+            <span class="text-danger">Position Filled</span>
+          {% endif %}
+          <br>
+          <span class="icon-attach_money"></span> Salary: {{ i.salary }}
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: Status Badge (Open / Closed) -->
+      <div class="col-12 col-sm-3 text-left text-sm-right">
+        {% if i.is_active %}
+          <span class="badge badge-success px-3 py-2" style="font-size: 0.9rem;">
+            Open
+          </span>
+        {% else %}
+          <span class="badge badge-danger px-3 py-2" style="font-size: 0.9rem;">
+            Closed
+          </span>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </li>
+
+  {% empty %}
+  <li class="text-center py-5">
+    <h5>No job posts yet.</h5>
+  </li>
+  {% endfor %}
+
+</ul>
+        <div class="row pagination-wrap">
+
+<div class="col-md-6 ml-auto text-right">
+
+<div class="custom-pagination ml-auto">
+
+
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}" class="prev">
+Prev
+</a>
+{% endif %}
+
+
+
+<div class="d-inline-block">
+
+{% for num in page_obj.paginator.page_range %}
+
+{% if page_obj.number == num %}
+
+<a href="?page={{ num }}" class="active">
+{{ num }}
+</a>
+
+{% else %}
+
+<a href="?page={{ num }}">
+{{ num }}
+</a>
+
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}" class="next">
+Next
+</a>
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+</div>
+
+    </div>
+</section>
+
+    
+<footer class="site-footer">
+
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Search Trending</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Graphic Design</a></li>
+              <li><a href="#">Web Developers</a></li>
+              <li><a href="#">Python</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS3</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Company</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Career</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Support</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <h3>Contact Us</h3>
+            <div class="footer-social">
+              <a href="#"><span class="icon-facebook"></span></a>
+              <a href="#"><span class="icon-twitter"></span></a>
+              <a href="#"><span class="icon-instagram"></span></a>
+              <a href="#"><span class="icon-linkedin"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/stickyfill.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

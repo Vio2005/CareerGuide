@@ -213,143 +213,194 @@ accept="image/*">
 
 <div class="edit-card">
 
+<h2>
+    Education
+    <button type="button" class="add-btn" onclick="addEducation()">
+        +
+    </button>
+</h2>
 
-<h2>Education</h2>
 
+<div id="education-container">
 
+{% for education in educations %}
+
+<div class="education-item">
 
 <label>Institution</label>
-
-
-<input type="text"
-name="institution"
-value="{{ education.institution }}">
-
-
-
+<input type="text" 
+       name="institution[]" 
+       value="{{ education.institution }}">
 
 
 <label>Degree</label>
-
-
-<input type="text"
-name="degree"
-value="{{ education.degree }}">
-
-
-
+<input type="text" 
+       name="degree[]" 
+       value="{{ education.degree }}">
 
 
 <label>Field of Study</label>
-
-
-<input type="text"
-name="field_of_study"
-value="{{ education.field_of_study }}">
-
-
-
+<input type="text" 
+       name="field_of_study[]" 
+       value="{{ education.field_of_study }}">
 
 
 <label>Start Year</label>
-
-
-<input type="number"
-name="start_year"
-value="{{ education.start_year }}">
-
-
-
+<input type="number" 
+       name="start_year[]" 
+       value="{{ education.start_year }}">
 
 
 <label>End Year</label>
+<input type="number" 
+       name="end_year[]" 
+       value="{{ education.end_year }}">
 
 
-<input type="number"
-name="end_year"
-value="{{ education.end_year }}">
+<button type="button"
+        class="remove-btn"
+        onclick="removeItem(this)">
+Remove
+</button>
 
 
+</div>
+
+{% empty %}
+
+<div class="education-item">
+
+<label>Institution</label>
+<input type="text" name="institution[]">
+
+
+<label>Degree</label>
+<input type="text" name="degree[]">
+
+
+<label>Field of Study</label>
+<input type="text" name="field_of_study[]">
+
+
+<label>Start Year</label>
+<input type="number" name="start_year[]">
+
+
+<label>End Year</label>
+<input type="number" name="end_year[]">
+
+</div>
+
+{% endfor %}
+
+</div>
 
 </div>
 
 
 
 
-
-
-
-
-
-<!-- EXPERIENCE -->
-
-
 <div class="edit-card">
 
+<h2>
+    Experience
 
-<h2>Experience</h2>
+    <button type="button" 
+            class="add-btn" 
+            onclick="addExperience()">
+        +
+    </button>
+
+</h2>
 
 
+<div id="experience-container">
+
+{% for experience in experiences %}
+
+<div class="experience-item">
 
 
 <label>Company Name</label>
 
-
 <input type="text"
-name="company_name"
+name="company_name[]"
 value="{{ experience.company_name }}">
-
-
 
 
 
 <label>Position</label>
 
-
 <input type="text"
-name="position"
+name="position[]"
 value="{{ experience.position }}">
-
-
 
 
 
 <label>Start Date</label>
 
-
 <input type="date"
-name="start_date"
+name="start_date[]"
 value="{{ experience.start_date|date:'Y-m-d' }}">
-
-
 
 
 
 <label>End Date</label>
 
-
 <input type="date"
-name="end_date"
+name="end_date[]"
 value="{{ experience.end_date|date:'Y-m-d' }}">
-
-
 
 
 
 <label>Description</label>
 
+<textarea name="description[]">{{ experience.description }}</textarea>
 
-<textarea name="description">
 
-{{ experience.description }}
 
-</textarea>
-
+<button type="button"
+class="remove-btn"
+onclick="removeItem(this)">
+Remove
+</button>
 
 
 </div>
 
 
+{% empty %}
+
+
+<div class="experience-item">
+
+<label>Company Name</label>
+<input type="text" name="company_name[]">
+
+
+<label>Position</label>
+<input type="text" name="position[]">
+
+
+<label>Start Date</label>
+<input type="date" name="start_date[]">
+
+
+<label>End Date</label>
+<input type="date" name="end_date[]">
+
+
+<label>Description</label>
+<textarea name="description[]"></textarea>
+
+</div>
+
+
+{% endfor %}
+
+</div>
+
+</div>
 
 
 
@@ -359,90 +410,108 @@ value="{{ experience.end_date|date:'Y-m-d' }}">
 
 <!-- SKILL -->
 
-
 <div class="edit-card">
 
+<h2>
+Skills
 
-<h2>Skill</h2>
+<button type="button" class="add-btn" onclick="addSkill()">
++
+</button>
+
+</h2>
 
 
+<div id="skill-container">
+
+
+{% for skill in skills %}
+
+<div class="skill-item">
 
 
 <label>Skill Name</label>
 
-
 <input type="text"
-name="skill_name"
+name="skill_name[]"
 value="{{ skill.skill_name }}">
 
 
 
+<label>Level</label>
 
-
-
-<label>Skill Level</label>
-
-
-<select name="skill_level">
-
+<select name="skill_level[]">
 
 
 <option value="Beginner"
-
 {% if skill.proficiency == "Beginner" %}
-
 selected
-
-{% endif %}
-
->
-
+{% endif %}>
 Beginner
-
 </option>
-
-
 
 
 
 <option value="Intermediate"
-
 {% if skill.proficiency == "Intermediate" %}
-
 selected
-
-{% endif %}
-
->
-
+{% endif %}>
 Intermediate
-
 </option>
-
-
 
 
 
 <option value="Advanced"
-
 {% if skill.proficiency == "Advanced" %}
-
 selected
-
-{% endif %}
-
->
-
+{% endif %}>
 Advanced
-
 </option>
-
 
 
 </select>
 
 
 
+<button type="button"
+class="remove-btn"
+onclick="removeItem(this)">
+Remove
+</button>
+
+
+</div>
+
+
+{% empty %}
+
+
+<div class="skill-item">
+
+<label>Skill Name</label>
+
+<input type="text"
+name="skill_name[]">
+
+
+<label>Level</label>
+
+<select name="skill_level[]">
+
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+
+</select>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</div>
 
 </div>
 
@@ -547,8 +616,188 @@ reader.readAsDataURL(file);
 
 </script>
 
+<script>
 
 
+function removeItem(button){
+
+    button.parentElement.remove();
+
+}
+
+
+
+
+function addEducation(){
+
+let container=document.getElementById(
+    "education-container"
+);
+
+
+container.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<div class="education-item">
+
+
+<label>Institution</label>
+<input type="text" name="institution[]">
+
+
+<label>Degree</label>
+<input type="text" name="degree[]">
+
+
+<label>Field of Study</label>
+<input type="text" name="field_of_study[]">
+
+
+<label>Start Year</label>
+<input type="number" name="start_year[]">
+
+
+<label>End Year</label>
+<input type="number" name="end_year[]">
+
+
+<button type="button"
+class="remove-btn"
+onclick="removeItem(this)">
+Remove
+</button>
+
+
+</div>
+
+`
+
+);
+
+}
+
+
+
+
+
+function addExperience(){
+
+
+let container=document.getElementById(
+"experience-container"
+);
+
+
+container.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<div class="experience-item">
+
+
+<label>Company Name</label>
+<input type="text" name="company_name[]">
+
+
+<label>Position</label>
+<input type="text" name="position[]">
+
+
+<label>Start Date</label>
+<input type="date" name="start_date[]">
+
+
+<label>End Date</label>
+<input type="date" name="end_date[]">
+
+
+<label>Description</label>
+<textarea name="description[]"></textarea>
+
+
+<button type="button"
+class="remove-btn"
+onclick="removeItem(this)">
+Remove
+</button>
+
+
+</div>
+
+
+`
+
+);
+
+
+}
+
+
+
+
+
+function addSkill(){
+
+
+let container=document.getElementById(
+"skill-container"
+);
+
+
+
+container.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<div class="skill-item">
+
+
+<label>Skill Name</label>
+
+<input type="text"
+name="skill_name[]">
+
+
+
+<label>Skill Level</label>
+
+
+<select name="skill_level[]">
+
+<option>Beginner</option>
+
+<option>Intermediate</option>
+
+<option>Advanced</option>
+
+</select>
+
+
+
+<button type="button"
+class="remove-btn"
+onclick="removeItem(this)">
+Remove
+</button>
+
+
+</div>
+
+
+`
+
+);
+
+
+
+}
+
+
+</script>
 
 
 

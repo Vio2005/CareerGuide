@@ -1,33 +1,137 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <title>JobBoard - Company Profile</title>
 
-<title>JobBoard - Employee Profile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
 
-<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+    <!-- Same CSS as home -->
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/companyprofile.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+   .status-card{
+    background:#fff;
+    border-radius:18px;
+    padding:20px 25px;
+    margin-top:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.status-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:2px !important;
+}
+
+.status-header h3{
+    margin:0;
+    padding:0;
+    line-height:1.1;
+    font-size:24px;
+    font-weight:700;
+}
+
+.status-badge{
+    padding:8px 18px;
+    border-radius:30px;
+    font-weight:600;
+    color:#fff;
+}
+.status-card form{
+    margin:0;
+}
+.pending{
+    background:#ffc107;
+    color:#222;
+}
+
+.shortlisted{
+    background:#074f85;
+}
+
+.accepted{
+    background:#198754;
+}
+
+.rejected{
+    background:#dc3545;
+}
+
+.status-body{
+    display:flex;
+    align-items:center;      /* keeps select and button on same line */
+    gap:15px;
+    flex-wrap:nowrap;        /* don't wrap on desktop */
+}
+
+.status-select{
+    flex:1;
+    min-width:220px;
+    height:50px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    padding:0 15px;
+}
+
+.status-btn{
+
+    height:50px;             /* same height as select */
+    padding:0 35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#074f85,#00c6ff);
+
+    color:white !important;
+
+    border:none;
+    border-radius:50px;
+
+    font-weight:700;
+
+    box-shadow:0 10px 20px rgba(0,123,255,.25);
+
+    transition:.3s;
+
+    margin-top:0;            /* remove the 25px pushing it down */
+    white-space:nowrap;
+}
 
 
-<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
-<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
-<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+.status-btn:hover {
 
-<link rel="stylesheet" href="{% static 'css/employ_profile_detail.css' %}">
+    
+    transform:translateY(-3px);
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    background:linear-gradient(135deg,#053b63,#0099cc);
 
+    color:white !important;
 
+    text-decoration:none !important;
+
+      box-shadow:
+    0 15px 30px rgba(0,123,255,.35);
+
+}
+</style>
 </head>
-
 
 
 <body id="top">
@@ -36,204 +140,81 @@
 <div id="overlayer"></div>
 
 <div class="loader">
-<div class="spinner-border text-primary" role="status">
-<span class="sr-only">Loading...</span>
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
 </div>
-</div>
-
 
 
 
 <div class="site-wrap">
 
 
-
 <!-- MOBILE MENU -->
-
 <div class="site-mobile-menu site-navbar-target">
 
-<div class="site-mobile-menu-header">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+    </div>
 
-<div class="site-mobile-menu-close mt-3">
-
-<span class="icon-close2 js-menu-toggle"></span>
-
-</div>
-
-</div>
-
-
-<div class="site-mobile-menu-body"></div>
+    <div class="site-mobile-menu-body"></div>
 
 </div>
-
-
 
 
 
 <!-- NAVBAR -->
-
 <header class="site-navbar mt-3">
-
 <div class="container-fluid">
-
 <div class="row align-items-center">
-
-
-
 <div class="site-logo col-6">
-
-<a href="{% url 'homeview' %}">
-Career Bridge
-</a>
-
+    <a href="{% url 'company_index' %}">
+        Career Bridge
+    </a>
 </div>
-
-
-
 
 <nav class="mx-auto site-navigation">
-
 <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-
-
-<li>
-<a href="{% url 'homeview' %}" class="nav-link">
-Home
-</a>
-</li>
-
-
-<li>
-<a href="{% url 'company_list_view' %}">
-Company
-</a>
-</li>
-
-
-
-<li>
-<a href="#">
-Career Match
-</a>
-</li>
-
-
-
-<li>
-<a href="{% url 'applied_job' %}">
-Applied Job
-</a>
-</li>
-
-
-
-<li>
-<a href="{%url 'employeeprofile' %}">
-Profile
-</a>
-</li>
-
-
-
-<li class="d-lg-none">
-
-<a href="{% url 'employeelogout' %}">
-Log Out
-</a>
-
-</li>
-
-
+    <li><a href="{% url 'company_index' %}" >Home</a></li>
+    <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
+    <li><a href="{% url 'company_candidates' %}"class="nav-link active">Applicants</a></li>
+    <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
+    <li><a href="{% url 'companyprofile' company.id %}" >Profile</a></li>
+    <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
+     <span class="mr-2 icon-add"></span>Post a Job</a></li>
+    <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
 </ul>
-
 </nav>
 
-
-
-
-
 <div class="right-cta-menu text-right d-flex align-items-center col-6">
-
 <div class="ml-auto">
-
-<a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
-
-<span class="mr-2 icon-lock_outline"></span>
-
-Log Out
-
-</a>
-
+    <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+    <span class="mr-2 icon-lock_outline"></span>Log Out</a>
 </div>
-
-
-
-<a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
-
-<span class="icon-menu h3 m-0 p-0 mt-2"></span>
-
-</a>
-
-
+    <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+    <span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
 </div>
-
-
-
 </div>
-
 </div>
-
 </header>
-
-
-
-
-
 
 <!-- HERO -->
 
-
-<section class="section-hero overlay inner-page bg-image"
-style="background-image:url('{% static 'images/hero.jpg' %}');"
-id="home-section">
-
-
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/company1.jpg' %}');" id="home-section">
 <div class="container">
-
 <div class="row">
-
 <div class="col-md-7">
-
-
-<h1 class="text-white font-weight-bold">
-Employee Profile
-</h1>
-
-
-
+<h1 class="text-white font-weight-bold">Employee Profile</h1>
 <div class="custom-breadcrumbs">
-
-<a href="{% url 'homeview' %}" class="dec">
-Home
-</a>
-
-
-<span class="mx-2 slash">
-/
-</span>
-
-
-<span class="text-white">
-<strong>
-Profile
-</strong>
-</span>
-
+<a href="{% url 'company_index' %}" class="dec">Home</a>
+<span class="mx-2 slash">/</span>
+<a href="{% url 'company_candidates' %}" class="dec">Applicant</a>
+<span class="mx-2 slash">/</span>
+<span class="text-white"><strong>Employee Profile</strong></span>
 
 </div>
-
-
 
 </div>
 
@@ -242,12 +223,6 @@ Profile
 </div>
 
 </section>
-
-
-
-
-
-
 
 <!-- PROFILE SECTION -->
 
@@ -263,7 +238,7 @@ Profile
 
 
 <h2 class="profile-title">
-My Profile
+Employee Profile
 </h2>
 
 
@@ -362,21 +337,6 @@ onclick="showImage(this.src)">
 
 
 
-<a href="{% url 'edit_employee_profile' employee.id %}"
-class="profile-btn">
-
-Edit Profile
-
-</a>
-
-<a href="{% url 'savedjobs' %}"
-class="profile-btn">
-
-Saved Jobs
-
-</a>
-
-
 
 </div>
 
@@ -407,7 +367,7 @@ Saved Jobs
 
     <div class="row">
 
-        <div class="col-md-3 info-column">
+        <div class="col-md-4 info-column">
             <strong>Institution</strong>
             <br>
             <span>{{ edu.institution }}</span>
@@ -477,14 +437,14 @@ Saved Jobs
         </div>
 
 
-        <div class="col-md-3 info-column">
+        <div class="col-md-2 info-column">
             <strong>Date</strong>
             <br>
             <span>{{ exp.start_date }} - {{ exp.end_date }}</span>
         </div>
 
 
-        <div class="col-md-2 info-column">
+        <div class="col-md-4 info-column">
             <strong>Description</strong>
             <br>
             <span>{{ exp.description }}</span>
@@ -547,6 +507,96 @@ Saved Jobs
 
     </div>
 
+
+</div>
+<p>
+<strong>Summary:</strong>
+{{ profile.summary }}
+</p>
+
+
+<hr>
+
+
+<!-- COVER LETTER -->
+
+<h3 class="section-title">
+    Cover Letter
+</h3>
+
+
+<div class="detail-box mb-3">
+
+
+<p>
+
+{% if application.cover_letter %}
+
+{{ application.cover_letter }}
+
+{% else %}
+
+No cover letter provided.
+
+{% endif %}
+
+
+</p>
+
+
+</div>
+
+<!-- CURRENT STATUS -->
+
+<hr>
+
+<div class="status-card">
+
+    <div class="status-header">
+        <h3>Application Status</h3>
+
+        <span class="status-badge
+            {% if application.status == 'Pending' %}pending
+            {% elif application.status == 'Shortlisted' %}shortlisted
+            {% elif application.status == 'Accepted' %}accepted
+            {% elif application.status == 'Rejected' %}rejected
+            {% endif %}">
+            {{ application.status }}
+        </span>
+    </div>
+
+    <form method="POST" action="{% url 'update_application_status' application.id %}">
+        {% csrf_token %}
+
+        <div class="status-body">
+
+            <select name="status" class="status-select">
+
+
+                <option value="Shortlisted"
+                    {% if application.status == "Shortlisted" %}selected{% endif %}>
+                    Shortlisted
+                </option>
+
+                <option value="Accepted"
+                    {% if application.status == "Accepted" %}selected{% endif %}>
+                    Accepted
+                </option>
+
+                <option value="Rejected"
+                    {% if application.status == "Rejected" %}selected{% endif %}>
+                    Rejected
+                </option>
+
+            </select>
+
+            <button type="submit" class="status-btn">
+                Update Status
+            </button>
+
+        </div>
+
+    </form>
 
 </div>
 

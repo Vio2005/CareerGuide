@@ -20,6 +20,43 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+
+    <style>
+      .btn-success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.btn-warning {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.btn-info {
+    background-color: #074f85 !important;
+    border-color: #074f85 !important;
+    color: #fff !important;
+}
+
+.employee-item{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+
+.employee-item:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+    </style>
   </head>
   <body id="top">
 
@@ -53,7 +90,7 @@
             <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
               <li><a href="index.html" class="nav-link active">Home</a></li>
               <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
-              <li><a href="{% url 'company_candidates' %}">Candidate</a></li>
+              <li><a href="{% url 'company_candidates' %}">Applicant</a></li>
               <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
               <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
               <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
@@ -65,7 +102,7 @@
           
           <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">
-              <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
+              <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block" id="logoutBtn"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
             </div>
             <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
           </div>
@@ -89,7 +126,7 @@
         </div>
       </div>
     </section>
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('images/hero_1.jpg');">
+    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('{% static 'images/company1.jpg' %}');">
         <div class="container">
           <div class="row mb-5 justify-content-center">
             <div class="col-md-7 text-center">
@@ -125,26 +162,24 @@
 
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">Recent Employee</h2>
+            <h2 class="section-title mb-2">Recent Application</h2>
           </div>
         </div>
         
         <ul class="job-listings mb-5">
           {% for i in job_applications %}
-<li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-
-    <!-- Employee Image -->
-    <div class="job-listing-logo">
-        {% if i.employee.employeeprofile.profile_image %}
-            <img src="{{ i.employee.employeeprofile.profile_image.url }}" 
-                 alt="Employee Image" 
-                 class="img-fluid">
-        {% else %}
-            <img src="{% static 'images/job_logo_1.jpg' %}" 
-                 alt="Default Image" 
-                 class="img-fluid">
-        {% endif %}
+<li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center employee-item"
+    onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'">
+     <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
+         style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+{% if i.employee.employeeprofile.profile_image %}
+        <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% else %}
+        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% endif %}            
     </div>
+
+   
 
 
     <!-- Employee Information -->
@@ -175,7 +210,7 @@
                 </span>
 
             {% else %}
-                <span class="btn btn-primary">
+                <span class="btn btn-info">
                     {{ i.status }}
                 </span>
 
@@ -188,8 +223,9 @@
         <div class="w-25 text-right">
 
             <a href="{% url 'employeeprofileview' i.employee.id %}" 
-   class="btn btn-secondary">
-    View Details
+class="btn btn-secondary"
+onclick="event.stopPropagation();">
+View Details
 </a>
 
         </div>
@@ -257,7 +293,7 @@
 
     </section>
 
-    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('images/hero_1.jpg');">
+    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('{% static 'images/company1.jpg' %}');">
       <div class="container">
         <div class="row">
           <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
@@ -350,6 +386,27 @@
     <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
     
     <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.getElementById("logoutBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Logout?",
+        text: "Are you sure you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#074f85",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, Logout",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = this.href;
+        }
+    });
+});
+</script>
 
      
   </body>

@@ -19,9 +19,39 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> 
-  </head>
-  <body id="top">
+<style>
+.job-description-content,
+.requirements-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    text-align: justify;
+}
+.btn-info{
+    background-color:#074f85 !important;
+    border-color:#074f85 !important;
+    color:white !important;
+}
+.job-description-content img,
+.requirements-content img {
+    max-width:100%;
+    height:auto;
+}
 
+.job-description-content table,
+.requirements-content table {
+    max-width:100%;
+    display:block;
+    overflow-x:auto;
+}
+.dec:hover{
+  text-decoration: none;
+}
+
+</style>  
+</head>
+  <body id="top">
     <div id="overlayer"></div>
     <div class="loader">
       <div class="spinner-border text-primary" role="status">
@@ -53,14 +83,20 @@
                 <li><a href="{% url 'careerquiz' %}">Career Match</a></li>
                 <li><a href="{% url 'applied_job' %}">Applied Job</a></li>
                 <li><a href="{% url 'employeeprofile' %}">Profile</a></li>
-                <li class="d-lg-none"><a href="{% url 'employeelogout' %}">Log Out</a></li>
               </ul>
             </nav>
             
             <div class="right-cta-menu text-right d-flex align-items-center col-6">
               <div class="ml-auto">
-                <a href="{% url 'employeelogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
-              </div>
+{% if request.session.employee_id %}
+    <a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>
+        Log Out
+    </a>
+{% else %}
+    <a href="{% url 'employeelogin' %}"class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>
+        Log In
+    </a>
+{% endif %}              </div>
               <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
             </div>
           </div>
@@ -72,11 +108,10 @@
         <div class="container">
           <div class="row">
             <div class="col-md-7">
-              <h1 class="text-white font-weight-bold">Product Designer</h1>
+              <h1 class="text-white font-weight-bold">{{data.position}}</h1>
               <div class="custom-breadcrumbs">
-                <a href="#">Home</a> <span class="mx-2 slash">/</span>
-                <a href="#">Job</a> <span class="mx-2 slash">/</span>
-                <span class="text-white"><strong>Product Designer</strong></span>
+                <a href="{% url 'homeview' %}" class="dec">Home</a> <span class="mx-2 slash">/</span>
+                <span class="text-white"><strong>{{data.position}}</strong></span>
               </div>
             </div>
           </div>
@@ -84,287 +119,186 @@
       </section>
 
       <!-- MAIN CONTENT SECTION -->
-      <section class="site-section">
-        <div class="container">
-          <div class="row align-items-center mb-5">
-            <div class="col-lg-8 mb-4 mb-lg-0">
-              <div class="d-flex align-items-center">
-            </div>
-            <div class="col-lg-4">
-              <div class="row">
-               
-              </div>
-            </div>
+      <!-- MAIN CONTENT SECTION -->
+<section class="site-section ">
+  <div class="container">
+    
+    <!-- Top Row (Header/Meta) -->
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-8 mb-4 mb-lg-0">
+        <div class="d-flex align-items-center">
+          <!-- Optional header content -->
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row">
+          <!-- Optional sidebar top content -->
+        </div>
+      </div>
+    </div> <!-- Proper closing tag added here -->
+
+    <!-- Main Grid Row -->
+    <div class="row">
+      
+      <!-- LEFT COLUMN (Job Info & Django Loop) -->
+      <!-- Added pr-lg-4 to create space on the right side of the left column -->
+      <div class="col-lg-8 pr-lg-4">
+        
+        <!-- JOB DESCRIPTION -->
+        <div class="mb-5">
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title">
+            <span class="icon-align-left mr-3"></span>
+            Job Description
+          </h3>
+          <div  class="job-description-content">
+            {{ data.description|safe }}
           </div>
-          
+        </div>
 
-          <div class="row">
-            <!-- LEFT COLUMN (Job Info & Django Loop) -->
-            <div class="col-lg-8">
-              <div class="mb-5">
-                <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title"><span class="icon-align-left mr-3"></span>Job Description</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet. Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo blanditiis iste eius officia minus.</p>
-                <p>Velit unde aliquam et voluptas reiciendis non sapiente labore, deleniti asperiores blanditiis nihil quia officiis dolor vero iste dolore vel molestiae saepe. Id nisi, consequuntur sunt impedit quidem, vitae mollitia!</p>
-              </div>
+        <!-- REQUIREMENTS -->
+        <div class="mb-5">
+          <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title">
+            <span class="icon-check_circle mr-3"></span>
+            Requirements
+          </h3>
+          <div  class="requirements-content">
+            {{ data.requirements|linebreaks }}
+          </div>
+        </div>
 
-              <div class="mb-5">
-                <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title"><span class="icon-rocket mr-3"></span>Responsibilities</h3>
-                <ul class="list-unstyled m-0 p-0">
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Necessitatibus quibusdam facilis</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Velit unde aliquam et voluptas reiciendis non sapiente labore</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Commodi quae ipsum quas est itaque</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Deleniti asperiores blanditiis nihil quia officiis dolor</span></li>
-                </ul>
-              </div>
-
-              <div class="mb-5">
-                <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title"><span class="icon-book mr-3"></span>Education + Experience</h3>
-                <ul class="list-unstyled m-0 p-0">
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Necessitatibus quibusdam facilis</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Velit unde aliquam et voluptas reiciendis non sapiente labore</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Commodi quae ipsum quas est itaque</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Deleniti asperiores blanditiis nihil quia officiis dolor</span></li>
-                </ul>
-              </div>
-
-              <div class="mb-5">
-                <h3 class="h5 d-flex align-items-center mb-4 text-primary section-title"><span class="icon-turned_in mr-3"></span>Other Benefits</h3>
-                <ul class="list-unstyled m-0 p-0">
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Necessitatibus quibusdam facilis</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Velit unde aliquam et voluptas reiciendis non sapiente labore</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Commodi quae ipsum quas est itaque</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span></li>
-                  <li class="d-flex align-items-start mb-2"><span class="icon-check_circle mr-2 text-muted"></span><span>Deleniti asperiores blanditiis nihil quia officiis dolor</span></li>
-                </ul>
-              </div>
-
-              <!-- Django Loop Start -->
-              <div class="row mb-5">
-                <div class="col-6">
+        <!-- Action Buttons (Save / Apply) -->
+        <div class="row mb-5">
+          <div class="col-6">
                   {% if save %}
-                  <a href="{% url 'savejob' employee.id %}" class="savebtn">
+                  <a href="{% url 'savejob' data.id %}" class="savebtn">
                   <button type="button" class="btn btn-block btn-asave btn-md">
                     <i class="bi bi-heart-fill text-danger"></i> Saved</button>
                   </a>
                   {% else %}
 
-                  <a href="{% url 'savejob' employee.id %}" class="savebtn">
+                  <a href="{% url 'savejob' data.id %}" class="savebtn">
                   <button type="button" class="btn btn-block btn-bsave btn-md">
                     <i class="bi bi-heart mr-2 text-danger"></i> Save Job</button>
                   </a>
                   {% endif %}
                 </div>
-                <div class="col-6">
-                  {% if apply %}
-                  <button type="button" 
-        class="btn btn-block btn-applied btn-md"
-        disabled
-        >
-    Applied
-</button>
-{% else %}
-  {% if request.session.employee_id %}
+          <div class="col-6">
 
-<a href="{% url 'check_apply' data.id %}" 
-   class="btn btn-block btn-primary btn-md">
-    Apply Now
-</a>
+    {% if not data.is_active %}
+        <button type="button" class="btn btn-block btn-secondary btn-md" disabled>
+            Position Closed
+        </button>
 
-{% else %}
+    {% elif apply %}
+        <button type="button" class="btn btn-block btn-applied btn-md" disabled>
+            Applied
+        </button>
 
-<a href="{% url 'employeelogin' %}" 
-   class="btn btn-primary">
-    Apply Now
-</a>
+    {% else %}
+        {% if request.session.employee_id %}
+            <a href="{% url 'check_apply' data.id %}" class="btn btn-block btn-primary btn-md">
+                Apply Now
+            </a>
+        {% else %}
+            <a href="{% url 'employeelogin' %}" class="btn btn-block btn-primary btn-md">
+                Apply Now
+            </a>
+        {% endif %}
+    {% endif %}
 
-{% endif %}
-{% endif %}
-                </div>
-              </div>
-
-          <!-- PUT YOUR APPLY MODAL HERE -->
-
-    <div class="modal fade"
-     id="applyModal{{ data.id }}"
-     tabindex="-1"
-     role="dialog"
-     aria-hidden="true">
-
-
-<div class="modal-dialog modal-dialog-centered" role="document">
-
-            <div class="modal-content">
-
-
-              <form method="POST" 
-      action="{% url 'applyjob' data.id  %}" id="applyForm{{ data.id }}">
-      
-    {% csrf_token %}
-
-
-                    <div class="modal-header">
-
-                        <h5 class="modal-title" style="color:#074f85">
-
-                            Apply for {{ data.position }}
-
-                        </h5>
-
-
-                     <button type="button"
-        class="close"
-        data-dismiss="modal"
-        aria-label="Close">
-
-    <span aria-hidden="true">&times;</span>
-
-</button>
-
-                    </div>
-
-
-
-                    <div class="modal-body" style="color:#074f85">
-
-
-                        <p>
-                            <strong>Username:</strong>
-                            {{ employee.username }}
-                        </p>
-
-
-                        <p>
-                            <strong>Email:</strong>
-                            {{ employee.email }}
-                        </p>
-
-
-
-                        <label class="form-label" style="color: #074f85 !important;">
-                            Cover Letter
-                        </label>
-
-
-                        <textarea
-                            name="cover_letter"
-                            class="form-control"
-                            rows="6"
-                            required style="color: #074f85 !important;"></textarea>
-
-
-                    </div>
-
-
-
-                    <div class="modal-footer">
-
-<button type="button"
-        class="btn btn-secondary"
-        data-dismiss="modal">
-
-    Cancel
-
-</button>
-
-
-
-                        <button type="submit" 
-        class="btn btn-primary confirm-apply">
-
-                            Submit Application
-
-                        </button>
-
-
-                    </div>
-
-
-                </form>
-
-
-            </div>
-
-
+</div>
+          
+          
         </div>
 
-
-    </div>
-
-
-
-</div>
-
-            <!-- RIGHT COLUMN (Sidebar Info) -->
-            <div class="col-lg-4">
-<div class="bg-light p-4 border rounded mb-4 shadow-sm bg-primary-custom" style="background-color: #074f85 !important;">
-                    <div class="text-center mb-4">
-                       {% if data.company.profile_image %}
-                       <img src="{{ data.company.profile_image.url }}" 
-                  class="rounded-circle shadow" style="width:120px;height:120px;object-fit:cover;" 
-                  alt="Company Image" onclick="showImage(this.src)">
-                    {% else %}
-                    <img src="{% static 'images/default-profile.jpg' %}" 
-                  class="rounded-circle shadow" style="width:120px;height:120px;object-fit:cover;" 
-                  alt="Company Image" onclick="showImage(this.src)">
-                        
-                    {% endif %}
-                  
-                  
-                  <h3 class="mt-3 mb-1 text-muted">{{data.company.company_name }}</h3>
-                  <p class="text-muted">{{ data.position }}</p>
+        <!-- APPLY MODAL -->
+        <div class="modal fade" id="applyModal{{ data.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form method="POST" action="{% url 'applyjob' data.id %}" id="applyForm{{ data.id }}">
+                {% csrf_token %}
+                <div class="modal-header">
+                  <h5 class="modal-title" style="color:#074f85">
+                    Apply for {{ data.position }}
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-
-                <h4 class="text-primary section-title mb-3" style="color: #ffffff !important;">
-                  <span class="icon-briefcase mr-2" style="color: #ffffff;"></span>Job Summary
-                </h4>
-
-                <ul class="list-unstyled" style="color:white !important;">
-                  <li class="mb-3"><span class="icon-briefcase text-primary mr-2" style="color: #ffffff !important;"></span><strong>Position:</strong> {{ data.position }}</li>
-                  <li class="mb-3"><span class="icon-building text-primary mr-2" style="color: #ffffff !important;"></span><strong>Company:</strong> {{ data.company.company_name }}</li>
-                  <li class="mb-3"><span class="icon-users text-primary mr-2" style="color: #ffffff !important;"></span><strong>Vacancy:</strong> {{ data.vacancy }}</li>
-                  <li class="mb-3"><span class="icon-briefcase text-primary mr-2" style="color: #ffffff !important;"></span><strong>Salary:</strong> {{ data.salary }}</li>
-                  <li class="mb-3"><span class="icon-clock-o text-primary mr-2" style="color: #ffffff !important;"></span><strong>Job Type:</strong> {{ data.job_type }}</li>
-                  <li class="mb-3"><span class="icon-room text-primary mr-2" style="color: #ffffff !important;"></span><strong>Location:</strong> {{ data.location }}</li>
-                  <li class="mb-3"><span class="icon-align-left text-primary mr-2" style="color: #ffffff !important;"></span><strong>Description:</strong><br>{{ data.description }}</li>
-                </ul>
-              </div>
-             <div class="p-3 border rounded" style="background-color: #074f85;">
-
-    <h3 class="mt-3 h5 pl-3 mb-3 section-title" style="color:#ffffff !important;">
-        Share
-    </h3>
-
-    <div class="px-3">
-
-        <a href="#" class="pt-3 pb-3 pr-3 pl-0" 
-           style="color:white; font-size:20px;">
-            <span class="icon-facebook"></span>
-        </a>
-
-        <a href="#" class="pt-3 pb-3 pr-3 pl-0" 
-           style="color:white; font-size:20px;">
-            <span class="icon-twitter"></span>
-        </a>
-
-        <a href="#" class="pt-3 pb-3 pr-3 pl-0" 
-           style="color:white; font-size:20px;">
-            <span class="icon-linkedin"></span>
-        </a>
-
-        <a href="#" class="pt-3 pb-3 pr-3 pl-0" 
-           style="color:white; font-size:20px;">
-            <span class="icon-pinterest"></span>
-        </a>
-
-    </div>
-
-</div>
+                <div class="modal-body" style="color:#074f85">
+                  <p><strong>Username:</strong> {{ employee.username }}</p>
+                  <p><strong>Email:</strong> {{ employee.email }}</p>
+                  <label class="form-label" style="color: #074f85 !important;">
+                    Cover Letter
+                  </label>
+                  <textarea name="cover_letter" class="form-control" rows="6" required style="color: #074f85 !important;"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btn-primary confirm-apply">
+                    Submit Application
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </section>
 
+      </div> <!-- End Left Column -->
+
+      <!-- RIGHT COLUMN (Sidebar Info) -->
+      <!-- Added pl-lg-4 to push sidebar slightly right -->
+      <div class="col-lg-4 pl-lg-4">
+        
+        <div class="bg-light p-4 border rounded mb-4 shadow-sm bg-primary-custom" style="background-color:#ffffff !important; border-color:#074f85 !important; border-width:2px !important; box-shadow:0 0 15px 5px rgba(0,0,0,0.25) !important;">
+          <div class="text-center mb-4">
+            {% if data.company.profile_image %}
+            <img src="{{ data.company.profile_image.url }}" class="rounded-circle shadow" style="width:120px;height:120px;object-fit:cover;" alt="Company Image" onclick="showImage(this.src)">
+            {% else %}
+            <img src="{% static 'images/default-profile.jpg' %}" class="rounded-circle shadow" style="width:120px;height:120px;object-fit:cover;" alt="Company Image" onclick="showImage(this.src)">
+            {% endif %}
+            
+            <h3 class="mt-3 mb-1 text-muted" style="color: #074f85 !important;">{{ data.company.company_name }}</h3>
+            <div class="mt-2 mb-2">
+              <a href="{% url 'viewcompanydetail' data.company.id %}" class="btn btn-sm text-white" style="background-color: #074f85;  border-radius: 20px; padding: 4px 16px;">
+                <span class="icon-user mr-1"></span> View Profile
+              </a>
+            </div>
+            <p class="text-muted" style="color: #074f85 !important;">{{ data.position }}</p>
+          </div>
+
+          <h4 class="text-primary section-title mb-3" style="color: #074f85 !important;">
+            <span class="icon-briefcase mr-2" style="color: #074f85;"></span>Job Summary
+          </h4>
+
+          <ul class="list-unstyled" style="color:#074f85 !important;">
+            <li class="mb-3"><span class="icon-briefcase text-primary mr-2" style="color: #074f85 !important;"></span><strong>Position:</strong> {{ data.position }}</li>
+            <li class="mb-3"><span class="icon-building text-primary mr-2" style="color: #074f85 !important;"></span><strong>Company:</strong> {{ data.company.company_name }}</li>
+            <li class="mb-3"><span class="icon-users text-primary mr-2" style="color: #074f85 !important;"></span><strong>Vacancy:</strong> {{ data.vacancy }}</li>
+            <li class="mb-3"><span class="icon-briefcase text-primary mr-2" style="color: #074f85 !important;"></span><strong>Salary:</strong> {{ data.salary }}</li>
+            <li class="mb-3"><span class="icon-clock-o text-primary mr-2" style="color: #074f85 !important;"></span><strong>Job Type:</strong> {{ data.job_type }}</li>
+            <li class="mb-3"><span class="icon-room text-primary mr-2" style="color: #074f85 !important;"></span><strong>Location:</strong> {{ data.location }}</li>
+          </ul>
+        </div>
+
+        <div class="p-3 border rounded" style="background-color:#ffffff !important; border-color:#074f85 !important; border-width:2px !important; box-shadow:0 0 15px 5px rgba(0,0,0,0.25) !important;">
+          <h3 class="mt-3 h5 pl-3 mb-3 section-title">Share</h3>
+          <div class="px-3">
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0" style="color:#074f85; font-size:20px;"><span class="icon-facebook"></span></a>
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0" style="color:#074f85; font-size:20px;"><span class="icon-twitter"></span></a>
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0" style="color:#074f85; font-size:20px;"><span class="icon-linkedin"></span></a>
+            <a href="#" class="pt-3 pb-3 pr-3 pl-0" style="color:#074f85; font-size:20px;"><span class="icon-pinterest"></span></a>
+          </div>
+        </div>
+
+      </div> <!-- End Right Column -->
+
+    </div> <!-- End Main Grid Row -->
+
+  </div>
+</section>
       <!-- FOOTER -->
       <footer class="site-footer">
         <a href="#top" class="smoothscroll scroll-top">

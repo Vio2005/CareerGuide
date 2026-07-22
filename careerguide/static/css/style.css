@@ -1857,6 +1857,6 @@ form {
     color: #fff !important;
     box-shadow: none !important;}
 
-
-
-  
+.dec:hover{
+  text-decoration: none;
+}

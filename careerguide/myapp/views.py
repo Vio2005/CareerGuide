@@ -13,12 +13,24 @@ from django.db.models import Count
 
 
 
+def intro(request):
+    jobcount=Job.objects.count()
+    companycount=Company.objects.count()
+    fillcount=JobApplication.objects.filter(status='Accepted').count()
+    employeecount= JobApplication.objects.values('employee').distinct().count()
+    context = {
+        
+        'jobcount':jobcount,
+        'companycount':companycount,
+        'fillcount':fillcount,
+        'employeecount':employeecount
+    }
 
+    return render(request, 'intro.html', context)
 
 
 def homeview(request):
-    jobs = Job.objects.all().order_by('-posted_date')
-
+    jobs = Job.objects.filter(is_active=True).order_by('-posted_date')
     cities = City.objects.all()
     positions = Position.objects.all()
 
@@ -44,8 +56,8 @@ def homeview(request):
     paginator = Paginator(jobs, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    jobcount=Job.objects.count()
-    companycount=Job.objects.count()
+    jobcount = Job.objects.filter(is_active=True).count()   
+    companycount=Company.objects.count()
     fillcount=JobApplication.objects.filter(status='Accepted').count()
     employeecount= JobApplication.objects.values('employee').distinct().count()
 
@@ -159,10 +171,19 @@ def employee_profile(request):
     if not employee_id:
         return redirect('employeelogin')
 
-    employee = Employee.objects.get(id=employee_id)
+
+    employee = Employee.objects.get(
+        id=employee_id
+    )
+
 
 
     if request.method == "POST":
+
+
+        # =========================
+        # EMPLOYEE PROFILE
+        # =========================
 
         full_name = request.POST.get('full_name')
         phone = request.POST.get('phone')
@@ -170,10 +191,13 @@ def employee_profile(request):
         date_of_birth = request.POST.get('date_of_birth')
         address = request.POST.get('address')
         summary = request.POST.get('summary')
-        profile_image = request.FILES.get('profile_image')
+
+        profile_image = request.FILES.get(
+            'profile_image'
+        )
 
 
-        # Employee Profile
+
         profile, created = EmployeeProfile.objects.update_or_create(
             employee=employee,
             defaults={
@@ -186,60 +210,226 @@ def employee_profile(request):
             }
         )
 
+
         if profile_image:
             profile.profile_image = profile_image
             profile.save()
 
 
 
-        # Education (Update instead of creating duplicate)
-        Education.objects.update_or_create(
-            employee=employee,
-            defaults={
-                'institution': request.POST.get('institution'),
-                'degree': request.POST.get('degree'),
-                'field_of_study': request.POST.get('field_of_study'),
-                'start_year': request.POST.get('start_year'),
-                'end_year': request.POST.get('end_year'),
-            }
+
+
+        # =========================
+        # EDUCATION MULTIPLE SAVE
+        # =========================
+
+
+        Education.objects.filter(
+            employee=employee
+        ).delete()
+
+
+
+        institutions = request.POST.getlist(
+            'institution[]'
+        )
+
+        degrees = request.POST.getlist(
+            'degree[]'
+        )
+
+        fields = request.POST.getlist(
+            'field_of_study[]'
+        )
+
+        start_years = request.POST.getlist(
+            'start_year[]'
+        )
+
+        end_years = request.POST.getlist(
+            'end_year[]'
         )
 
 
-        # Experience (Update instead of creating duplicate)
-        Experience.objects.update_or_create(
-            employee=employee,
-            defaults={
-                'company_name': request.POST.get('company_name'),
-                'position': request.POST.get('position'),
-                'start_date': request.POST.get('start_date'),
-                'end_date': request.POST.get('end_date'),
-                'description': request.POST.get('description'),
-            }
+
+        for i in range(len(institutions)):
+
+
+            if institutions[i].strip():
+
+
+                Education.objects.create(
+                    employee=employee,
+                    institution=institutions[i],
+                    degree=degrees[i] if i < len(degrees) else "",
+                    field_of_study=fields[i] if i < len(fields) else "",
+                    start_year=start_years[i] if i < len(start_years) and start_years[i] else None,
+                    end_year=end_years[i] if i < len(end_years) and end_years[i] else None,
+                )
+
+
+
+
+
+
+
+        # =========================
+        # EXPERIENCE MULTIPLE SAVE
+        # =========================
+
+
+        Experience.objects.filter(
+            employee=employee
+        ).delete()
+
+
+
+        company_names = request.POST.getlist(
+            'company_name[]'
+        )
+
+        positions = request.POST.getlist(
+            'position[]'
+        )
+
+        start_dates = request.POST.getlist(
+            'start_date[]'
+        )
+
+        end_dates = request.POST.getlist(
+            'end_date[]'
+        )
+
+        descriptions = request.POST.getlist(
+            'description[]'
         )
 
 
-        # Skill (Update instead of creating duplicate)
-        Skill.objects.update_or_create(
-            employee=employee,
-            defaults={
-                'skill_name': request.POST.get('skill_name'),
-                'proficiency': request.POST.get('skill_level'),
-            }
+
+
+        for i in range(len(company_names)):
+
+
+            if company_names[i].strip():
+
+
+                Experience.objects.create(
+                    employee=employee,
+
+                    company_name=company_names[i],
+
+                    position=positions[i] 
+                    if i < len(positions) 
+                    else "",
+
+                    start_date=start_dates[i]
+                    if i < len(start_dates) and start_dates[i]
+                    else None,
+
+                    end_date=end_dates[i]
+                    if i < len(end_dates) and end_dates[i]
+                    else None,
+
+                    description=descriptions[i]
+                    if i < len(descriptions)
+                    else "",
+                )
+
+
+
+
+
+
+
+
+        # =========================
+        # SKILL MULTIPLE SAVE
+        # =========================
+
+
+        Skill.objects.filter(
+            employee=employee
+        ).delete()
+
+
+
+        skill_names = request.POST.getlist(
+            'skill_name[]'
         )
 
 
-        job_id = request.session.pop("apply_job_id", None)
+        skill_levels = request.POST.getlist(
+            'skill_level[]'
+        )
+
+
+
+
+        for i in range(len(skill_names)):
+
+
+            if skill_names[i].strip():
+
+
+                Skill.objects.create(
+
+                    employee=employee,
+
+                    skill_name=skill_names[i],
+
+                    proficiency=skill_levels[i]
+                    if i < len(skill_levels)
+                    else "Beginner"
+
+                )
+
+
+
+
+
+        # =========================
+        # RETURN TO APPLY JOB
+        # =========================
+
+
+        job_id = request.session.pop(
+            "apply_job_id",
+            None
+        )
+
 
         if job_id:
+
             request.session["open_apply_modal"] = True
-            return redirect("jobdetail", id=job_id)
 
-        return redirect('employeeprofile')
+            return redirect(
+                "jobdetail",
+                id=job_id
+            )
 
+
+
+        return redirect(
+            'employeeprofile'
+        )
+
+
+
+
+
+
+    # =========================
+    # CHECK EXISTING PROFILE
+    # =========================
 
 
     try:
-        profile = EmployeeProfile.objects.get(employee=employee)
+
+
+        profile = EmployeeProfile.objects.get(
+            employee=employee
+        )
+
 
         return render(
             request,
@@ -251,52 +441,18 @@ def employee_profile(request):
         )
 
 
+
     except EmployeeProfile.DoesNotExist:
+
 
         return render(
             request,
-            'employee_profile.html'
+            'employee_profile.html',
+            {
+                'employee': employee
+            }
         )
-
 def applyjob(request, id):
-
-    employee_id = request.session.get('employee_id')
-
-    if not employee_id:
-        return redirect('employeelogin')
-
-    employee = Employee.objects.get(id=employee_id)
-
-    if not EmployeeProfile.objects.filter(employee=employee).exists():
-        return redirect('employeeprofile')
-
-    job = Job.objects.get(id=id)
-
-    if request.method == "POST":
-
-        if JobApplication.objects.filter(
-            employee=employee,
-            job=job
-        ).exists():
-
-            
-            return redirect('jobdetail', id=id)
-
-        cover_letter = request.POST.get("cover_letter")
-
-        
-
-        JobApplication.objects.create(
-            employee=employee,
-            job=job,
-            cover_letter=cover_letter,
-            status="Pending"
-        )
-
-        
-    return redirect('jobdetail', id=id)
-
-def check_apply(request, id):
 
     employee_id = request.session.get("employee_id")
 
@@ -306,18 +462,55 @@ def check_apply(request, id):
     employee = Employee.objects.get(id=employee_id)
 
     if not EmployeeProfile.objects.filter(employee=employee).exists():
-
-        # remember which job the user wanted to apply
-        request.session["apply_job_id"] = id
-
         return redirect("employeeprofile")
 
+    job = get_object_or_404(Job, id=id)
 
-    # profile exists, open modal
-    request.session["open_apply_modal"] = True
+    # Prevent applying to closed jobs
+    if not job.is_active:
+        messages.error(request, "This job is no longer accepting applications.")
+        return redirect("jobdetail", id=id)
+
+    if request.method == "POST":
+
+        if JobApplication.objects.filter(
+            employee=employee,
+            job=job
+        ).exists():
+            return redirect("jobdetail", id=id)
+
+        cover_letter = request.POST.get("cover_letter")
+
+        JobApplication.objects.create(
+            employee=employee,
+            job=job,
+            cover_letter=cover_letter,
+            status="Pending"
+        )
 
     return redirect("jobdetail", id=id)
+from django.shortcuts import get_object_or_404
 
+def check_apply(request, id):
+    job = get_object_or_404(Job, id=id)
+
+    if not job.is_active:
+        messages.error(request, "This job is no longer accepting applications.")
+        return redirect("jobdetail", id=job.id)
+
+    employee_id = request.session.get("employee_id")
+
+    if not employee_id:
+        return redirect("employeelogin")
+
+    employee = Employee.objects.get(id=employee_id)
+
+    if not EmployeeProfile.objects.filter(employee=employee).exists():
+        request.session["apply_job_id"] = id
+        return redirect("employeeprofile")
+
+    request.session["open_apply_modal"] = True
+    return redirect("jobdetail", id=id)
 def company_register(request):
     if request.method == "POST":
 
@@ -430,13 +623,21 @@ def companyview(request):
 
 def edit_employee_profile(request, id):
 
-    employee = Employee.objects.get(id=id)
+    employee = get_object_or_404(Employee, id=id)
 
-    profile = EmployeeProfile.objects.get(employee=employee)
+    profile = get_object_or_404(
+        EmployeeProfile,
+        employee=employee
+    )
+
 
     if request.method == "POST":
 
-        # Update Employee Profile
+
+        # =========================
+        # UPDATE PROFILE
+        # =========================
+
         profile.full_name = request.POST.get('full_name')
         profile.phone = request.POST.get('phone')
         profile.gender = request.POST.get('gender')
@@ -444,54 +645,168 @@ def edit_employee_profile(request, id):
         profile.address = request.POST.get('address')
         profile.summary = request.POST.get('summary')
 
+
         if request.FILES.get('profile_image'):
             profile.profile_image = request.FILES.get('profile_image')
+
 
         profile.save()
 
 
-        # Update Education
-        Education.objects.filter(employee=employee).delete()
 
-        Education.objects.create(
-            employee=employee,
-            institution=request.POST.get('institution'),
-            degree=request.POST.get('degree'),
-            field_of_study=request.POST.get('field_of_study'),
-            start_year=request.POST.get('start_year'),
-            end_year=request.POST.get('end_year'),
+        # =========================
+        # EDUCATION
+        # =========================
+
+        Education.objects.filter(
+            employee=employee
+        ).delete()
+
+
+        institutions = request.POST.getlist(
+            'institution[]'
+        )
+
+        degrees = request.POST.getlist(
+            'degree[]'
+        )
+
+        fields = request.POST.getlist(
+            'field_of_study[]'
+        )
+
+        start_years = request.POST.getlist(
+            'start_year[]'
+        )
+
+        end_years = request.POST.getlist(
+            'end_year[]'
         )
 
 
-        # Update Experience
-        Experience.objects.filter(employee=employee).delete()
+        for i in range(len(institutions)):
 
-        Experience.objects.create(
-            employee=employee,
-            company_name=request.POST.get('company_name'),
-            position=request.POST.get('position'),
-            start_date=request.POST.get('start_date'),
-            end_date=request.POST.get('end_date'),
-            description=request.POST.get('description'),
+            if institutions[i]:
+
+                Education.objects.create(
+                    employee=employee,
+                    institution=institutions[i],
+                    degree=degrees[i] if i < len(degrees) else "",
+                    field_of_study=fields[i] if i < len(fields) else "",
+                    start_year=start_years[i] if i < len(start_years) and start_years[i] else None,
+                    end_year=end_years[i] if i < len(end_years) and end_years[i] else None,
+                )
+
+
+
+
+        # =========================
+        # EXPERIENCE
+        # =========================
+
+        Experience.objects.filter(
+            employee=employee
+        ).delete()
+
+
+        company_names = request.POST.getlist(
+            'company_name[]'
+        )
+
+        positions = request.POST.getlist(
+            'position[]'
+        )
+
+        start_dates = request.POST.getlist(
+            'start_date[]'
+        )
+
+        end_dates = request.POST.getlist(
+            'end_date[]'
+        )
+
+        descriptions = request.POST.getlist(
+            'description[]'
         )
 
 
-        # Update Skill
-        Skill.objects.filter(employee=employee).delete()
+        for i in range(len(company_names)):
 
-        Skill.objects.create(
-            employee=employee,
-            skill_name=request.POST.get('skill_name'),
-            proficiency=request.POST.get('skill_level'),
+            if company_names[i]:
+
+                Experience.objects.create(
+                    employee=employee,
+                    company_name=company_names[i],
+                    position=positions[i] if i < len(positions) else "",
+                    start_date=start_dates[i] if i < len(start_dates) and start_dates[i] else None,
+                    end_date=end_dates[i] if i < len(end_dates) and end_dates[i] else None,
+                    description=descriptions[i] if i < len(descriptions) else "",
+                )
+
+
+
+
+
+        # =========================
+        # SKILL
+        # =========================
+
+        Skill.objects.filter(
+            employee=employee
+        ).delete()
+
+
+        skill_names = request.POST.getlist(
+            'skill_name[]'
+        )
+
+        skill_levels = request.POST.getlist(
+            'skill_level[]'
         )
 
 
-        return redirect('employeeprofile')
+        for i in range(len(skill_names)):
+
+            if skill_names[i]:
+
+                Skill.objects.create(
+                    employee=employee,
+                    skill_name=skill_names[i],
+                    proficiency=(
+                        skill_levels[i]
+                        if i < len(skill_levels)
+                        else "Beginner"
+                    )
+                )
 
 
-    education = Education.objects.filter(employee=employee).first()
-    experience = Experience.objects.filter(employee=employee).first()
-    skill = Skill.objects.filter(employee=employee).first()
+
+        return redirect(
+            'employeeprofile'
+        )
+
+
+
+
+    # =========================
+    # LOAD EXISTING DATA
+    # =========================
+
+
+    educations = Education.objects.filter(
+        employee=employee
+    )
+
+
+    experiences = Experience.objects.filter(
+        employee=employee
+    )
+
+
+    skills = Skill.objects.filter(
+        employee=employee
+    )
+
 
 
     return render(
@@ -500,9 +815,9 @@ def edit_employee_profile(request, id):
         {
             'employee': employee,
             'profile': profile,
-            'education': education,
-            'experience': experience,
-            'skill': skill,
+            'educations': educations,
+            'experiences': experiences,
+            'skills': skills,
         }
     )
 def post(request):
@@ -535,9 +850,20 @@ def post(request):
         )
 
         messages.success(request, "Job posted successfully!")
-        return redirect("company_index")
+        return redirect("companypostview",id=company.id)
 
     return render(request, "company_post.html", {"company": company})
+def view_company_detail(request,id):
+    
+
+    company = Company.objects.get(id=id)
+
+    context = {
+        'company': company,
+    }
+
+    return render(request, 'view_company_detail.html', context)
+
 def company_profile(request,id):
     
 
@@ -584,22 +910,34 @@ def edit_company_profile(request, id):
 
 
 
+from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
+
 def company_post_view(request, id):
+    company = get_object_or_404(Company, id=id)
 
-    company = Company.objects.get(id=id)
-
+    # Get all jobs for this company
     jobs = Job.objects.filter(company=company)
 
-    paginator = Paginator(jobs, 5)  # show 5 jobs per page
+    # Filter by status
+    status = request.GET.get("status")
 
-    page_number = request.GET.get('page')
+    if status == "open":
+        jobs = jobs.filter(is_active=True)
+    elif status == "closed":
+        jobs = jobs.filter(is_active=False)
 
+    jobs = jobs.order_by("-posted_date")   # or "-id"
+
+    paginator = Paginator(jobs, 5)
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'company_post_view.html', {
-        'company': company,
-        'jobs': page_obj,
-        'page_obj': page_obj,
+    return render(request, "company_post_view.html", {
+        "company": company,
+        "jobs": page_obj,
+        "page_obj": page_obj,
+        "status": status,
     })
 
 def edit_post(request, id):
@@ -651,9 +989,15 @@ def view_apply(request, id):
     }
     return render(request, 'view_apply.html', context)
 
-def deletepost(request,id):
-    job=Job.objects.filter(id=id).delete()
-    return redirect('companypostview', id=job.company.id)
+def deletepost(request, id):
+
+    job = Job.objects.get(id=id)
+
+    company_id = job.company.id
+
+    job.delete()
+
+    return redirect('companypostview', id=company_id)
 
 def career_quiz(request):
 
@@ -690,53 +1034,41 @@ from .career_data import CAREERS
 
 
 def career_quiz(request):
-    employee_id = request.session.get(
-            "employee_id"
-        )
 
-    employee=Employee.objects.get(id=employee_id)
+    employee = None
+
+    employee_id = request.session.get("employee_id")
+
+    if employee_id:
+        employee = Employee.objects.filter(id=employee_id).first()
+
+
     if request.method == "POST":
 
-        answers=[]
+        answers = []
 
-        for i in range(1,26):
-
-            answer=request.POST.get(
-                f"q{i}"
-            )
-
+        for i in range(1, 26):
+            answer = request.POST.get(f"q{i}")
             answers.append(answer)
 
 
-        result = calculate_match(
-            answers
-        )
+        result = calculate_match(answers)
 
 
-        employee_id = request.session.get(
-            "employee_id"
-        )
-
-
-
-        # Only save after employee login
-
-        if employee_id:
+        # Save result only if employee is logged in
+        if employee_id and employee:
 
             EmployeeCareerResult.objects.create(
-
-                employee_id=employee_id,
-
+                employee=employee,
                 best_match=result["best"],
-
-                similar_matches=
-                ", ".join(result["similar"])
-
+                similar_matches=", ".join(result["similar"])
             )
+
+
         context = {
-    **result,
-    "employee": employee
-}
+            **result,
+            "employee": employee
+        }
 
         return render(
             request,
@@ -749,11 +1081,10 @@ def career_quiz(request):
         request,
         "career_quiz.html",
         {
-            "questions":QUESTIONS,
-            'employee':employee
+            "questions": QUESTIONS,
+            "employee": employee
         }
     )
-
 
 
 
@@ -1314,20 +1645,22 @@ def company_detail(request, id):
         context
     )
 def company_list_view(request):
+    employee = None
+
     employee_id = request.session.get('employee_id')
 
     if employee_id:
-        employee = Employee.objects.get(id=employee_id)
-    company = Company.objects.all()
-    paginator = Paginator(company, 3)
+        employee = Employee.objects.filter(id=employee_id).first()
+
+    companies = Company.objects.all()
+
+    paginator = Paginator(companies, 3)
     page_number = request.GET.get("page")
-    companies = paginator.get_page(page_number)
+    companies_page = paginator.get_page(page_number)
 
     context = {
-        'companies': companies,
-        'employee' :employee,
-        'company':company
-        
+        'companies': companies_page,
+        'employee': employee,
     }
 
     return render(request, 'company_list_view.html', context)
@@ -1459,48 +1792,203 @@ def employee_profile_view(request, id):
     # Get employee
     employee = get_object_or_404(Employee, id=id)
 
-    # Get employee profile (OneToOne)
+    # Get employee profile
     profile = EmployeeProfile.objects.filter(employee=employee).first()
 
-    # Get all related information
+    # Get employee information
     education = Education.objects.filter(employee=employee)
     experience = Experience.objects.filter(employee=employee)
     skills = Skill.objects.filter(employee=employee)
 
+    # Get logged-in company
+    company = None
+    company_id = request.session.get("company_id")
+
+    if company_id:
+        company = Company.objects.filter(id=company_id).first()
 
     context = {
-        'employee': employee,
-        'profile': profile,
-        'education': education,
-        'experience': experience,
-        'skills': skills,
+        "employee": employee,
+        "profile": profile,
+        "education": education,
+        "experience": experience,
+        "skills": skills,
+        "company": company,
+    }
+
+    return render(request, "employee_profile_view.html", context)
+
+def company_candidates(request):
+
+    company_id = request.session.get("company_id")
+
+    company = get_object_or_404(
+        Company,
+        id=company_id
+    )
+
+
+    jobs = Job.objects.filter(
+    company=company,
+    is_active=True
+    ).prefetch_related(
+    'jobapplication_set__employee'
+)
+
+
+    context = {
+        "company": company,
+        "jobs": jobs,
     }
 
 
     return render(
         request,
-        'employee_profile_view.html',
+        "company_candidates.html",
         context
     )
+# views.py
 
-def company_candidates(request):
+from django.shortcuts import render, get_object_or_404
+from .models import Job
 
-    company_id = request.session.get('company_id')
+def company_job_detail(request, id):
 
-    company = Company.objects.get(id=company_id)
+    data = get_object_or_404(Job, id=id)
 
-    job_applications = JobApplication.objects.filter(
-        job__company=company
-    ).select_related(
-        'employee',
-        'job'
-    )
+    company = data.company
 
     return render(
         request,
-        'company_candidates.html',
+        'company_job_detail.html',
         {
-            'company': company,
-            'job_applications': job_applications,
+            'data': data,
+            'company': company
         }
     )
+
+from .models import JobApplication, EmployeeProfile, Education, Experience, Skill
+
+
+def job_applicants(request, id):
+
+    application = JobApplication.objects.get(id=id)
+
+    employee = application.employee
+
+    profile = EmployeeProfile.objects.get(employee=employee)
+
+    company = application.job.company
+
+
+    return render(
+        request,
+        'job_applicants.html',
+        {
+            'application': application,
+            'employee': employee,
+            'profile': profile,
+            'company': company
+        }
+    )
+from django.shortcuts import get_object_or_404, redirect
+from .models import JobApplication
+
+def update_application_status(request, id):
+    application = get_object_or_404(JobApplication, id=id)
+    job = application.job
+
+    if request.method == "POST":
+        new_status = request.POST.get("status")
+        old_status = application.status
+
+        # Accepting an applicant
+        if old_status != "Accepted" and new_status == "Accepted":
+            if job.vacancy > 0:
+                job.vacancy -= 1
+
+                if job.vacancy == 0:
+                    job.is_active = False
+
+                job.save()
+
+        # Changing from Accepted back to another status
+        elif old_status == "Accepted" and new_status != "Accepted":
+            job.vacancy += 1
+            job.is_active = True
+            job.save()
+
+        application.status = new_status
+        application.save()
+
+    return redirect("job_applicants", id=application.id)
+
+def saved_jobs(request):
+
+    employee_id = request.session.get("employee_id")
+
+    if not employee_id:
+        return redirect("employeelogin")
+
+
+    employee = get_object_or_404(
+        Employee,
+        id=employee_id
+    )
+
+
+    saved = SaveJob.objects.filter(
+        employee=employee
+    ).select_related(
+        "job",
+        "job__company",
+        "job__position"
+    ).order_by("-id")
+
+
+    # Pagination
+    paginator = Paginator(saved, 5)
+
+    page_number = request.GET.get("page")
+
+    page_obj = paginator.get_page(page_number)
+
+
+    return render(
+        request,
+        "saved_jobs.html",
+        {
+            "employee": employee,
+            "page_obj": page_obj
+        }
+    )
+
+def show_post(request,id):
+    
+
+    company = Company.objects.get(id=id)
+    
+
+    jobs = Job.objects.filter(company=company)
+
+    status = request.GET.get("status")
+
+    if status == "open":
+        jobs = jobs.filter(is_active=True)
+    elif status == "closed":
+        jobs = jobs.filter(is_active=False)
+
+    jobs = jobs.order_by("-posted_date")  # or "-id" if you don't have posted_date
+
+    paginator = Paginator(jobs, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "company": company,
+        "jobs": page_obj,
+        "page_obj": page_obj,
+        "status": status,
+    }
+
+    return render(request, "show_post.html", context)

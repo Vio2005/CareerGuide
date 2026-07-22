@@ -287,6 +287,9 @@
 .btn-container{
     text-align: center;
 }
+.dec:hover{
+    text-decoration: none;
+}
     </style>
     
   </head>
@@ -496,7 +499,7 @@ Career Match History
 <div class="custom-breadcrumbs">
 
 
-<a href="{% url 'homeview' %}">
+<a href="{% url 'homeview' %}" class="dec">
 Home
 </a>
 
@@ -507,7 +510,7 @@ Home
 </span>
 
 
-<a href="{% url 'careerquiz' %}">
+<a href="{% url 'careerquiz' %}" class="dec">
 Career Match
 </a>
 

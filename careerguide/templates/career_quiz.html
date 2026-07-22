@@ -306,6 +306,9 @@
 
 
 }
+.dec:hover{
+    text-decoration: none;
+}
     </style> 
   </head>
   <body id="top">
@@ -413,13 +416,7 @@ Profile
 
 
 
-<li class="d-lg-none">
 
-<a href="{% url 'employeelogout' %}">
-Log Out
-</a>
-
-</li>
 
 
 
@@ -440,16 +437,15 @@ Log Out
 <div class="ml-auto">
 
 
-<a href="{% url 'employeelogout' %}"
-class="btn btn-primary border-width-2 d-none d-lg-inline-block">
-
-
-<span class="mr-2 icon-lock_outline"></span>
-
-Log Out
-
-
-</a>
+{% if request.session.employee_id %}
+    <a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>
+        Log Out
+    </a>
+{% else %}
+    <a href="{% url 'employeelogin' %}"class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>
+        Log In
+    </a>
+{% endif %}
 
 
 </div>
@@ -517,7 +513,7 @@ Career Match
 <div class="custom-breadcrumbs">
 
 
-<a href="{% url 'homeview' %}">
+<a href="{% url 'homeview' %}" class="dec">
 Home
 </a>
 

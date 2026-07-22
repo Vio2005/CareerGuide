@@ -44,6 +44,15 @@ urlpatterns = [
     path('check_apply/<int:id>/', check_apply, name='check_apply'),
     path('employeeprofileview/<int:id>/',employee_profile_view,name='employeeprofileview'),
     path('company_candidates', company_candidates, name='company_candidates'),
+    path('intro', intro, name='intro'),
+    path('employeeprofileview/<int:id>/',employee_profile_view,name='employeeprofileview'),
+    path('company_candidates', company_candidates, name='company_candidates'),
+    path('company-job-detail/<int:id>/',company_job_detail,name='company_job_detail'),
+    path('job_applicants/<int:id>/',job_applicants,name='job_applicants'),
+    path('application/status/<int:id>/',update_application_status,name='update_application_status'),
+    path('viewcompanydetail/<int:id>/', view_company_detail,name='viewcompanydetail'),
+    path('savedjobs', saved_jobs,name='savedjobs'),
+    path('showpost/<int:id>/', show_post,name='showpost'),
   
 
 
