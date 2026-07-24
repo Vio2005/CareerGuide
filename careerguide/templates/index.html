@@ -151,7 +151,7 @@
                   <ul class="keywords list-unstyled m-0 p-0 d-flex flex-wrap align-items-center">
                     {% for p in popular_positions %}
                         <li class="mb-2 mr-2">
-                            <a href="{% url 'homeview' %}?position={{ p.position_name }}#list" class="badge badge-light px-3 py-2 text-dark text-decoration-none">
+                            <a href="{% url 'homeview' %}?position={{ p.position_name }}#list" class="badge badge-light px-3 py-2 text-decoration-none">
                                 {{ p.position_name }}
                             </a>
                         </li>
