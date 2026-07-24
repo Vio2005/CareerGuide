@@ -398,13 +398,11 @@ Profile
 
 
 
-<li class="d-lg-none">
-
-<a href="{% url 'employeelogout' %}">
-Log Out
-</a>
-
-</li>
+{% if request.session.employee_id %}
+              <li><a href="{%url 'employeelogout' %}" id="logoutBtn">Log out</a></li>
+              {% else %}
+              <li><a href="{%url 'employeelogin' %}">Log In</a></li>
+              {% endif %}
 
 
 
