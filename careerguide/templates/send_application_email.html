@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JobBoard - Company Profile</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+    <!-- Same CSS as home -->
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/companyprofile.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Email Form */
+        .email-container {
+            padding: 40px 0;
+        }
+
+        .email-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* OVERRIDE GLOBAL FORM MARGIN FROM style.css */
+        .email-card form {
+            margin-top: 0 !important;
+            padding: 0 !important;
+        }
+
+        .email-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #074f80;
+        }
+
+        .email-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .email-input,
+        .email-textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .email-input:focus,
+        .email-textarea:focus {
+            border-color: #074f80;
+            box-shadow: 0 0 0 3px rgba(7, 79, 128, 0.15);
+            outline: none;
+        }
+
+        .email-textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        /* Action Buttons */
+        .btn-action-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .send-email-btn {
+            background: linear-gradient(135deg,#074f85,#00c6ff);
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+
+        .send-email-btn:hover {
+            background: linear-gradient(135deg,#063b63,#0099cc);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background: #e9ecef;
+            color: #495057;
+            border: 1px solid #ced4da;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #dee2e6;
+            color: #212529;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+        .status-info {
+            background: #f4f8f8;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .status-info span {
+            font-weight: 700;
+            color: #074f80;
+        }
+    </style>
+</head>
+
+<body id="top">
+
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="site-wrap">
+
+        <!-- MOBILE MENU -->
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+        <!-- NAVBAR -->
+        <header class="site-navbar mt-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="site-logo col-6">
+                        <a href="{% url 'company_index' %}">Career Bridge</a>
+                    </div>
+
+                    <nav class="mx-auto site-navigation">
+                        <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+                            <li><a href="{% url 'company_index' %}">Home</a></li>
+                            <li><a href="{% url 'companypostview' company.id %}">Job Post</a></li>
+                            <li><a href="{% url 'company_candidates' %}" class="nav-link active">Applicants</a></li>
+                            <li><a href="{% url 'hiring_analytics' %}">Hiring Analytic</a></li>
+                            <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
+                            <li>
+                                <a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
+                                    <span class="mr-2 icon-add"></span>Post a Job
+                                </a>
+                            </li>
+                            <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="right-cta-menu text-right d-flex align-items-center col-6">
+                        <div class="ml-auto">
+                            <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block" id="logoutBtn">
+                                <span class="mr-2 icon-lock_outline"></span>Log Out
+                            </a>
+                        </div>
+                        <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+                            <span class="icon-menu h3 m-0 p-0 mt-2"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'images/company1.jpg' %}');" id="home-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 class="text-white font-weight-bold">Send {{ status }} Email</h1>
+                        <div class="custom-breadcrumbs">
+                            <a href="{% url 'company_index' %}" class="dec">Home</a>
+                            <span class="mx-2 slash">/</span>
+                            <a href="{% url 'company_candidates' %}" class="dec">Applicant</a>
+                            <span class="mx-2 slash">/</span>
+                            <a href="{% url 'job_applicants' application.id %}" class="dec">Employee Profile</a>
+                            <span class="mx-2 slash">/</span>
+                            <span class="text-white"><strong>Send Email</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main SECTION -->
+        <section class="profile-section">
+            <div class="container email-container">
+                <div class="email-card">
+                    <h2 class="email-title">Send {{ status }} Email</h2>
+
+                    <div class="status-info">
+                        Application Status: <span>{{ status }}</span>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Side-by-side row for Email & Password -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="email-label">Company Email</label>
+                                <input type="email" name="email" class="email-input" placeholder="company@gmail.com" value="{{ company.email|default:'' }}" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="email-label">App Password</label>
+                                <input type="password" name="app_password" class="email-input" placeholder="Enter app password" value="{{ company.email_app_password|default:'' }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="email-label">Subject</label>
+                            <input name="subject" class="email-input" value="Application Status Update">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="email-label">Message</label>
+                            <textarea name="message" class="email-textarea">{{ default_message }}</textarea>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="btn-action-group">
+                            <button type="submit" class="send-email-btn">
+                                <span class="icon-mail_outline mr-1"></span> Send Email
+                            </button>
+                            <a href="{% url 'job_applicants' application.id %}" class="back-btn">
+                                <span class="icon-arrow-left mr-1"></span> Back
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+
+  <a href="#top" class="smoothscroll scroll-top">
+    <span class="icon-keyboard_arrow_up"></span>
+  </a>
+
+  <div class="container">
+    <div class="row mb-5">
+      
+      <!-- Column 1: Quick Links -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>Quick Links</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'intro' %}" class="dec">Welcome</a></li>
+          <li><a href="{% url 'homeview' %}" class="dec">Find Jobs</a></li>
+          <li><a href="{% url 'careerquiz' %}" class="dec">Career Quiz</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: For Job Seekers -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>For Job Seekers</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'homeview' %}#list" class="dec">Job Lists</a></li>
+          <li><a href="{% url 'savedjobs' %}" class="dec">Saved Jobs</a></li>
+          <li><a href="{% url 'applied_job' %}" class="dec">Applied Jobs</a></li>
+          <li><a href="{% url 'result_history' %}" class="dec">Career Match Results</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: For Companies -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>For Companies</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'companypost' %}" class="dec">Post Job</a></li>
+          <li><a href="{% url 'company_index' %}" class="dec">Dashboard</a></li>
+          <li><a href="{% url 'company_candidates' %}" class="dec">Applicants</a></li>
+          <li><a href="{% url 'companyregister' %}" class="dec">Register</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Us (WIDER COLUMN) -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>Contact Us</h3>
+
+        <div class="footer-social mb-3">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-facebook"></span>
+          </a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-twitter"></span>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-instagram"></span>
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-linkedin"></span>
+          </a>
+        </div>
+
+        <p class="mb-1 text-nowrap">
+          <span class="icon-envelope"></span>
+          Email: support@careerbridge.com
+        </p>
+
+        <p class="mb-0 text-nowrap">
+          <span class="icon-phone"></span>
+          Phone: +95 9 123 456 789
+        </p>
+      </div>
+
+    </div>
+
+    <div class="row text-center">
+      <div class="col-12">
+        <p class="copyright"><small>
+          Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+        </small></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.getElementById("logoutBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Logout?",
+        text: "Are you sure you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#074f85",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, Logout",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = this.href;
+        }
+    });
+});
+</script>
+
+</body>
+
+</html>

@@ -30,6 +30,33 @@ class Company(models.Model):
     company_name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
+    EMAIL_PROVIDER = [
+        ('gmail', 'Gmail'),
+        ('outlook', 'Outlook'),
+        ('custom', 'Custom'),
+    ]
+
+    email_provider = models.CharField(
+        max_length=20,
+        choices=EMAIL_PROVIDER,
+        default='gmail'
+    )
+
+    email_app_password = models.CharField(
+    max_length=255,
+    blank=True,
+    null=True
+)
+
+    smtp_host = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    smtp_port = models.IntegerField(
+        default=587
+    )
     phone = models.CharField(max_length=15)
     description = models.TextField()
     website = models.URLField(blank=True)
@@ -126,6 +153,7 @@ class JobApplication(models.Model):
     cover_letter = models.TextField(blank=True)
 
     applied_date = models.DateTimeField(auto_now_add=True)
+    
 
     status = models.CharField(
         max_length=30,
@@ -173,3 +201,24 @@ class SaveJob(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.employee} - {self.job}"
+
+class ApplicationEmail(models.Model):
+
+    application = models.ForeignKey(
+        JobApplication,
+        on_delete=models.CASCADE
+    )
+    status = models.CharField(
+        max_length=30
+    )
+
+    subject = models.CharField(max_length=200)
+
+    message = models.TextField()
+
+    sent_date = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.application} - {self.status}"

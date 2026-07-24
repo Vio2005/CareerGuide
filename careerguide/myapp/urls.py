@@ -53,6 +53,7 @@ urlpatterns = [
     path('viewcompanydetail/<int:id>/', view_company_detail,name='viewcompanydetail'),
     path('savedjobs', saved_jobs,name='savedjobs'),
     path('showpost/<int:id>/', show_post,name='showpost'),
+    path('send-application-email/<int:id>/<str:status>/',send_application_email,name='send_application_email'),
   
 
 

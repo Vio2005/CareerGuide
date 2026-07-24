@@ -323,7 +323,21 @@
         width: auto; }
         .site-mobile-menu .site-nav-wrap[data-class="social"] > li:first-child a {
           padding-left: 15px !important; }
+#overlayer {
+    z-index: 1000 !important;
+}
 
+.loader {
+    z-index: 1001 !important;
+}
+
+.site-mobile-menu {
+    z-index: 9999 !important;
+}
+
+.site-mobile-menu .site-nav-wrap a {
+    pointer-events: auto !important;
+}
 .sticky-wrapper {
   position: absolute;
   z-index: 100;
@@ -1860,3 +1874,5 @@ form {
 .dec:hover{
   text-decoration: none;
 }
+
+

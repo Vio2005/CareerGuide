@@ -33,6 +33,7 @@ def homeview(request):
     jobs = Job.objects.filter(is_active=True).order_by('-posted_date')
     cities = City.objects.all()
     positions = Position.objects.all()
+    
 
     position = request.GET.get('position')
     city = request.GET.get('city')
@@ -60,6 +61,12 @@ def homeview(request):
     companycount=Company.objects.count()
     fillcount=JobApplication.objects.filter(status='Accepted').count()
     employeecount= JobApplication.objects.values('employee').distinct().count()
+    popular_positions = (
+    Position.objects.annotate(
+        total_applications=Count("job__jobapplication")
+    )
+    .order_by("-total_applications")[:3]   
+)
 
     context = {
         'job': jobs,
@@ -73,7 +80,8 @@ def homeview(request):
         'jobcount':jobcount,
         'companycount':companycount,
         'fillcount':fillcount,
-        'employeecount':employeecount
+        'employeecount':employeecount,
+        'popular_positions':popular_positions,
     }
 
     return render(request, 'index.html', context)
@@ -865,7 +873,9 @@ def view_company_detail(request,id):
     return render(request, 'view_company_detail.html', context)
 
 def company_profile(request,id):
-    
+    company_id = request.session.get('company_id')
+    if not company_id:
+                return redirect('companylogin')
 
     company = Company.objects.get(id=id)
 
@@ -914,6 +924,10 @@ from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
 
 def company_post_view(request, id):
+    company_id = request.session.get('company_id')
+    
+    if not company_id:
+            return redirect('companylogin')
     company = get_object_or_404(Company, id=id)
 
     # Get all jobs for this company
@@ -1691,6 +1705,8 @@ from django.db.models.functions import ExtractMonth
 def hiring_analytics(request):
 
     company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companylogin')
 
     company = Company.objects.get(id=company_id)
     # Total jobs posted by company
@@ -1819,8 +1835,11 @@ def employee_profile_view(request, id):
     return render(request, "employee_profile_view.html", context)
 
 def company_candidates(request):
+    
 
     company_id = request.session.get("company_id")
+    if not company_id:
+                return redirect('companylogin')
 
     company = get_object_or_404(
         Company,
@@ -1992,3 +2011,229 @@ def show_post(request,id):
     }
 
     return render(request, "show_post.html", context)
+
+from django.core.mail import EmailMessage, get_connection
+
+
+from django.contrib import messages
+
+
+
+
+
+def send_application_email(request, id, status):
+
+    application = get_object_or_404(
+        JobApplication,
+        id=id
+    )
+
+    company = application.job.company
+
+
+    # Check 1: Cannot send email when Pending
+    if status == "Pending":
+
+        messages.warning(
+            request,
+            "Please update the application status before sending an email."
+        )
+
+        return redirect(
+            "job_applicants",
+            id=id
+        )
+
+
+    # Check 2: Check if this status email was already sent
+    already_sent = ApplicationEmail.objects.filter(
+        application=application,
+        status=status
+    ).exists()
+
+
+    if already_sent:
+
+        messages.warning(
+            request,
+            f"The {status} email has already been sent for this application."
+        )
+
+        return redirect(
+            "job_applicants",
+            id=id
+        )
+
+
+    # Default messages
+
+    if status == "Accepted":
+
+        default_message = f"""
+Dear {application.employee.username},
+
+Congratulations!
+
+Your application for 
+{application.job.position.position_name}
+
+has been accepted.
+
+Company:
+{company.company_name}
+
+We will contact you soon.
+
+Best regards,
+{company.company_name}
+"""
+
+
+    elif status == "Shortlisted":
+
+        default_message = f"""
+Dear {application.employee.username},
+
+Your application for
+{application.job.position.position_name}
+
+has been shortlisted.
+
+We will contact you soon.
+
+Best regards,
+{company.company_name}
+"""
+
+
+    elif status == "Rejected":
+
+        default_message = f"""
+Dear {application.employee.username},
+
+Thank you for applying.
+
+Your application was not selected.
+
+We wish you success.
+
+Best regards,
+{company.company_name}
+"""
+
+
+    else:
+
+        default_message = ""
+
+
+
+    # Send email
+
+    if request.method == "POST":
+
+
+        company_email = request.POST.get("email")
+
+        app_password = request.POST.get("app_password")
+
+
+
+        subject = request.POST.get("subject")
+
+        message = request.POST.get("message")
+
+
+
+        connection = get_connection(
+
+            host="smtp.gmail.com",
+
+            port=587,
+
+            username=company_email,
+
+            password=app_password,
+
+            use_tls=True
+
+        )
+
+
+
+        email = EmailMessage(
+
+            subject,
+
+            message,
+
+            company_email,
+
+            [application.employee.email],
+
+            connection=connection
+
+        )
+
+
+        # Send email
+        email.send()
+
+
+
+        # Save company email credentials after successful send
+        if not company.email_app_password:
+
+            company.email = company_email
+
+            company.email_app_password = app_password
+
+            company.save()
+
+
+
+        # Save email history
+
+        ApplicationEmail.objects.create(
+
+            application=application,
+
+            status=status,
+
+            subject=subject,
+
+            message=message
+
+        )
+
+
+
+        messages.success(
+            request,
+            "Email has been sent successfully!"
+        )
+
+
+        return redirect(
+            "job_applicants",
+            id=id
+        )
+
+
+
+    return render(
+
+        request,
+
+        "send_application_email.html",
+
+        {
+            "application": application,
+            "status": status,
+            "default_message": default_message,
+            "company": company
+        }
+
+    )
+
+

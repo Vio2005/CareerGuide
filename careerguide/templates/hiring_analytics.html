@@ -181,16 +181,18 @@
               <li><a href="{% url 'company_candidates' %}">Candidate</a></li>
               <li><a href="{% url 'hiring_analytics' %}" class="nav-link active">Hiring Analytic</a></li>
               <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
-              <li><a href="{% url 'companypost' %}" class="btn d-none d-lg-inline-block">
-                <span class="mr-2 icon-add"></span>Post a Job
-              </a></li>
+               <li>
+  <a href="{% url 'companypost' %}">
+    <span class="mr-2 icon-add"></span>Post a Job
+  </a>
+</li>
               <li class="d-lg-none"><a href="{% url 'companylogout' %}">Log Out</a></li>
             </ul>
           </nav>
           
           <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">
-              <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
+              <a href="{% url 'companylogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block" id="logoutBtn"><span class="mr-2 icon-lock_outline"></span>Log Out</a>
             </div>
             <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
           </div>
@@ -394,62 +396,88 @@ Monthly Applications
 
 </section>
     
-    <footer class="site-footer">
+   <footer class="site-footer">
 
-      <a href="#top" class="smoothscroll scroll-top">
-        <span class="icon-keyboard_arrow_up"></span>
-      </a>
-<div class="container">
-        <div class="row mb-5">
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Search Trending</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Graphic Design</a></li>
-              <li><a href="#">Web Developers</a></li>
-              <li><a href="#">Python</a></li>
-              <li><a href="#">HTML5</a></li>
-              <li><a href="#">CSS3</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Company</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Career</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Resources</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Support</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Support</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-3 mb-4 mb-md-0">
-            <h3>Contact Us</h3>
-            <div class="footer-social">
-              <a href="#"><span class="icon-facebook"></span></a>
-              <a href="#"><span class="icon-twitter"></span></a>
-              <a href="#"><span class="icon-instagram"></span></a>
-              <a href="#"><span class="icon-linkedin"></span></a>
-            </div>
-          </div>
-        </div>
+  <a href="#top" class="smoothscroll scroll-top">
+    <span class="icon-keyboard_arrow_up"></span>
+  </a>
 
-        <div class="row text-center">
-          <div class="col-12">
-            <p class="copyright"><small>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small></p>
-          </div>
-        </div>
+  <div class="container">
+    <div class="row mb-5">
+      
+      <!-- Column 1: Quick Links -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>Quick Links</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'intro' %}" class="dec">Welcome</a></li>
+          <li><a href="{% url 'homeview' %}" class="dec">Find Jobs</a></li>
+          <li><a href="{% url 'careerquiz' %}" class="dec">Career Quiz</a></li>
+        </ul>
       </div>
-    </footer>
+
+      <!-- Column 2: For Job Seekers -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>For Job Seekers</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'homeview' %}#list" class="dec">Job Lists</a></li>
+          <li><a href="{% url 'savedjobs' %}" class="dec">Saved Jobs</a></li>
+          <li><a href="{% url 'applied_job' %}" class="dec">Applied Jobs</a></li>
+          <li><a href="{% url 'result_history' %}" class="dec">Career Match Results</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: For Companies -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>For Companies</h3>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'companypost' %}" class="dec">Post Job</a></li>
+          <li><a href="{% url 'company_index' %}" class="dec">Dashboard</a></li>
+          <li><a href="{% url 'company_candidates' %}" class="dec">Applicants</a></li>
+          <li><a href="{% url 'companyregister' %}" class="dec">Register</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Us (WIDER COLUMN) -->
+      <div class="col-6 col-md-3 col-lg-3 mb-4 mb-md-0">
+        <h3>Contact Us</h3>
+
+        <div class="footer-social mb-3">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-facebook"></span>
+          </a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-twitter"></span>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-instagram"></span>
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+            <span class="icon-linkedin"></span>
+          </a>
+        </div>
+
+        <p class="mb-1 text-nowrap">
+          <span class="icon-envelope"></span>
+          Email: support@careerbridge.com
+        </p>
+
+        <p class="mb-0 text-nowrap">
+          <span class="icon-phone"></span>
+          Phone: +95 9 123 456 789
+        </p>
+      </div>
+
+    </div>
+
+    <div class="row text-center">
+      <div class="col-12">
+        <p class="copyright"><small>
+          Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+        </small></p>
+      </div>
+    </div>
+  </div>
+</footer>
   
   </div>
 
@@ -534,6 +562,26 @@ new Chart(ctx, {
 
 </script>
 
-     
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.getElementById("logoutBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Logout?",
+        text: "Are you sure you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#074f85",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, Logout",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = this.href;
+        }
+    });
+});
+</script>
   </body>
 </html>

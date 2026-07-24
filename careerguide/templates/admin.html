@@ -35,7 +35,7 @@
         </a>
         <a class="nav-link {% if request.resolver_match.url_name == 'employeelist' %}active{% endif %}" href="{% url 'employeelist' %}">
           <span class="nav-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
-          <span class="nav-text">Employee</span>
+          <span class="nav-text">Job Seeker</span>
         </a>
         <a class="nav-link {% if request.resolver_match.url_name == 'companylist' %}active{% endif %}" href="{% url 'companylist' %}">
           <span class="nav-icon"><i class="bi bi-building" aria-hidden="true"></i></span>
@@ -106,7 +106,7 @@
             <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
               <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
             </button>
-            <div class="dropdown">
+            <!--<div class="dropdown">
               <button class="icon-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
                 <span class="notification-dot"></span>
                 <i class="bi bi-bell" aria-hidden="true"></i>
@@ -129,7 +129,7 @@
             </div>
 
             <div class="dropdown">
-             <!----<button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="avatar-img avatar-sm" src="{% static 'assets/images/avatar/admin1.jpg' %}" alt="Admin Hasan">
                 <span class="profile-name d-none d-sm-inline">Admin</span>
               </button>
@@ -138,10 +138,10 @@
                 <li><a class="dropdown-item" href="settings.html">Account settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="login.html" onclick="return confirmLogout()">Sign out</a></li>
-              </ul>-->
+              </ul>
             </div>
           </div>
-        </div>
+        </div>-->
       </nav>
 
     
