@@ -19,7 +19,64 @@
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
 
     <!-- MAIN CSS -->
-<link rel="stylesheet" href="{% static 'css/intro.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/intro.css' %}">    
+
+    <!-- INLINE FIX FOR CAROUSEL ARROWS OVERLAPPING TEXT -->
+    <style>
+      .single-carousel {
+          position: relative;
+      }
+      .single-carousel .owl-nav {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          transform: translateY(-50%);
+          display: flex;
+          justify-content: space-between;
+          z-index: 10;
+          pointer-events: none;
+          padding: 0 25px;
+      }
+      .single-carousel .owl-nav button.owl-prev,
+      .single-carousel .owl-nav button.owl-next {
+          pointer-events: auto;
+          background: rgba(7, 79, 133, 0.85) !important;
+          color: #fff !important;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          outline: none;
+          transition: 0.3s ease;
+      }
+      .single-carousel .owl-nav button.owl-prev:hover,
+      .single-carousel .owl-nav button.owl-next:hover {
+          background: #074f85 !important;
+      }
+      .carousel-content {
+          padding-left: 12% !important;
+          padding-right: 12% !important;
+          max-width: 1100px;
+      }
+      @media (max-width: 991.98px) {
+          .carousel-content {
+              padding-left: 8% !important;
+              padding-right: 8% !important;
+          }
+          .single-carousel .owl-nav {
+              padding: 0 10px;
+          }
+          .single-carousel .owl-nav button.owl-prev,
+          .single-carousel .owl-nav button.owl-next {
+              width: 40px;
+              height: 40px;
+              font-size: 18px;
+          }
+      }
+    </style>
   </head>
   <body id="top">
 
@@ -30,7 +87,6 @@
     </div>
   </div>
     
-
 <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -48,483 +104,179 @@
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="site-logo col-6"><a href="#">Career Bridge</a></div>
-            </ul>
-          </nav>
-
         </div>
       </div>
     </header>
 
     <section class="bg-light testimony-full">
-
       <section class="testimony-full">
+        <div class="owl-carousel single-carousel">
 
-    <div class="owl-carousel single-carousel">
+          <!-- Slide 1 -->
+          <div class="carousel-slide" style="background-image:url('{% static 'images/hero_1.jpg' %}');">
+              <div class="carousel-overlay"></div>
+              <div class="carousel-content">
+                  <div class="hero-text">
+                      <h1>Find the Right Talent for Your Future</h1>
+                      <p>Connect with skilled candidates and discover professionals who match your company's needs through Career Bridge.</p>
+                  </div>
+                  <div class="hero-buttons">
+                      <div class="top-buttons">
+                          <a href="{% url 'companylogin' %}" class="btn">Search Candidates</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-    <!-- Slide 1 -->
-<div class="carousel-slide" style="background-image:url('{% static 'images/hero_1.jpg' %}');">
+          <!-- Slide 2 -->
+          <div class="carousel-slide" style="background-image: url('{% static 'images/company1.jpg' %}');">
+              <div class="carousel-overlay"></div>
+              <div class="carousel-content">
+                  <div class="hero-text">
+                      <h1>Discover Better Career Opportunities</h1>
+                      <p>Explore trusted companies, connect with employers, and take the next step toward your professional growth.</p>
+                  </div>
+                  <div class="hero-buttons">
+                      <div class="top-buttons">
+                          <a href="{% url 'homeview' %}" class="btn">Search Companies</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-    <div class="carousel-overlay"></div>
-
-    <div class="carousel-content">
-
-        <div class="hero-text">
-
-            <h1>
-                Find the Right Talent for Your Future
-            </h1>
-
-            <p>
-                Connect with skilled candidates and discover professionals 
-                who match your company's needs through Career Bridge.
-            </p>
-
-        </div>
-
-
-        <div class="hero-buttons">
-
-            <div class="top-buttons">
-
-                <a href="{%url 'companylogin' %}" class="btn">
-                    Search Candidates
-                </a>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- Slide 2 -->
-<div class="carousel-slide" style="background-image: url('{% static 'images/company1.jpg' %}');">
-
-    <div class="carousel-overlay"></div>
-
-    <div class="carousel-content">
-
-
-        <div class="hero-text">
-
-            <h1>
-                Discover Better Career Opportunities
-            </h1>
-
-            <p>
-                Explore trusted companies, connect with employers, 
-                and take the next step toward your professional growth.
-            </p>
+          <!-- Slide 3 -->
+          <div class="carousel-slide" style="background-image:url('{% static 'images/hero_3.jpg' %}');">
+              <div class="carousel-overlay"></div>
+              <div class="carousel-content">
+                  <div class="hero-text">
+                      <h1>Not Sure Which Career Fits You?</h1>
+                      <p>Let Career Bridge help you discover suitable career paths based on your skills, interests, and future goals.</p>
+                  </div>
+                  <div class="hero-buttons">
+                      <div class="career-button">
+                          <a href="{% url 'careerquiz' %}" class="btn">Find Your Career</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
         </div>
-
-
-        <div class="hero-buttons">
-
-            <div class="top-buttons">
-
-                <a href="{%url 'homeview' %}" class="btn">
-                    Search Companies
-                </a>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- Slide 3 -->
-<div class="carousel-slide" style="background-image:url('{% static 'images/hero_3.jpg' %}');">
-
-    <div class="carousel-overlay"></div>
-
-    <div class="carousel-content">
-
-
-        <div class="hero-text">
-
-            <h1>
-                Not Sure Which Career Fits You?
-            </h1>
-
-            <p>
-                Let Career Bridge help you discover suitable career paths 
-                based on your skills, interests, and future goals.
-            </p>
-
-        </div>
-
-
-        <div class="hero-buttons">
-
-            <div class="career-button">
-
-                <a href="{%url 'careerquiz' %}" class="btn">
-                    Find Your Career
-                </a>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-</section>
-
-   <!-- ================= HOME ================= -->
-
-
-
+      </section>
+    </section>
 
 <!-- ================= STATS SECTION ================= -->
-
-
-<section class="py-5 bg-image overlay-primary fixed overlay"
-id="next"
-style="background-image: url('{% static 'images/hero_1.jpg' %}');">
-
-
-<div class="container">
-
-
-    <div class="row mb-5 justify-content-center">
-
-        <div class="col-md-7 text-center">
-
-
-            <h2 class="section-title mb-2 text-white">
-                Career Bridge Site Stats
-            </h2>
-
-
-            <p class="lead text-white">
-
-                Empowering professional journeys and building lasting partnerships. We bridge the gap between world-class talent and the visionary companies looking to hire them.
-
-            </p>
-
-
-        </div>
-
-    </div>
-
-
-
-
-
-    <div class="row block__19738 section-counter">
-
-
-
-        <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-
-            <div class="d-flex justify-content-center mb-2">
-
-            <strong class="number" data-number="{{employeecount}}">
-                    0
-                </strong>
-
-            </div>
-
-
-            <span class="caption">
-                Candidates
-            </span>
-
-
-        </div>
-
-
-
-
-
-        <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-
-            <div class="d-flex justify-content-center mb-2">
-
-                <strong class="number" data-number="{{jobcount}}">
-                    0
-                </strong>
-
-            </div>
-
-
-            <span class="caption">
-                Jobs Posted
-            </span>
-
-
-        </div>
-
-
-
-
-
-        <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-
-            <div class="d-flex justify-content-center mb-2">
-
-                <strong class="number" data-number="{{fillcount}}">
-                    0
-                </strong>
-
-            </div>
-
-
-            <span class="caption">
-                Jobs Filled
-            </span>
-
-
-        </div>
-
-
-
-
-
-        <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-
-            <div class="d-flex justify-content-center mb-2">
-
-                <strong class="number" data-number="{{companycount}}">
-                    0
-                </strong>
-
-            </div>
-
-
-            <span class="caption">
-                Companies
-            </span>
-
-
-        </div>
-
-
-
-    </div>
-
-
-</div>
-
-
+<section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+      <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+              <h2 class="section-title mb-2 text-white">Career Bridge Site Stats</h2>
+              <p class="lead text-white">
+                  Empowering professional journeys and building lasting partnerships. We bridge the gap between world-class talent and the visionary companies looking to hire them.
+              </p>
+          </div>
+      </div>
+
+      <div class="row block__19738 section-counter">
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+              <div class="d-flex justify-content-center mb-2">
+              <strong class="number" data-number="{{employeecount}}">0</strong>
+              </div>
+              <span class="caption">Candidates</span>
+          </div>
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+              <div class="d-flex justify-content-center mb-2">
+                  <strong class="number" data-number="{{jobcount}}">0</strong>
+              </div>
+              <span class="caption">Jobs Posted</span>
+          </div>
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+              <div class="d-flex justify-content-center mb-2">
+                  <strong class="number" data-number="{{fillcount}}">0</strong>
+              </div>
+              <span class="caption">Jobs Filled</span>
+          </div>
+
+          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+              <div class="d-flex justify-content-center mb-2">
+                  <strong class="number" data-number="{{companycount}}">0</strong>
+              </div>
+              <span class="caption">Companies</span>
+          </div>
+      </div>
+  </div>
 </section>
-
-
-
-
-
 
 <!-- ================= WHY CAREER BRIDGE ================= -->
-
-
 <section class="site-section why-career-section">
-
-
-<div class="container">
-
-
-    <!-- TITLE -->
-
-    <div class="row justify-content-center mb-4">
-
-
-        <div class="col-lg-8 text-center">
-
-
-            <h2 class="section-title mb-3">
-
-                Why Career Bridge
-
-            </h2>
-
-
-
-            <p class="lead">
-
-                We connect talented professionals with trusted companies through meaningful opportunities, smart matching, and a faster hiring experience.
-
-            </p>
-
-
-
-        </div>
-
-
-    </div>
-
-
-
-
-
-    <!-- CARDS -->
-
-
-    <div class="row feature-row">
-
-
-
-        <!-- CARD 1 -->
-
-        <div class="col-lg-4 col-md-6 mb-4">
-
-
-            <div class="feature-card">
-
-
-                <div class="feature-icon">
-                    ✓
-                </div>
-
-
-
-                <h3>
-                    Quality Over Quantity
-                </h3>
-
-
-
-                <p>
-
-                    We don’t believe in endless scrolling or spam applications. We carefully curate candidates and company listings to ensure every connection is meaningful, qualified, and relevant.
-
-                </p>
-
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-        <!-- CARD 2 -->
-
-        <div class="col-lg-4 col-md-6 mb-4">
-
-
-            <div class="feature-card">
-
-
-                <div class="feature-icon">
-                    ⚡
-                </div>
-
-
-
-                <h3>
-                    Direct & Accelerated Hiring
-                </h3>
-
-
-
-                <p>
-
-                    Connect directly with decision-makers and remove unnecessary delays. Career Bridge helps reduce traditional hiring cycles by creating a faster and clearer recruitment process.
-
-                </p>
-
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-
-        <!-- CARD 3 -->
-
-        <div class="col-lg-4 col-md-6 mb-4">
-
-
-            <div class="feature-card">
-
-
-                <div class="feature-icon">
-                    🎯
-                </div>
-
-
-
-                <h3>
-                    Culture-First Alignment
-                </h3>
-
-
-
-                <p>
-
-                    The right career move is more than matching skills. Our smart approach considers values, work styles, and long-term growth opportunities.
-
-                </p>
-
-
-
-            </div>
-
-
-        </div>
-
-
-
-    </div>
-
-
-</div>
-
-
+  <div class="container">
+      <div class="row justify-content-center mb-4">
+          <div class="col-lg-8 text-center">
+              <h2 class="section-title mb-3">Why Career Bridge</h2>
+              <p class="lead">
+                  We connect talented professionals with trusted companies through meaningful opportunities, smart matching, and a faster hiring experience.
+              </p>
+          </div>
+      </div>
+
+      <div class="row feature-row">
+          <!-- CARD 1 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+              <div class="feature-card">
+                  <div class="feature-icon">✓</div>
+                  <h3>Quality Over Quantity</h3>
+                  <p>We don’t believe in endless scrolling or spam applications. We carefully curate candidates and company listings to ensure every connection is meaningful, qualified, and relevant.</p>
+              </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+              <div class="feature-card">
+                  <div class="feature-icon">⚡</div>
+                  <h3>Direct & Accelerated Hiring</h3>
+                  <p>Connect directly with decision-makers and remove unnecessary delays. Career Bridge helps reduce traditional hiring cycles by creating a faster and clearer recruitment process.</p>
+              </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+              <div class="feature-card">
+                  <div class="feature-icon">🎯</div>
+                  <h3>Culture-First Alignment</h3>
+                  <p>The right career move is more than matching skills. Our smart approach considers values, work styles, and long-term growth opportunities.</p>
+              </div>
+          </div>
+      </div>
+  </div>
 </section>
     
-
-    <section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('{% static 'images/hero_1.jpg' %}');">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
-            <h2 class="text-white">Get The Mobile Apps</h2>
-            <p class="mb-5 lead text-white">Coming Soon.</p>
-            <p class="mb-0">
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
-              <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
-            </p>
-          </div>
-          <div class="col-md-6 ml-auto align-self-end">
-            <img src="{% static 'images/phone.png' %}" alt="Free Website Template by Free-Template.co" class="img-fluid">
-          </div>
-        </div>
+<section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
+        <h2 class="text-white">Get The Mobile Apps</h2>
+        <p class="mb-5 lead text-white">Coming Soon.</p>
+        <p class="mb-0">
+          <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-apple mr-3"></span>App Store</a>
+          <a href="#" class="btn btn-dark btn-md px-4 border-width-2"><span class="icon-android mr-3"></span>Play Store</a>
+        </p>
       </div>
-    </section>
+      <div class="col-md-6 ml-auto align-self-end">
+        <img src="{% static 'images/phone.png' %}" alt="Free Website Template by Free-Template.co" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</section>
     
 <footer class="site-footer">
-
   <a href="#top" class="smoothscroll scroll-top">
     <span class="icon-keyboard_arrow_up"></span>
   </a>
 
   <div class="container">
     <div class="row mb-5">
-      
-      <!-- Column 1: Quick Links -->
+      <!-- Column 1 -->
       <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4 mb-md-0">
         <h3>Quick Links</h3>
         <ul class="list-unstyled">
@@ -534,7 +286,7 @@ style="background-image: url('{% static 'images/hero_1.jpg' %}');">
         </ul>
       </div>
 
-      <!-- Column 2: For Job Seekers -->
+      <!-- Column 2 -->
       <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4 mb-md-0">
         <h3>For Job Seekers</h3>
         <ul class="list-unstyled">
@@ -545,7 +297,7 @@ style="background-image: url('{% static 'images/hero_1.jpg' %}');">
         </ul>
       </div>
 
-      <!-- Column 3: For Companies -->
+      <!-- Column 3 -->
       <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4 mb-md-0">
         <h3>For Companies</h3>
         <ul class="list-unstyled">
@@ -556,36 +308,18 @@ style="background-image: url('{% static 'images/hero_1.jpg' %}');">
         </ul>
       </div>
 
-      <!-- Column 4: Contact Us -->
+      <!-- Column 4 -->
       <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4 mb-md-0">
         <h3>Contact Us</h3>
-
         <div class="footer-social mb-3">
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-            <span class="icon-facebook"></span>
-          </a>
-          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-            <span class="icon-twitter"></span>
-          </a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-            <span class="icon-instagram"></span>
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-            <span class="icon-linkedin"></span>
-          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook"></span></a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter"></span></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><span class="icon-instagram"></span></a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin"></span></a>
         </div>
-
-        <p class="mb-1 text-break">
-          <span class="icon-envelope"></span>
-          Email: support@careerbridge.com
-        </p>
-
-        <p class="mb-0 text-break">
-          <span class="icon-phone"></span>
-          Phone: +95 9 123 456 789
-        </p>
+        <p class="mb-1 text-break"><span class="icon-envelope"></span> Email: support@careerbridge.com</p>
+        <p class="mb-0 text-break"><span class="icon-phone"></span> Phone: +95 9 123 456 789</p>
       </div>
-
     </div>
 
     <div class="row text-center">
@@ -598,7 +332,7 @@ style="background-image: url('{% static 'images/hero_1.jpg' %}');">
   </div>
 </footer>
   
-  </div>
+</div>
 
     <!-- SCRIPTS -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
@@ -607,15 +341,10 @@ style="background-image: url('{% static 'images/hero_1.jpg' %}');">
     <script src="{% static 'js/stickyfill.min.js' %}"></script>
     <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
     <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-    
     <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
     <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    
     <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
-    
     <script src="{% static 'js/custom.js' %}"></script>
-
-     
   </body>
 </html>
