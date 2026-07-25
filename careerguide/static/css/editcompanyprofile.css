@@ -132,9 +132,9 @@ input[type="file"] {
 
 /* Update Profile Button */
 .profile-btn {
-    display: block;
+    display:inline-flex;
+    width:auto;
     min-width:170px;
-    padding:14px 30px;
     border-radius:50px;
     margin: 20px auto 0;
     padding: 14px 30px;
@@ -160,12 +160,12 @@ input[type="file"] {
 
 /* Back Button */
 .back-btn {
-    display: block;
+    display:inline-flex;
+    width:auto;
     min-width:170px;
     padding:14px 30px;
     border-radius:50px;
     margin: 20px auto 0;
-    padding: 14px 30px;
     border-radius: 50px;
     background: #f1f5f9;
     color: #074f85;
@@ -176,6 +176,7 @@ input[type="file"] {
     border: 2px solid #074f85;
     transition: .3s;
 }
+
 
 .back-btn:hover {
     background: #074f85;
@@ -207,9 +208,7 @@ input[type="file"] {
     }
 
     /* Make buttons stack properly and expand cleanly on mobile */
-    .d-flex.flex-column-reverse {
-        flex-direction: column-reverse;
-    }
+    
     .card .form-control{
         height:50px;
         min-height:50px;
