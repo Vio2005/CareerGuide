@@ -160,73 +160,118 @@
       </section>
 
 
-  <section class="site-section">
+<section class="site-section" id="list">
   <div class="container">
 
+    <!-- Section Title -->
     <div class="row mb-5 justify-content-center">
       <div class="col-md-7 text-center">
         <h2 class="section-title mb-2">Recent Application</h2>
       </div>
     </div>
     
-    <ul class="job-listings mb-5 list-unstyled">
+    <!-- Filter Form -->
+    <form method="GET" id="filterForm" class="row g-3 mb-4 justify-content-center">
+      
+      <!-- City -->
+      <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <select name="city" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
+          <option value="">All Cities</option>
+          {% for c in cities %}
+            <option value="{{ c.city_name }}" {% if city == c.city_name %}selected{% endif %}>
+              {{ c.city_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Position -->
+      <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <select name="position" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
+          <option value="">All Positions</option>
+          {% for p in positions %}
+            <option value="{{ p.position_name }}" {% if position == p.position_name %}selected{% endif %}>
+              {{ p.position_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Job Type -->
+      <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <select name="job_type" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
+          <option value="">All Job Types</option>
+          {% for value, label in job_types %}
+            <option value="{{ value }}" {% if job_type == value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+    </form>
+    
+    <!-- Job Applications Listings -->
+    <ul class="job-listings mb-5 mt-4 list-unstyled">
       {% for i in job_applications %}
-      <li class="job-listing d-flex flex-column flex-sm-row p-3 align-items-start align-items-sm-center employee-item mb-3 shadow-sm bg-white rounded"
+      <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center mb-3"
           onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'"
-          style="cursor: pointer; transition: all 0.2s ease-in-out;">
+          style="cursor: pointer;">
         
         <!-- Profile Image Container -->
         <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
-             style="width: 80px; height: 80px; min-width: 80px; max-width: 80px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 8px; border: 1px solid #eaeaea;">
+             style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
           {% if i.employee.employeeprofile.profile_image %}
-            <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
           {% else %}
-            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Logo" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
           {% endif %}            
         </div>
 
-        <!-- Employee Information Container -->
-        <div class="job-listing-about d-flex flex-column flex-lg-row w-100 justify-content-between align-items-start align-items-lg-center ms-sm-4 mt-2 mt-sm-0">
+        <!-- Grid Container inside card -->
+        <div class="row w-100 align-items-center no-gutters mx-0 px-2 px-sm-3">
+          
+          <!-- Employee Username & Position -->
+          <div class="col-12 col-sm-4 col-md-4 mb-2 mb-sm-0 pr-sm-2">
+            <h2 class="h5 mb-1" style="color: #074f85;">{{ i.employee.username }}</h2>
+            <strong class="d-block" style="color: #6c757d !important;">{{ i.job.position }}</strong>
+          </div>
 
-            <!-- Employee Username & Position -->
-            <div class="job-listing-position flex-grow-1 mb-2 mb-lg-0 pe-lg-4">
-                <h2 class="h5 mb-1 text-dark text-break">{{ i.employee.username }}</h2>
-                <strong class="text-secondary text-break">{{ i.job.position }}</strong>
-            </div>
+          <!-- Status Badge (Centered) -->
+          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-center mb-2 mb-sm-0">
+            {% if i.status == "Accepted" %}
+                <span class="badge badge-success text-white py-2 px-3">
+                    {{ i.status }}
+                </span>
+            {% elif i.status == "Rejected" %}
+                <span class="badge badge-danger text-white py-2 px-3">
+                    {{ i.status }}
+                </span>
+            {% elif i.status == "Pending" %}
+                <span class="badge badge-warning text-dark py-2 px-3">
+                    {{ i.status }}
+                </span>
+            {% else %}
+                <span class="badge badge-info text-dark py-2 px-3">
+                    {{ i.status }}
+                </span>
+            {% endif %}
+          </div>
 
-            <!-- Status Badge (Centered / Spaced Out) -->
-            <div class="mb-2 mb-lg-0 px-lg-4 text-start text-lg-center mx-lg-auto">
-                {% if i.status == "Accepted" %}
-                    <span class="badge bg-success text-white px-3 py-2">
-                        {{ i.status }}
-                    </span>
-                {% elif i.status == "Rejected" %}
-                    <span class="badge bg-danger text-white px-3 py-2">
-                        {{ i.status }}
-                    </span>
-                {% elif i.status == "Pending" %}
-                    <span class="badge bg-warning text-dark px-3 py-2">
-                        {{ i.status }}
-                    </span>
-                {% else %}
-                    <span class="badge bg-info text-dark px-3 py-2">
-                        {{ i.status }}
-                    </span>
-                {% endif %}
-            </div>
-
-            <!-- Applied Date -->
-            <div class="text-start text-lg-end text-muted ps-lg-4 mt-2 mt-lg-0 flex-shrink-0">
-                <small class="d-block"><i class="icon-clock-o me-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong></small>
-            </div>
+          <!-- Applied Date -->
+          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-right text-muted" style="font-size: 0.95rem;">
+            <small><i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong></small>
+          </div>
 
         </div>
 
       </li>
       {% empty %}
-      <p class="text-center text-muted py-4">No applicants found.</p>
+      <p class="text-center my-4">No applicants found.</p>
       {% endfor %}
     </ul>
+
+    
 
   </div>
 </section>
