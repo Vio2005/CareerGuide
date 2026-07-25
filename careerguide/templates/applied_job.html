@@ -265,16 +265,19 @@ Home
                     <!-- LAPTOP/DESKTOP ONLY: Original Right Side Position -->
                     <div class="job-listing-location custom-width w-25 text-right d-none d-md-block">
 
-                        <a href="{% url 'editpost' i.id %}" onclick="event.stopPropagation();"
-                           class="btn btn-warning btn-sm mb-2 d-block" style="background:#ffc107;color:#212529;border:none;">
-                            Edit
-                        </a>
-
-                       <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
-   class="btn btn-danger btn-sm d-block delete-btn">
-    Delete
-</a>
-
+                        {% if application.status == "Accepted" %}
+              <span class="badge badge-success px-3 py-2">
+                {{ application.status }}
+              </span>
+            {% elif application.status == "Rejected" %}
+              <span class="badge badge-danger px-3 py-2">
+                {{ application.status }}
+              </span>
+            {% else %}
+              <span class="badge badge-warning px-3 py-2 text-dark">
+                {{ application.status }}
+              </span>
+            {% endif %}
                     </div>
 
                 </div>
@@ -283,7 +286,7 @@ Home
 
             {% empty %}
             <li class="text-center py-5">
-                <h5>No job posts yet.</h5>
+                <h5>No applied posts yet.</h5>
             </li>
             {% endfor %}
 
