@@ -511,10 +511,7 @@ onclick="showImage(this.src)">
 
 
 </div>
-<p>
-<strong>Summary:</strong>
-{{ profile.summary }}
-</p>
+
 
 
 <hr>
@@ -552,12 +549,12 @@ No cover letter provided.
 
 <hr>
 
-<div class="status-card">
+<div class="status-card p-3 p-md-4 shadow-sm bg-white rounded">
 
-    <div class="status-header">
-        <h3>Application Status</h3>
+    <div class="status-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3">
+        <h3 class="h5 mb-2 mb-sm-0">Application Status</h3>
 
-        <span class="status-badge
+        <span class="status-badge px-3 py-1 rounded font-weight-bold
             {% if application.status == 'Pending' %}pending
             {% elif application.status == 'Shortlisted' %}shortlisted
             {% elif application.status == 'Accepted' %}accepted
@@ -570,11 +567,9 @@ No cover letter provided.
     <form method="POST" action="{% url 'update_application_status' application.id %}">
         {% csrf_token %}
 
-        <div class="status-body">
+        <div class="status-body d-flex flex-column flex-md-row align-items-stretch align-items-md-center gap-2">
 
-            <select name="status" class="status-select">
-
-
+            <select name="status" class="status-select form-control mb-2 mb-md-0 mr-md-2 flex-grow-1">
                 <option value="Shortlisted"
                     {% if application.status == "Shortlisted" %}selected{% endif %}>
                     Shortlisted
@@ -589,19 +584,16 @@ No cover letter provided.
                     {% if application.status == "Rejected" %}selected{% endif %}>
                     Rejected
                 </option>
-
             </select>
 
-            <button type="submit" class="status-btn">
+            <button type="submit" class="status-btn btn btn-primary mb-2 mb-md-0 mr-md-2">
                 Update Status
             </button>
             
             <a href="{% url 'send_application_email' application.id application.status %}"
-class="status-btn email-btn">
-
-    Email Employee
-
-</a>
+               class="status-btn email-btn btn btn-secondary text-center text-decoration-none">
+                Email Employee
+            </a>
 
         </div>
 
