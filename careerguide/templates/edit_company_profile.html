@@ -10,22 +10,22 @@
     
 </head>
 <body>
-  <form method="POST" enctype="multipart/form-data" class="container my-4">
+<form method="POST" enctype="multipart/form-data" class="container my-4 px-3 px-md-0">
     {% csrf_token %}
 
-    <div class="card shadow-sm p-4 mb-4 bg-white rounded">
-        <h2 class="mb-4 text-center text-md-left">Company Information</h2>
+    <div class="card shadow-sm p-3 p-md-4 mb-4 bg-white rounded">
+        <h2 class="mb-4 text-center text-md-start">Company Information</h2>
 
         <div class="row">
             <!-- Company Name -->
             <div class="col-12 col-md-6 mb-3">
-                <label class="font-weight-bold">Company Name</label>
+                <label class="form-label font-weight-bold">Company Name</label>
                 <input type="text" name="company_name" class="form-control" value="{{ company.company_name }}" required>
             </div>
 
             <!-- Email -->
             <div class="col-12 col-md-6 mb-3">
-                <label class="font-weight-bold">Email</label>
+                <label class="form-label font-weight-bold">Email</label>
                 <input type="email" name="email" class="form-control" value="{{ company.email }}" required>
             </div>
         </div>
@@ -33,62 +33,62 @@
         <div class="row">
             <!-- Phone -->
             <div class="col-12 col-md-6 mb-3">
-                <label class="font-weight-bold">Phone</label>
+                <label class="form-label font-weight-bold">Phone</label>
                 <input type="text" name="phone" class="form-control" value="{{ company.phone }}">
             </div>
 
             <!-- Website -->
             <div class="col-12 col-md-6 mb-3">
-                <label class="font-weight-bold">Website</label>
+                <label class="form-label font-weight-bold">Website</label>
                 <input type="text" name="website" class="form-control" value="{{ company.website }}">
             </div>
         </div>
 
         <!-- Address -->
         <div class="mb-3">
-            <label class="font-weight-bold">Address</label>
+            <label class="form-label font-weight-bold">Address</label>
             <input type="text" name="address" class="form-control" value="{{ company.address }}">
         </div>
 
         <!-- Description -->
         <div class="mb-3">
-            <label class="font-weight-bold">Description</label>
+            <label class="form-label font-weight-bold">Description</label>
             <textarea name="description" class="form-control" rows="4">{{ company.description }}</textarea>
         </div>
 
         <!-- Tagline -->
         <div class="mb-3">
-            <label class="font-weight-bold">Tagline (Optional)</label>
+            <label class="form-label font-weight-bold">Tagline (Optional)</label>
             <input type="text" name="tagline" class="form-control" value="{{ company.tagline|default:'' }}" placeholder="e.g. Building better careers">
         </div>
 
         <div class="row">
             <!-- Facebook Username -->
             <div class="col-12 col-md-4 mb-3">
-                <label class="font-weight-bold">Facebook Username</label>
+                <label class="form-label font-weight-bold">Facebook Username</label>
                 <input type="text" name="facebook" class="form-control" value="{{ company.facebook|default:'' }}" placeholder="companyname">
             </div>
 
             <!-- Twitter Username -->
             <div class="col-12 col-md-4 mb-3">
-                <label class="font-weight-bold">Twitter Username</label>
+                <label class="form-label font-weight-bold">Twitter Username</label>
                 <input type="text" name="twitter" class="form-control" value="{{ company.twitter|default:'' }}" placeholder="@companyname">
             </div>
 
             <!-- LinkedIn Username -->
             <div class="col-12 col-md-4 mb-3">
-                <label class="font-weight-bold">LinkedIn Username</label>
+                <label class="form-label font-weight-bold">LinkedIn Username</label>
                 <input type="text" name="linkedin" class="form-control" value="{{ company.linkedin|default:'' }}" placeholder="companyname">
             </div>
         </div>
 
         <!-- Profile Image Section -->
         <div class="mb-3">
-            <label class="font-weight-bold d-block">Profile Image</label>
+            <label class="form-label font-weight-bold d-block">Profile Image</label>
 
-            <div class="image-preview-container d-flex flex-column flex-sm-row gap-3 my-2 align-items-center">
+            <div class="image-preview-container d-flex flex-wrap gap-4 my-3 align-items-center justify-content-center justify-content-sm-start">
                 {% if company.profile_image %}
-                <div class="text-center mr-sm-4 mb-3 mb-sm-0">
+                <div class="text-center">
                     <p class="text-muted small mb-1">Current Image</p>
                     <img src="{{ company.profile_image.url }}" class="preview-img img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;">
                 </div>
@@ -100,20 +100,19 @@
                 </div>
             </div>
 
-            <input type="file" name="profile_image" id="profile-image-input" accept="image/*" class="form-control-file mt-2">
+            <input type="file" name="profile_image" id="profile-image-input" accept="image/*" class="form-control mt-2">
         </div>
 
     </div>
 
     <!-- Action Buttons -->
-    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
-        <button type="submit" class="profile-btn btn btn-primary w-100 w-sm-auto mb-2 mb-sm-0 px-4 py-2">
-            Update Profile
-        </button>
-
-        <a href="{% url 'companyprofile' company.id %}" class="back-btn btn btn-secondary w-100 w-sm-auto px-4 py-2 text-decoration-none">
+    <div class="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2">
+        <a href="{% url 'companyprofile' company.id %}" class="back-btn btn btn-secondary px-4 py-2 text-center text-decoration-none">
             Back
         </a>
+        <button type="submit" class="profile-btn btn btn-primary px-4 py-2">
+            Update Profile
+        </button>
     </div>
 
 </form>
