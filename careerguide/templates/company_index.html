@@ -170,12 +170,12 @@
         
         <ul class="job-listings mb-5">
           {% for i in job_applications %}
-<li class="job-listing d-block d-md-flex p-4 align-items-center employee-item shadow-sm mb-3 bg-white rounded"
+<li class="job-listing d-flex flex-column flex-md-row p-4 align-items-start align-items-md-center justify-content-between employee-item shadow-sm mb-3 bg-white rounded"
     onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'"
     style="cursor: pointer;">
     
     <!-- Left Section: Logo + Username and Position -->
-    <div class="d-flex align-items-center w-100 w-md-40 mb-3 mb-md-0">
+    <div class="d-flex align-items-center w-100 w-md-35 mb-3 mb-md-0">
         <!-- Logo -->
         <div class="job-listing-logo d-flex align-items-center justify-content-center mr-3" 
              style="width: 100px; height: 100px; min-width: 100px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
@@ -194,7 +194,7 @@
     </div>
 
     <!-- Center Section: Status Button -->
-    <div class="w-100 w-md-30 text-left text-md-center mb-3 mb-md-0">
+    <div class="w-100 w-md-auto text-left text-md-center mb-3 mb-md-0 px-md-2">
         {% if i.status == "Accepted" %}
             <span class="badge btn-success px-3 py-2" style="font-size: 1rem;">
                 {{ i.status }}
@@ -215,7 +215,7 @@
     </div>
 
     <!-- Right Section: Applied Date -->
-    <div class="w-100 w-md-30 text-left text-md-right">
+    <div class="w-100 w-md-auto text-left text-md-right">
         <span class="text-secondary" style="font-size: 1rem; white-space: nowrap;">
             <i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong>
         </span>
