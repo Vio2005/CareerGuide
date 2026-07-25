@@ -76,15 +76,6 @@
               font-size: 18px;
           }
       }
-      .phone-image{
-    height: 550px;
-    width: auto;
-}
-
-.bg-image{
-    padding-top: 60px !important;
-    padding-bottom: 60px !important;
-}
     </style>
   </head>
   <body id="top">
@@ -260,32 +251,33 @@
   </div>
 </section>
     
-<section class="py-4 bg-image overlay-primary overlay"
-         style="background-image: url('{% static 'images/hero_1.jpg' %}');">
-    <div class="container">
-        <div class="row align-items-center">
+<section class="pt-5 bg-image overlay-primary fixed overlay" style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 align-self-center text-center text-md-left mb-5 mb-md-0">
 
-            <div class="col-lg-6 text-center text-lg-left mb-4 mb-lg-0">
-                <h2 class="text-white mb-3">Access Career Bridge Anywhere</h2>
+    <h2 class="text-white">Access Career Bridge Anywhere</h2>
 
-                <p class="lead text-white mb-4">
-                    Our platform is mobile-friendly. Job seekers and companies can access Career Bridge easily from any smartphone browser.
-                </p>
+    <p class="mb-5 lead text-white">
+        Our platform is mobile-friendly. Job seekers and companies can access Career Bridge easily from any smartphone browser.
+    </p>
 
-                <button class="btn btn-dark btn-md px-4 border-width-2" disabled>
+    <p class="mb-0">
+        <button class="btn btn-dark btn-md px-4 border-width-2" disabled>
     <span class="icon-mobile mr-3"></span>
     View Mobile Version
 </button>
-            </div>
+    </p>
 
-            <div class="col-lg-6 text-center">
-                <img src="{% static 'images/three.png' %}"
-                     alt="Career Bridge Mobile View"
-                     class="img-fluid phone-image">
-            </div>
+</div>
 
-        </div>
+<div class="col-md-6 ml-auto align-self-end">
+    <img src="{% static 'images/three.png' %}" 
+         alt="Career Bridge Mobile View" 
+         class="img-fluid">
+</div>
     </div>
+  </div>
 </section>
     
 <footer class="site-footer">
