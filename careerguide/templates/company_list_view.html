@@ -5,7 +5,7 @@
 
 <head>
 
-<title>Career Bridge - Company List</title>
+<title>Career Bridge</title>
 
 <meta charset="utf-8">
 
@@ -186,9 +186,9 @@ Profile
 </li>
 
 {% if request.session.employee_id %}
-              <li><a href="{%url 'employeelogout' %}" id="logoutBtn">Log out</a></li>
+              <li class="d-lg-none"><a href="{% url 'employeelogout' %}" id="logoutBtn" >Log out</a></li>
               {% else %}
-              <li><a href="{%url 'employeelogin' %}">Log In</a></li>
+              <li class="d-lg-none"><a href="{% url 'employeelogin' %}">Log In</a></li>
               {% endif %}
 
 
