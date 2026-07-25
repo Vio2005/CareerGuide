@@ -170,81 +170,64 @@
         
         <ul class="job-listings mb-5">
           {% for i in job_applications %}
-<li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center employee-item"
-    onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'">
+<li class="job-listing d-block d-sm-flex p-3 align-items-center employee-item"
+    onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'"
+    style="cursor: pointer;">
+    
      <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
-         style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+          style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
 {% if i.employee.employeeprofile.profile_image %}
         <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
       {% else %}
-        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
       {% endif %}            
     </div>
 
-   
+    <!-- Employee Information Container (Wraps on mobile, flex on desktop) -->
+    <div class="job-listing-about d-flex flex-column flex-md-row w-100 justify-content-between mx-0 mx-md-4 align-items-start align-items-md-center mt-3 mt-sm-0">
 
-
-    <!-- Employee Information -->
-    <div class="job-listing-about d-flex w-100 justify-content-between mx-4 align-items-center">
-
-        <div class="job-listing-position w-50">
-            <h2>{{ i.employee.username }}</h2>
+        <!-- Employee Username & Position -->
+        <div class="job-listing-position w-100 w-md-40 mb-3 mb-md-0">
+            <h2 class="h5 mb-1">{{ i.employee.username }}</h2>
             <strong>{{ i.job.position }}</strong>
         </div>
 
-
-        <!-- Status Middle -->
-        <div class="w-25 text-center">
-
+        <!-- Status Badge -->
+        <div class="w-100 w-md-25 text-left text-md-center mb-3 mb-md-0">
             {% if i.status == "Accepted" %}
-                <span class="btn btn-success">
+                <span class="badge btn-success px-3 py-2">
                     {{ i.status }}
                 </span>
-
             {% elif i.status == "Rejected" %}
-                <span class="btn btn-danger">
+                <span class="badge btn-danger px-3 py-2">
                     {{ i.status }}
                 </span>
-
             {% elif i.status == "Pending" %}
-                <span class="btn btn-warning">
+                <span class="badge btn-warning px-3 py-2">
                     {{ i.status }}
                 </span>
-
             {% else %}
-                <span class="btn btn-info">
+                <span class="badge btn-info px-3 py-2">
                     {{ i.status }}
                 </span>
-
             {% endif %}
-
         </div>
 
-
-        <!-- View Profile Button -->
-        <div class="w-25 text-right">
-
-            <a href="{% url 'employeeprofileview' i.employee.id %}" 
-class="btn btn-secondary"
-onclick="event.stopPropagation();">
-View Details
-</a>
-
+        <!-- Applied Date (Replaced View Details) -->
+        <div class="w-100 w-md-35 text-left text-md-right text-muted">
+            <small><i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong></small>
         </div>
-
 
     </div>
 
 </li>
 {% empty %}
 
-<p>No applicants found.</p>
+<p class="text-center">No applicants found.</p>
 
 {% endfor %}
-     
+        
         </ul>
-
-      
 
       </div>
     </section>
