@@ -87,19 +87,28 @@
             <label class="form-label fw-bold d-block">Profile Image</label>
 
             <!-- Responsive Image Containers wrapper -->
-            <div class="d-flex flex-wrap gap-3 my-3 align-items-center justify-content-center justify-content-sm-start">
-                {% if company.profile_image %}
-                <div class="text-center">
-                    <p class="text-muted small mb-1">Current Image</p>
-                    <img src="{{ company.profile_image.url }}" class="preview-img img-thumbnail" style="width: 100px; height: 100px; max-width: 100px; object-fit: cover;">
-                </div>
-                {% endif %}
+            <div class="image-preview-container">
 
-                <div class="text-center">
-                    <p class="text-muted small mb-1">New Image</p>
-                    <img id="new-image-preview" src="{% static 'images/default-profile.jpg' %}" class="preview-img img-thumbnail" style="width: 100px; height: 100px; max-width: 100px; object-fit: cover;">
-                </div>
-            </div>
+
+ {% if company.profile_image %}
+
+
+<div>
+
+<p>Current Image</p>
+<img src="{{ company.profile_image.url }}"
+class="preview-img">
+</div>
+{% endif %}
+<div>
+<p>New Image</p>
+<img id="new-image-preview"
+src="{% static 'images/default-profile.jpg' %}"
+class="preview-img">
+</div>
+
+
+</div>
 
             <div class="input-group">
                 <input type="file" name="profile_image" id="profile-image-input" accept="image/*" class="form-control">
