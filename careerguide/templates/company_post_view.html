@@ -227,20 +227,18 @@ My Job Posts
     </div>
 
 </div>
-                    <!-- Right Side -->
-                    <div class="job-listing-location custom-width w-25 text-right">
+                    <!-- Right Side: Responsive Edit & Delete Buttons -->
+        <div class="job-listing-location w-100 w-sm-25 d-flex flex-row flex-sm-column justify-content-start justify-content-sm-end align-items-sm-end" style="gap: 8px;">
+            <a href="{% url 'editpost' i.id %}" onclick="event.stopPropagation();"
+               class="btn btn-warning btn-sm px-3 py-2 text-dark font-weight-bold" style="background:#ffc107; border:none; flex: 1; max-width: 100px;">
+                Edit
+            </a>
 
-                        <a href="{% url 'editpost' i.id %}" onclick="event.stopPropagation();"
-                           class="btn btn-warning btn-sm mb-2 d-block" style="background:#ffc107;color:#212529;border:none;">
-                            Edit
-                        </a>
-
-                       <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
-   class="btn btn-danger btn-sm d-block delete-btn">
-    Delete
-</a>
-
-                    </div>
+            <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
+               class="btn btn-danger btn-sm px-3 py-2 font-weight-bold delete-btn" style="flex: 1; max-width: 100px;">
+                Delete
+            </a>
+        </div>
 
                 </div>
 

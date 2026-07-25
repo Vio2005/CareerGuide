@@ -201,26 +201,26 @@
           <!-- Status Badge (Centered) -->
           <div class="col-12 col-sm-4 col-md-4 text-left text-sm-center mb-2 mb-sm-0">
             {% if i.status == "Accepted" %}
-                <span class="badge badge-success text-white py-2 px-3">
+                <span class="badge btn-success text-white py-2 px-3">
                     {{ i.status }}
                 </span>
             {% elif i.status == "Rejected" %}
-                <span class="badge badge-danger text-white py-2 px-3">
+                <span class="badge btn-danger text-white py-2 px-3">
                     {{ i.status }}
                 </span>
             {% elif i.status == "Pending" %}
-                <span class="badge badge-warning text-dark py-2 px-3">
+                <span class="badge btn-warning text-dark py-2 px-3">
                     {{ i.status }}
                 </span>
             {% else %}
-                <span class="badge badge-info text-dark py-2 px-3">
+                <span class="badge btn-info text-dark py-2 px-3">
                     {{ i.status }}
                 </span>
             {% endif %}
           </div>
 
           <!-- Applied Date -->
-          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-right" style="font-size: 0.95rem;">
+          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-right" style="font-size: 1.1rem;">
             <small><i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong></small>
           </div>
 
