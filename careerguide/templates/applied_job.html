@@ -195,28 +195,28 @@ Home
     <ul class="job-listings mb-5 list-unstyled">
       {% for application in applications %}
       <!-- CLICKABLE CARD -->
-      <li class="job-listing d-block d-md-flex p-3 p-md-4 mb-3 align-items-start bg-white border rounded shadow-sm"
+      <li class="job-listing d-flex flex-column flex-md-row p-4 mb-4 align-items-start align-items-md-center bg-white shadow-sm rounded"
           onclick="window.location='{% url 'jobdetail' application.job.id %}'"
-          style="cursor:pointer;">
+          style="cursor:pointer; transition: transform 0.2s ease;">
 
         <!-- COMPANY LOGO -->
         <div class="job-listing-logo mb-3 mb-md-0 d-flex align-items-center justify-content-center mx-auto mx-md-0" 
-             style="width: 100px; height: 100px; min-width: 100px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+             style="width: 100px; height: 100px; min-width: 100px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px; border: 1px solid #eaeaea;">
           {% if application.job.company.profile_image %}
-            <img src="{{ application.job.company.profile_image.url }}" alt="{{ application.job.company.company_name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+            <img src="{{ application.job.company.profile_image.url }}" alt="{{ application.job.company.company_name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
           {% else %}
-            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
-          {% endif %}            
+            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+          {% endif %}         
         </div>
 
         <!-- JOB INFORMATION -->
-        <div class="job-listing-about d-flex flex-column flex-md-row w-100 justify-content-between ml-md-4">
+        <div class="job-listing-about d-flex flex-column flex-md-row w-100 justify-content-between ml-md-4 mt-3 mt-md-0">
           
           <!-- LEFT SIDE -->
           <div class="job-listing-position w-100 w-md-75 mb-3 mb-md-0">
-            <h3 class="h5 font-weight-bold text-dark mb-1">
+            <h2 class="h4 mb-1 text-dark" style="font-size: 1.25rem;">
               {{ application.job.position.position_name }}
-            </h3>
+            </h2>
             <strong class="text-muted d-block mb-2">
               {{ application.job.company.company_name }}
             </strong>
@@ -230,8 +230,8 @@ Home
             </div>
           </div>
 
-          <!-- RIGHT SIDE -->
-          <div class="job-listing-location w-100 w-md-25 text-left text-md-right d-flex align-items-md-start justify-content-start justify-content-md-end">
+          <!-- RIGHT SIDE (STATUS BADGE) -->
+          <div class="job-listing-location w-100 w-md-25 text-left text-md-right d-flex align-items-md-center justify-content-md-end">
             {% if application.status == "Accepted" %}
               <span class="badge badge-success px-3 py-2">
                 {{ application.status }}
@@ -241,7 +241,7 @@ Home
                 {{ application.status }}
               </span>
             {% else %}
-              <span class="badge badge-warning px-3 py-2">
+              <span class="badge badge-warning px-3 py-2 text-dark">
                 {{ application.status }}
               </span>
             {% endif %}
@@ -251,7 +251,7 @@ Home
       </li>
       {% empty %}
       <li class="text-center py-5">
-        <h5>No applied jobs found.</h5>
+        <h5 class="text-muted">No applied jobs found.</h5>
       </li>
       {% endfor %}
     </ul>
@@ -259,23 +259,23 @@ Home
     <!-- PAGINATION -->
     <div class="row pagination-wrap">
       <div class="col-md-12 text-center text-md-right">
-        <div class="custom-pagination ml-auto">
+        <div class="custom-pagination ml-auto d-inline-flex flex-wrap justify-content-center">
           {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}#applied-job-section" class="prev">Prev</a>
+            <a href="?page={{ page_obj.previous_page_number }}#applied-job-section" class="prev m-1">Prev</a>
           {% endif %}
           
-          <div class="d-inline-block my-2 my-md-0">
+          <div class="d-inline-flex flex-wrap">
             {% for num in page_obj.paginator.page_range %}
               {% if page_obj.number == num %}
-                <a href="?page={{ num }}#applied-job-section" class="active">{{ num }}</a>
+                <a href="?page={{ num }}#applied-job-section" class="active m-1">{{ num }}</a>
               {% else %}
-                <a href="?page={{ num }}#applied-job-section">{{ num }}</a>
-              {%endif %}
+                <a href="?page={{ num }}#applied-job-section" class="m-1">{{ num }}</a>
+              {% endif %}
             {% endfor %}
           </div>
 
           {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}#applied-job-section" class="next">Next</a>
+            <a href="?page={{ page_obj.next_page_number }}#applied-job-section" class="next m-1">Next</a>
           {% endif %}
         </div>
       </div>
