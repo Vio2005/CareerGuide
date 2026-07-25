@@ -14,16 +14,15 @@ body {
 
 /* Form container - Responsive Fix */
 form {
-    max-width: 700px;
     width: 100%;
+    max-width: 1000px;
     margin: 40px auto;
-    padding: 0 15px; /* Adds breathing room on small mobile screens */
 }
 
 /* Card */
 .card {
     background: white;
-    padding: 45px;
+    padding: 35px;
     border-radius: 25px;
     box-shadow: 0 20px 50px rgba(0,0,0,.08);
     position: relative;
@@ -119,15 +118,14 @@ input[type="file"] {
 }
 
 /* Action Buttons container wrapper for layout */
-.d-flex {
-    display: flex;
-}
+
 
 /* Update Profile Button */
 .profile-btn {
     display: block;
-    width: 100%;
-    max-width: 300px;
+    min-width:170px;
+    padding:14px 30px;
+    border-radius:50px;
     margin: 20px auto 0;
     padding: 14px 30px;
     border: none;
@@ -153,8 +151,9 @@ input[type="file"] {
 /* Back Button */
 .back-btn {
     display: block;
-    width: 100%;
-    max-width: 300px;
+    min-width:170px;
+    padding:14px 30px;
+    border-radius:50px;
     margin: 20px auto 0;
     padding: 14px 30px;
     border-radius: 50px;
@@ -182,7 +181,7 @@ input[type="file"] {
     }
 
     .card {
-        padding: 20px 15px;
+        padding: 20px;
         border-radius: 15px;
     }
 
