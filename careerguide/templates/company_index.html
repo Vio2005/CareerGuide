@@ -170,46 +170,7 @@
       </div>
     </div>
     
-    <!-- Filter Form -->
-    <form method="GET" id="filterForm" class="row g-3 mb-4 justify-content-center">
-      
-      <!-- City -->
-      <div class="col-12 col-md-4 mb-2 mb-md-0">
-        <select name="city" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
-          <option value="">All Cities</option>
-          {% for c in cities %}
-            <option value="{{ c.city_name }}" {% if city == c.city_name %}selected{% endif %}>
-              {{ c.city_name }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Position -->
-      <div class="col-12 col-md-4 mb-2 mb-md-0">
-        <select name="position" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
-          <option value="">All Positions</option>
-          {% for p in positions %}
-            <option value="{{ p.position_name }}" {% if position == p.position_name %}selected{% endif %}>
-              {{ p.position_name }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Job Type -->
-      <div class="col-12 col-md-4 mb-2 mb-md-0">
-        <select name="job_type" class="form-control w-100" onchange="document.getElementById('filterForm').submit();">
-          <option value="">All Job Types</option>
-          {% for value, label in job_types %}
-            <option value="{{ value }}" {% if job_type == value %}selected{% endif %}>
-              {{ label }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-    </form>
+    
     
     <!-- Job Applications Listings -->
     <ul class="job-listings mb-5 mt-4 list-unstyled">
@@ -259,7 +220,7 @@
           </div>
 
           <!-- Applied Date -->
-          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-right text-muted" style="font-size: 0.95rem;">
+          <div class="col-12 col-sm-4 col-md-4 text-left text-sm-right" style="font-size: 0.95rem;">
             <small><i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong></small>
           </div>
 
