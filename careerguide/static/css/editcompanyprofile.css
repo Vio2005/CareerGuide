@@ -189,17 +189,27 @@ input[type="file"] {
     transform:translateY(-3px);
 }
 
+
 @media(max-width:576px){
 
     .button-container{
         flex-direction:column;
+        align-items:center;
         width:100%;
     }
 
 
     .profile-btn,
     .back-btn{
-        width:100%;
+        width:180px;
+    }
+
+}
+@media(max-width:400px){
+
+    .profile-btn,
+    .back-btn{
+        width:150px;
     }
 
 }
