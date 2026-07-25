@@ -170,61 +170,55 @@
         
         <ul class="job-listings mb-5">
           {% for i in job_applications %}
-<li class="job-listing d-block d-sm-flex p-4 align-items-center employee-item shadow-sm mb-3 bg-white rounded"
+<li class="job-listing d-block d-md-flex p-4 align-items-center employee-item shadow-sm mb-3 bg-white rounded"
     onclick="window.location.href='{% url 'employeeprofileview' i.employee.id %}'"
     style="cursor: pointer;">
     
-     <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
-          style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
-      {% if i.employee.employeeprofile.profile_image %}
-        <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
-      {% else %}
-        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
-      {% endif %}            
+    <!-- Left Section: Logo + Username and Position -->
+    <div class="d-flex align-items-center w-100 w-md-40 mb-3 mb-md-0">
+        <!-- Logo -->
+        <div class="job-listing-logo d-flex align-items-center justify-content-center mr-3" 
+             style="width: 100px; height: 100px; min-width: 100px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+            {% if i.employee.employeeprofile.profile_image %}
+                <img src="{{ i.employee.employeeprofile.profile_image.url }}" alt="Employee Image" style="width: 100%; height: 100%; object-fit: contain;">
+            {% else %}
+                <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            {% endif %}            
+        </div>
+
+        <!-- Username & Position -->
+        <div class="job-listing-position">
+            <h2 class="h4 mb-1 font-weight-bold text-dark">{{ i.employee.username }}</h2>
+            <strong class="text-secondary" style="font-size: 1.05rem;">{{ i.job.position }}</strong>
+        </div>
     </div>
 
-    <!-- Employee Information Container -->
-    <div class="job-listing-about d-flex flex-column flex-md-row w-100 justify-content-between mx-0 mx-md-4 align-items-start align-items-md-center mt-3 mt-sm-0">
+    <!-- Center Section: Status Button -->
+    <div class="w-100 w-md-30 text-left text-md-center mb-3 mb-md-0">
+        {% if i.status == "Accepted" %}
+            <span class="badge btn-success px-3 py-2" style="font-size: 1rem;">
+                {{ i.status }}
+            </span>
+        {% elif i.status == "Rejected" %}
+            <span class="badge btn-danger px-3 py-2" style="font-size: 1rem;">
+                {{ i.status }}
+            </span>
+        {% elif i.status == "Pending" %}
+            <span class="badge btn-warning px-3 py-2" style="font-size: 1rem;">
+                {{ i.status }}
+            </span>
+        {% else %}
+            <span class="badge btn-info px-3 py-2" style="font-size: 1rem;">
+                {{ i.status }}
+            </span>
+        {% endif %}
+    </div>
 
-        <!-- Employee Username & Position -->
-        <div class="job-listing-position w-100 w-md-35 mb-3 mb-md-0">
-            <h2 class="h4 mb-1 font-weight-bold text-dark">{{ i.employee.username }}</h2>
-            <strong class="text-secondary" style="font-size: 1.1rem;">{{ i.job.position }}</strong>
-        </div>
-
-        <!-- Right Side Container (Status & Date pushed tightly together near the date side) -->
-        <div class="d-flex flex-column flex-sm-row align-items-start align-items-md-center w-100 w-md-auto" style="gap: 8px;">
-            
-            <!-- Status Badge -->
-            <div>
-                {% if i.status == "Accepted" %}
-                    <span class="badge btn-success px-3 py-2" style="font-size: 1rem;">
-                        {{ i.status }}
-                    </span>
-                {% elif i.status == "Rejected" %}
-                    <span class="badge btn-danger px-3 py-2" style="font-size: 1rem;">
-                        {{ i.status }}
-                    </span>
-                {% elif i.status == "Pending" %}
-                    <span class="badge btn-warning px-3 py-2" style="font-size: 1rem;">
-                        {{ i.status }}
-                    </span>
-                {% else %}
-                    <span class="badge btn-info px-3 py-2" style="font-size: 1rem;">
-                        {{ i.status }}
-                    </span>
-                {% endif %}
-            </div>
-
-            <!-- Applied Date -->
-            <div class="text-left text-md-right mt-2 mt-sm-0 ml-md-3">
-                <span class="text-secondary" style="font-size: 1rem; white-space: nowrap;">
-                    <i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong>
-                </span>
-            </div>
-
-        </div>
-
+    <!-- Right Section: Applied Date -->
+    <div class="w-100 w-md-30 text-left text-md-right">
+        <span class="text-secondary" style="font-size: 1rem; white-space: nowrap;">
+            <i class="icon-clock-o mr-1"></i>Applied on: <strong>{{ i.applied_date|date:"M d, Y" }}</strong>
+        </span>
     </div>
 
 </li>
