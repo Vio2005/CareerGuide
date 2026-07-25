@@ -182,160 +182,140 @@ Home
 
 </section>
 <!-- APPLIED JOB SECTION -->
-<section class="site-section" id="job-post-section">
-    <div class="container">
+<section class="site-section" id="applied-job-section">
+  <div class="container">
+    <!-- TITLE -->
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-7 text-center">
+        <h2 class="section-title mb-2">My Applied Jobs</h2>
+      </div>
+    </div>
 
-        <!-- Section Title & Filter Dropdown -->
-        <div class="row align-items-center mb-4 mb-md-5 pt-2">
-            <!-- Spacer for Desktop Balance -->
-            <div class="col-md-3 d-none d-md-block"></div>
+    <!-- JOB LIST -->
 
-            <!-- CENTERED Title without Underline -->
-            <div class="col-12 col-md-6 text-center">
-                <h2 class="section-title mb-3 mb-md-0 no-underline" style="border: none !important;">
-                    My Job Posts
-                </h2>
-            </div>
-
-            <!-- RIGHT Filter Dropdown -->
-            <div class="col-12 col-md-3 text-center text-md-right mt-2 mt-md-0">
-                <form method="GET" class="m-0 d-inline-block w-100" style="max-width: 200px;">
-                    <select name="status" class="form-control" onchange="this.form.submit()">
-                        <option value="">All Jobs</option>
-                        <option value="open" {% if status == "open" %}selected{% endif %}>
-                            Open
-                        </option>
-                        <option value="closed" {% if status == "closed" %}selected{% endif %}>
-                            Closed
-                        </option>
-                    </select>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Job Listings -->
         <ul class="job-listings mb-5">
-            {% for i in jobs %}
-            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-start"
-                onclick="window.location.href='{% url 'company_job_detail' i.id %}'"
-                style="cursor:pointer;">
- 
-                <!-- COMPANY LOGO -->
-                <div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
-                     style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
-                    {% if company.profile_image %}
-                        <img src="{{ company.profile_image.url }}" alt="{{ company.company_name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
-                    {% else %}
-                        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
-                    {% endif %}            
-                </div>
+
+            {% for application in applications %}
+       <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-start"
+    onclick="window.location.href='{% url 'jobdetail' application.job.id %}'"
+    style="cursor:pointer;">
+  
+<div class="job-listing-logo mb-3 mb-sm-0 d-flex align-items-center justify-content-center" 
+         style="width: 120px; height: 120px; min-width: 120px; flex-shrink: 0; background: #fff; overflow: hidden; border-radius: 5px;">
+                    {% if application.job.company.profile_image %}
+        <img src="{{ application.job.company.profile_image.url }}" alt="{{ application.job.company.company_name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% else %}
+        <img src="{% static 'images/default-profile.jpg' %}" alt="Default Company Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 0px;">
+      {% endif %}            
+    </div>
+                
 
                 <!-- Job Information -->
                 <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-sm-4 mx-0">
 
                     <!-- Left Side -->
                     <div class="job-listing-position custom-width w-100 w-md-75">
-                        <h2>{{ i.position }}</h2>
-                        <strong>{{ company.company_name }}</strong>
 
-                        <!-- Job Status -->
-                        <div class="mt-2">
-                            {% if i.is_active %}
-                                <span class="badge badge-success">
-                                    Open
-                                </span>
-                            {% else %}
-                                <span class="badge badge-danger">
-                                    Closed
-                                </span>
-                            {% endif %}
-                        </div>
+    <h2>{{ application.job.position.position_name }}</h2>
 
-                        <div class="mt-2 job-info">
-                            <span class="icon-room"></span>
-                            {{ i.location }}, {{ i.city.city_name }}
-                            <br>
-                            {% if i.is_active %}
-                                <span class="icon-people"></span>
-                                Vacancy: {{ i.vacancy }}
-                            {% else %}
-                                <span class="text-danger">
-                                    Position Filled
-                                </span>
-                            {% endif %}
-                            <br>
-                            <span class="icon-attach_money"></span>
-                            Salary: {{ i.salary }}
-                        </div>
+    <strong>{{ application.job.company.company_name }}</strong>
 
-                        <!-- MOBILE ONLY: Action Buttons -->
-                        <div class="d-flex d-md-none mt-3">
-                            <a href="{% url 'editpost' i.id %}" onclick="event.stopPropagation();"
-                               class="btn btn-warning btn-sm mr-2 flex-grow-1" style="background:#ffc107;color:#212529;border:none;">
-                                Edit
-                            </a>
-                            <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
-                               class="btn btn-danger btn-sm flex-grow-1 delete-btn">
-                                Delete
-                            </a>
-                        </div>
-                    </div>
 
-                    <!-- LAPTOP/DESKTOP ONLY: Action Buttons -->
+   
+
+    <div class="mt-2 job-info">
+
+        <span class="icon-room"></span>
+        {{ application.job.location }}, {{ application.job.city.city_name }}
+
+        <br>
+
+
+            <span class="icon-briefcase"></span>
+            {{ application.job.job_type }}
+
+        
+
+
+        <br>
+
+       <span class="icon-calendar mr-1"></span>Applied Date: {{ application.applied_date }}
+
+    </div>
+
+    <!-- MOBILE ONLY: Action Buttons (Stacked or side-by-side cleanly below content) -->
+    <div class="d-flex d-md-none mt-3">
+         <!-- RIGHT SIDE (STATUS BADGE) -->
+          <div class="job-listing-location w-100 w-md-25 text-left text-md-right d-flex align-items-md-center justify-content-md-end">
+            {% if application.status == "Accepted" %}
+              <span class="badge badge-success px-3 py-2">
+                {{ application.status }}
+              </span>
+            {% elif application.status == "Rejected" %}
+              <span class="badge badge-danger px-3 py-2">
+                {{ application.status }}
+              </span>
+            {% else %}
+              <span class="badge badge-warning px-3 py-2 text-dark">
+                {{ application.status }}
+              </span>
+            {% endif %}
+          </div>
+    </div>
+
+</div>
+
+                    <!-- LAPTOP/DESKTOP ONLY: Original Right Side Position -->
                     <div class="job-listing-location custom-width w-25 text-right d-none d-md-block">
+
                         <a href="{% url 'editpost' i.id %}" onclick="event.stopPropagation();"
                            class="btn btn-warning btn-sm mb-2 d-block" style="background:#ffc107;color:#212529;border:none;">
                             Edit
                         </a>
-                        <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
-                           class="btn btn-danger btn-sm d-block delete-btn">
-                            Delete
-                        </a>
+
+                       <a href="{% url 'deletepost' i.id %}" onclick="event.stopPropagation();"
+   class="btn btn-danger btn-sm d-block delete-btn">
+    Delete
+</a>
+
                     </div>
 
                 </div>
+
             </li>
+
             {% empty %}
             <li class="text-center py-5">
                 <h5>No job posts yet.</h5>
             </li>
             {% endfor %}
+
         </ul>
+    <!-- PAGINATION -->
+    <div class="row pagination-wrap">
+      <div class="col-md-12 text-center text-md-right">
+        <div class="custom-pagination ml-auto d-inline-flex flex-wrap justify-content-center">
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}#applied-job-section" class="prev m-1">Prev</a>
+          {% endif %}
+          
+          <div class="d-inline-flex flex-wrap">
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <a href="?page={{ num }}#applied-job-section" class="active m-1">{{ num }}</a>
+              {% else %}
+                <a href="?page={{ num }}#applied-job-section" class="m-1">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
 
-        <!-- PAGINATION -->
-        <div class="row pagination-wrap">
-            <div class="col-md-6 ml-auto text-right">
-                <div class="custom-pagination ml-auto">
-                    {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}#job-post-section" class="prev">
-                        Prev
-                    </a>
-                    {% endif %}
-
-                    <div class="d-inline-block">
-                        {% for num in page_obj.paginator.page_range %}
-                        {% if page_obj.number == num %}
-                        <a href="?page={{ num }}#job-post-section" class="active">
-                            {{ num }}
-                        </a>
-                        {% else %}
-                        <a href="?page={{ num }}#job-post-section">
-                            {{ num }}
-                        </a>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-
-                    {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}#job-post-section" class="next">
-                        Next
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}#applied-job-section" class="next m-1">Next</a>
+          {% endif %}
         </div>
-
+      </div>
     </div>
+  </div>
 </section>
 <!-- FOOTER -->
 
