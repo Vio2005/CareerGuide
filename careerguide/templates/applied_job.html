@@ -242,12 +242,10 @@ Home
        <span class="icon-calendar mr-1"></span>Applied Date: {{ application.applied_date }}
 
     </div>
-
+    
     <!-- MOBILE ONLY: Action Buttons (Stacked or side-by-side cleanly below content) -->
     <div class="d-flex d-md-none mt-3">
-         <!-- RIGHT SIDE (STATUS BADGE) -->
-          <div class="job-listing-location w-100 w-md-25 text-left text-md-right d-flex align-items-md-center justify-content-md-end">
-            {% if application.status == "Accepted" %}
+        {% if application.status == "Accepted" %}
               <span class="badge badge-success px-3 py-2">
                 {{ application.status }}
               </span>
@@ -260,7 +258,6 @@ Home
                 {{ application.status }}
               </span>
             {% endif %}
-          </div>
     </div>
 
 </div>
