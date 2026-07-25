@@ -60,20 +60,76 @@
           </div>
 
           <!-- Desktop Navigation -->
-          <nav class="mx-auto site-navigation d-none d-xl-block">
-            <ul class="site-menu js-clone-nav ml-0 pl-0">
-              <li><a href="{% url 'homeview' %}" class="nav-link active">Home</a></li>
-              <li><a href="{% url 'company_list_view' %}">Company</a></li>
-              <li><a href="{% url 'careerquiz' %}">Career Match</a></li>
-              <li><a href="{% url 'applied_job' %}">Applied Job</a></li>
-              <li><a href="{% url 'employeeprofile' %}">Profile</a></li>
-              {% if request.session.employee_id %}
-              <li><a href="{% url 'employeelogout' %}" id="logoutBtn">Log out</a></li>
+          <nav class="mx-auto site-navigation">
+
+
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+
+
+<li>
+<a href="{% url 'homeview' %}" class="nav-link active"> 
+Home
+</a>
+</li>
+
+
+
+
+<li>
+<a href="{% url 'company_list_view' %}" >
+Company
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'careerquiz' %}">
+Career Match
+</a>
+</li>
+
+
+
+
+
+<li>
+<a href="{% url 'applied_job'  %}">
+Applied Job
+</a>
+</li>
+
+
+
+
+
+
+<li>
+<a href="{% url 'employeeprofile' %}">
+Profile
+</a>
+</li>
+
+{% if request.session.employee_id %}
+              <li class="d-lg-none"><a href="{% url 'employeelogout' %}" id="logoutBtn" >Log out</a></li>
               {% else %}
-              <li><a href="{% url 'employeelogin' %}">Log In</a></li>
+              <li class="d-lg-none"><a href="{% url 'employeelogin' %}">Log In</a></li>
               {% endif %}
-            </ul>
-          </nav>
+
+
+
+
+
+
+
+
+</ul>
+
+
+</nav>
           
           <!-- Right CTA & Mobile Toggle Menu -->
           <div class="right-cta-menu text-right d-flex align-items-center justify-content-end col-6 col-xl-3">
