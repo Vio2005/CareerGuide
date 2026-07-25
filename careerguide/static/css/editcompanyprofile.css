@@ -50,6 +50,19 @@ form{
     margin-bottom: 35px;
     
 }
+.card .form-control {
+    width:100%;
+    height:58px;
+    padding:15px 18px;
+    border-radius:12px;
+    border:1px solid #dbe3ee;
+    font-size:16px;
+    min-height:55px;
+}
+.card textarea.form-control {
+    height:160px;
+    resize:none;
+}
 
 /* Labels */
 label {
@@ -196,5 +209,13 @@ input[type="file"] {
     /* Make buttons stack properly and expand cleanly on mobile */
     .d-flex.flex-column-reverse {
         flex-direction: column-reverse;
+    }
+    .card .form-control{
+        height:50px;
+        min-height:50px;
+    }
+
+    .card textarea.form-control{
+        height:130px;
     }
 }
