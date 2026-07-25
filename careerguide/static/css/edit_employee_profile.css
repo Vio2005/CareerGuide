@@ -34,8 +34,8 @@ form {
 }
 .profile-edit-layout{
     display:grid;
-    grid-template-columns:350px 1fr;
-    gap:30px;
+    grid-template-columns:1fr 1fr;
+    gap:35px;
     align-items:start;
 }
 
@@ -55,6 +55,14 @@ form {
 
     flex-direction:column;
 
+}
+.left-profile-section,
+.right-profile-section{
+    width:100%;
+}
+
+.edit-card{
+    width:100%;
 }
 
 
