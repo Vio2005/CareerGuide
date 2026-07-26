@@ -576,7 +576,7 @@ Profile
     <script src="{% static 'js/custom.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.querySelectorAll(".logout-btn").forEach(function(element) {
+document.querySelectorAll(".logout-btn, #logoutBtn").forEach(function(element) {
     element.addEventListener("click", function(e) {
         e.preventDefault();
         const logoutUrl = this.href;
