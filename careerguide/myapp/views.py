@@ -30,60 +30,97 @@ def intro(request):
 
 
 def homeview(request):
+    # Active jobs only
     jobs = Job.objects.filter(is_active=True).order_by('-posted_date')
+
+    # Dropdown data
     cities = City.objects.all()
     positions = Position.objects.all()
-    
 
-    position = request.GET.get('position')
-    city = request.GET.get('city')
-    job_type = request.GET.get('job_type')
+    # Get filter values
+    position = request.GET.get('position', '')
+    city = request.GET.get('city', '')
+    job_type = request.GET.get('job_type', '')
 
+    # Apply filters only if selected
     if position:
-        jobs = jobs.filter(position__position_name__icontains=position)
+        jobs = jobs.filter(
+            position__position_name__icontains=position
+        )
 
     if city:
-        jobs = jobs.filter(city__city_name__icontains=city)
+        jobs = jobs.filter(
+            city__city_name__icontains=city
+        )
 
     if job_type:
-        jobs = jobs.filter(job_type=job_type)
+        jobs = jobs.filter(
+            job_type=job_type
+        )
 
+    # Count filtered jobs
+    jobcount = jobs.count()
+
+    # Employee session
     employee = None
-
     employee_id = request.session.get('employee_id')
 
     if employee_id:
-        employee = Employee.objects.get(id=employee_id)
-    paginator = Paginator(jobs, 5)
+        try:
+            employee = Employee.objects.get(id=employee_id)
+        except Employee.DoesNotExist:
+            employee = None
+
+    # Pagination
+    paginator = Paginator(jobs, 5)  # 5 jobs per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    jobcount = Job.objects.filter(is_active=True).count()   
-    companycount=Company.objects.count()
-    fillcount=JobApplication.objects.filter(status='Accepted').count()
-    employeecount= JobApplication.objects.values('employee').distinct().count()
+
+    # Dashboard counts
+    companycount = Company.objects.count()
+
+    fillcount = JobApplication.objects.filter(
+        status='Accepted'
+    ).count()
+
+    employeecount = JobApplication.objects.values(
+        'employee'
+    ).distinct().count()
+
+    # Trending positions
     popular_positions = (
-    Position.objects.annotate(
-        total_applications=Count("job__jobapplication")
+        Position.objects.annotate(
+            total_applications=Count("job__jobapplication")
+        )
+        .order_by("-total_applications")[:3]
     )
-    .order_by("-total_applications")[:3]   
-)
-    
 
     context = {
         'job': jobs,
         'cities': cities,
         'positions': positions,
+
+        # Selected filters
         'position': position,
         'city': city,
-        'job_type': job_type,              # selected value
+        'job_type': job_type,
+
         'job_types': Job.JOB_TYPE_CHOICES,
+
+        # User
         'employee': employee,
-        'page_obj':page_obj,
-        'jobcount':jobcount,
-        'companycount':companycount,
-        'fillcount':fillcount,
-        'employeecount':employeecount,
-        'popular_positions':popular_positions,
+
+        # Pagination
+        'page_obj': page_obj,
+
+        # Counts
+        'jobcount': jobcount,
+        'companycount': companycount,
+        'fillcount': fillcount,
+        'employeecount': employeecount,
+
+        # Trending
+        'popular_positions': popular_positions,
     }
 
     return render(request, 'index.html', context)

@@ -316,8 +316,8 @@ Profile
         <div class="custom-pagination ml-auto">
 
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list" class="prev">
-                 Prev
+        <a href="?page={{ page_obj.previous_page_number }}{% if city %}&city={{ city }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if job_type %}&job_type={{ job_type }}{% endif %}#list" class="prev">
+                   Prev
             </a>
                 
             {% endif %}
@@ -329,10 +329,12 @@ Profile
     {% if num == 1 or num == page_obj.paginator.num_pages or num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
 
         {% if page_obj.number == num %}
-            <a href="?page={{ num }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list"
-               class="active">{{ num }}</a>
+            <a href="?page={{ num }}{% if city %}&city={{ city }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if job_type %}&job_type={{ job_type }}{% endif %}#list"
+               class="active">
+                {{ num }}
+            </a>
         {% else %}
-            <a href="?page={{ num }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list">
+            <a href="?page={{ num }}{% if city %}&city={{ city }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if job_type %}&job_type={{ job_type }}{% endif %}#list">
                 {{ num }}
             </a>
         {% endif %}
@@ -347,8 +349,8 @@ Profile
 
 
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list" class="next">
-             Next
+            <a href="?page={{ page_obj.next_page_number }}{% if city %}&city={{ city }}{% endif %}{% if position %}&position={{ position }}{% endif %}{% if job_type %}&job_type={{ job_type }}{% endif %}#list" class="next">
+               Next
             </a>
                 
             {% endif %}
