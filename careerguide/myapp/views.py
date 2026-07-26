@@ -67,6 +67,7 @@ def homeview(request):
     )
     .order_by("-total_applications")[:3]   
 )
+    print(Job.JOB_TYPE_CHOICES)
 
     context = {
         'job': jobs,
@@ -74,7 +75,8 @@ def homeview(request):
         'positions': positions,
         'position': position,
         'city': city,
-        'job_type': job_type,
+        'job_type': job_type,              # selected value
+        'job_types': Job.JOB_TYPE_CHOICES,
         'employee': employee,
         'page_obj':page_obj,
         'jobcount':jobcount,
@@ -85,6 +87,7 @@ def homeview(request):
     }
 
     return render(request, 'index.html', context)
+
 def jobdetail(request, id):
     job = Job.objects.get(id=id)
 
