@@ -502,7 +502,7 @@ $(document).ready(function(){
 </script>
 
 <script>
-document.querySelectorAll(".logout-btn").forEach(function(element) {
+document.querySelectorAll(".logout-btn, #logoutBtn").forEach(function(element) {
     element.addEventListener("click", function(e) {
         e.preventDefault();
         const logoutUrl = this.href;

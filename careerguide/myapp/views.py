@@ -1698,23 +1698,31 @@ def company_detail(request, id):
         "company_detail.html",
         context
     )
+
+
 def company_list_view(request):
     employee = None
-
     employee_id = request.session.get('employee_id')
 
     if employee_id:
         employee = Employee.objects.filter(id=employee_id).first()
 
-    companies = Company.objects.all()
+    # Get search query from GET parameters
+    search_query = request.GET.get('company_name', '').strip()
 
-    paginator = Paginator(companies, 3)
+    # Filter companies if search query exists
+    companies = Company.objects.all()
+    if search_query:
+        companies = companies.filter(company_name__icontains=search_query)
+
+    paginator = Paginator(companies, 5)
     page_number = request.GET.get("page")
     companies_page = paginator.get_page(page_number)
 
     context = {
         'companies': companies_page,
         'employee': employee,
+        'company_name': search_query,  # Pass back to template to keep input value filled
     }
 
     return render(request, 'company_list_view.html', context)

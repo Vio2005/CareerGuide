@@ -356,7 +356,20 @@ Available Companies
 
 </div>
 
-
+<div class="row mb-5 justify-content-center">
+      <div class="col-md-8">
+        <form method="GET" action="{% url 'company_list_view' %}#company-section" class="search-jobs-form">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-lg" placeholder="Search company name..." name="company_name" value="{{ request.GET.company_name }}">
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-lg text-white px-4" type="submit">
+                <span class="icon-search icon mr-2"></span>Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
 
 
@@ -704,7 +717,7 @@ Next
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.querySelectorAll(".logout-btn").forEach(function(element) {
+document.querySelectorAll(".logout-btn, #logoutBtn").forEach(function(element) {
     element.addEventListener("click", function(e) {
         e.preventDefault();
         const logoutUrl = this.href;
