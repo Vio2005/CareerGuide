@@ -168,7 +168,7 @@ Profile
             </div>
 
             <!-- Search Form -->
-            <form method="GET" class="search-jobs-form px-2 px-md-0" action="{% url 'homeview' %}">
+            <form method="GET" class="search-jobs-form px-2 px-md-0" action="{% url 'homeview' %}#list">
               <div class="row mb-4">
                 
                 <!-- Job Title Input -->
@@ -224,8 +224,6 @@ Profile
       </div>
     </section>
      
-{{ job_type }}<br>
-{{ positions }}
 
     <section class="site-section" id="list">
       <div class="container">
@@ -235,7 +233,7 @@ Profile
             <h2 class="section-title mb-2">{{jobcount}} Job Listed</h2>
           </div>
         </div>
-        <form method="GET" id="filterForm">
+        <form method="GET" id="filterForm" action="{% url 'homeview' %}#list">
 
     <!-- City -->
     <select name="city" onchange="document.getElementById('filterForm').submit();">
@@ -318,37 +316,41 @@ Profile
         <div class="custom-pagination ml-auto">
 
             {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}#list" class="prev">
-                    Prev
-                </a>
+            <a href="?page={{ page_obj.previous_page_number }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list" class="prev">
+                 Prev
+            </a>
+                
             {% endif %}
 
             <div class="d-inline-block">
 
                 {% for num in page_obj.paginator.page_range %}
 
-                    {% if page_obj.number == num %}
+    {% if num == 1 or num == page_obj.paginator.num_pages or num >= page_obj.number|add:"-2" and num <= page_obj.number|add:"2" %}
 
-                        <a href="?page={{ num }}#list" class="active">
-                            {{ num }}
-                        </a>
+        {% if page_obj.number == num %}
+            <a href="?page={{ num }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list"
+               class="active">{{ num }}</a>
+        {% else %}
+            <a href="?page={{ num }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list">
+                {{ num }}
+            </a>
+        {% endif %}
 
-                    {% else %}
+    {% elif num == page_obj.number|add:"-3" or num == page_obj.number|add:"3" %}
+        <span>...</span>
+    {% endif %}
 
-                        <a href="?page={{ num }}#list">
-                            {{ num }}
-                        </a>
-
-                    {% endif %}
-
-                {% endfor %}
+{% endfor %}
 
             </div>
 
+
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}#list" class="next">
-                    Next
-                </a>
+            <a href="?page={{ page_obj.next_page_number }}&city={{ city }}&position={{ position }}&job_type={{ job_type }}#list" class="next">
+             Next
+            </a>
+                
             {% endif %}
 
         </div>
