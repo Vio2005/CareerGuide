@@ -98,7 +98,7 @@
             <div class="right-cta-menu text-right d-flex align-items-center col-6">
               <div class="ml-auto">
 {% if request.session.employee_id %}
-    <a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block" id="logoutBtn"><span class="mr-2 icon-lock_outline"></span>
+    <a href="{% url 'employeelogout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block" class="logout-btn"><span class="mr-2 icon-lock_outline"></span>
         Log Out
     </a>
 {% else %}
@@ -501,23 +501,26 @@ $(document).ready(function(){
 {% endif %}
 </script>
 
-    <script>
-document.getElementById("logoutBtn").addEventListener("click", function(e) {
-    e.preventDefault();
+<script>
+document.querySelectorAll(".logout-btn").forEach(function(element) {
+    element.addEventListener("click", function(e) {
+        e.preventDefault();
+        const logoutUrl = this.href;
 
-    Swal.fire({
-        title: "Logout?",
-        text: "Are you sure you want to logout?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#074f85",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Yes, Logout",
-        cancelButtonText: "Cancel"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = this.href;
-        }
+        Swal.fire({
+            title: "Logout?",
+            text: "Are you sure you want to logout?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#074f85",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Yes, Logout",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
     });
 });
 </script>
