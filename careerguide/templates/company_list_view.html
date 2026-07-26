@@ -338,30 +338,38 @@ Company
 
 <!-- TITLE -->
 
-<div class="row mb-5 justify-content-center">
+<div class="row mb-3 justify-content-center">
 
 
-<!-- TITLE AND SEARCH ROW -->
-<div class="row mb-5 align-items-center">
-  
-  <!-- EMPTY SPACER (Balances the layout on the left) -->
-  <div class="col-md-4 d-none d-md-block"></div>
+<div class="col-md-7 text-center">
 
-  <!-- AVAILABLE COMPANIES TITLE (Centered) -->
-  <div class="col-12 col-md-4 text-center mb-3 mb-md-0">
-    <h2 class="section-title mb-2">Available Companies</h2>
-  </div>
 
-  <!-- SEARCH BOX (Aligned to the Right, Narrow Width) -->
-  <div class="col-12 col-md-4 ml-auto">
-    <form method="GET" action="{% url 'company_list_view' %}#company-section" class="search-jobs-form">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search company name..." name="company_name" value="{{ request.GET.company_name }}">
-      </div>
-    </form>
-  </div>
+<h2 class="section-title mb-2">
+
+Available Companies
+
+</h2>
+
 
 </div>
+
+
+</div>
+
+<div class="row mb-4 justify-content-center">
+      <div class="col-md-8">
+        <form method="GET" action="{% url 'company_list_view' %}#company-section" class="search-jobs-form">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search company name..." name="company_name" value="{{ request.GET.company_name }}">
+            <div class="input-group-append">
+              <button class="btn btn-primary text-white px-4" type="submit">
+                <span class="icon-search icon mr-2"></span>Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
 
 
