@@ -67,7 +67,7 @@ def homeview(request):
     )
     .order_by("-total_applications")[:3]   
 )
-    print(Job.JOB_TYPE_CHOICES)
+    
 
     context = {
         'job': jobs,
