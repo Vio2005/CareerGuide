@@ -1711,7 +1711,7 @@ def company_list_view(request):
     search_query = request.GET.get('company_name', '').strip()
 
     # Filter companies if search query exists
-    companies = Company.objects.all()
+    companies = Company.objects.all().order_by('company_name')
     if search_query:
         companies = companies.filter(company_name__icontains=search_query)
 
