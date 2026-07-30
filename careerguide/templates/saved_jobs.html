@@ -278,7 +278,7 @@ Saved Jobs
       <ul class="job-listings mb-5 mt-4">
   {% for i in page_obj %}
     <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center"
-        onclick="window.location.href='{% url 'jobdetail' i.id %}';"
+        onclick="window.location.href='{% url 'jobdetail' i.job.id %}';"
         style="cursor: pointer;">
       
       <!-- Company Logo Container -->
