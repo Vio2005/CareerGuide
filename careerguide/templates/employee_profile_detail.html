@@ -482,11 +482,26 @@ Saved Jobs
         </div>
 
 
-        <div class="col-md-2 info-column">
-            <strong>Description</strong>
-            <br>
-            <span>{{ exp.description }}</span>
-        </div>
+       <div class="col-md-2 info-column">
+    <strong>Description</strong>
+    <br>
+
+    <span>
+        <span class="short-description">
+            {{ exp.description|truncatechars:80 }}
+        </span>
+
+        {% if exp.description|length > 80 %}
+            <span class="full-description" style="display: none;">
+                {{ exp.description }}
+            </span>
+
+            <button type="button" class="btn btn-link p-0 more-btn">
+                More
+            </button>
+        {% endif %}
+    </span>
+</div>
 
 
     </div>
@@ -735,7 +750,25 @@ document.querySelectorAll(".logout-btn, #logoutBtn").forEach(function(element) {
     });
 });
 </script>
+<script>
+document.querySelectorAll(".more-btn").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const container = button.parentElement;
+        const shortText = container.querySelector(".short-description");
+        const fullText = container.querySelector(".full-description");
 
+        if (fullText.style.display === "none") {
+            shortText.style.display = "none";
+            fullText.style.display = "inline";
+            button.textContent = "Less";
+        } else {
+            shortText.style.display = "inline";
+            fullText.style.display = "none";
+            button.textContent = "More";
+        }
+    });
+});
+</script>
 
 
 </body>
