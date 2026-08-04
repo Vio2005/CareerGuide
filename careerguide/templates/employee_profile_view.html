@@ -22,6 +22,14 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+    .more{
+        color:#32a4fb;
+        font-weight: bold;   }
+    .more:hover{
+        color: #074f85;
+    }
+</style>
 
 </head>
 
@@ -338,11 +346,26 @@ onclick="showImage(this.src)">
         </div>
 
 
-        <div class="col-md-2 info-column">
-            <strong>Description</strong>
-            <br>
-            <span>{{ exp.description }}</span>
-        </div>
+        <div class="col-md-3 info-column">
+    <strong>Description</strong>
+    <br>
+
+    <span>
+        <span class="short-description">
+            {{ exp.description|truncatechars:50 }}
+        </span>
+
+        {% if exp.description|length > 50 %}
+            <span class="full-description" style="display: none;">
+                {{ exp.description }}
+            </span>
+
+            <button type="button" class="btn more p-0 more-btn">
+                More
+            </button>
+        {% endif %}
+    </span>
+</div>
 
 
     </div>
