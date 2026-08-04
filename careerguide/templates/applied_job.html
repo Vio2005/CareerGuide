@@ -273,6 +273,10 @@ Home
               <span class="badge badge-danger px-3 py-2">
                 {{ application.status }}
               </span>
+            {% elif application.status == "Shortlisted" %}
+              <span class="badge badge-info px-3 py-2">
+                {{ application.status }}
+              </span>
             {% else %}
               <span class="badge badge-warning px-3 py-2 text-dark">
                 {{ application.status }}
