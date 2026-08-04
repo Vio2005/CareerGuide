@@ -24,6 +24,11 @@
 <link rel="stylesheet" href="{% static 'css/employ_profile_detail.css' %}">
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+    .more{
+        color: #074f85;
+    }
+</style>
 
 
 </head>
@@ -488,15 +493,15 @@ Saved Jobs
 
     <span>
         <span class="short-description">
-            {{ exp.description|truncatechars:80 }}
+            {{ exp.description|truncatechars:50 }}
         </span>
 
-        {% if exp.description|length > 80 %}
+        {% if exp.description|length > 50 %}
             <span class="full-description" style="display: none;">
                 {{ exp.description }}
             </span>
 
-            <button type="button" class="btn btn-link p-0 more-btn">
+            <button type="button" class="btn more p-0 more-btn">
                 More
             </button>
         {% endif %}
