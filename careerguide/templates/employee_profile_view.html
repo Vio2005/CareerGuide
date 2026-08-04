@@ -611,6 +611,25 @@ document.getElementById("logoutBtn").addEventListener("click", function(e) {
     });
 });
 </script>
+<script>
+document.querySelectorAll(".more-btn").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const container = button.parentElement;
+        const shortText = container.querySelector(".short-description");
+        const fullText = container.querySelector(".full-description");
+
+        if (fullText.style.display === "none") {
+            shortText.style.display = "none";
+            fullText.style.display = "inline";
+            button.textContent = "Less";
+        } else {
+            shortText.style.display = "inline";
+            fullText.style.display = "none";
+            button.textContent = "More";
+        }
+    });
+});
+</script>
 
 
 </body>

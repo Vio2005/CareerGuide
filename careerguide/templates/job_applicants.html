@@ -130,6 +130,14 @@
     0 15px 30px rgba(0,123,255,.35);
 
 }
+
+    .more{
+        color:#32a4fb;
+        font-weight: bold;   }
+    .more:hover{
+        color: #074f85;
+    }
+
 </style>
 </head>
 
@@ -446,11 +454,27 @@ onclick="showImage(this.src)">
         </div>
 
 
-        <div class="col-md-2 info-column">
-            <strong>Description</strong>
-            <br>
-            <span>{{ exp.description }}</span>
-        </div>
+        <div class="col-md-3 info-column">
+    <strong>Description</strong>
+    <br>
+
+    <span>
+        <span class="short-description">
+            {{ exp.description|truncatechars:50 }}
+        </span>
+
+        {% if exp.description|length > 50 %}
+            <span class="full-description" style="display: none;">
+                {{ exp.description }}
+            </span>
+
+            <button type="button" class="btn more p-0 more-btn">
+                More
+            </button>
+        {% endif %}
+    </span>
+</div>
+
 
 
     </div>
@@ -799,6 +823,25 @@ document.getElementById("logoutBtn").addEventListener("click", function(e) {
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = this.href;
+        }
+    });
+});
+</script>
+<script>
+document.querySelectorAll(".more-btn").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const container = button.parentElement;
+        const shortText = container.querySelector(".short-description");
+        const fullText = container.querySelector(".full-description");
+
+        if (fullText.style.display === "none") {
+            shortText.style.display = "none";
+            fullText.style.display = "inline";
+            button.textContent = "Less";
+        } else {
+            shortText.style.display = "inline";
+            fullText.style.display = "none";
+            button.textContent = "More";
         }
     });
 });
