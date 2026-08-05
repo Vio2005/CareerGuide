@@ -897,7 +897,7 @@ def post(request):
             position=position_obj,
         )
 
-        messages.success(request, "Job posted successfully!")
+        
         return redirect("companypostview",id=company.id)
 
     return render(request, "company_post.html", {"company": company})
