@@ -1,0 +1,452 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <title>Career Bridge - Company Employees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="shortcut icon" href="{% static 'ftco-32x32.png' %}">
+
+<link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/line-icons/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<style>
+    .employee-section{
+    background:#f5f8fc;
+}
+
+
+.employee-card{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    background:white;
+    height:360px;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(7,79,133,0.12);
+    transition:all .35s ease;
+}
+
+
+.employee-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 18px 40px rgba(7,79,133,0.25);
+}
+
+
+.employee-img{
+    width:100%;
+    height:360px;
+    object-fit:cover;
+}
+
+
+.employee-overlay{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:20px;
+    background:linear-gradient(
+        to top,
+        rgba(7,79,133,0.95),
+        rgba(7,79,133,0.5),
+        transparent
+    );
+}
+
+
+.employee-name{
+    color:white;
+    font-weight:700;
+    font-size:1.1rem;
+}
+
+
+.employee-position{
+    color:#e7f1ff;
+    font-size:.9rem;
+    margin-bottom:10px;
+}
+
+
+.employee-badge{
+    background:white;
+    color:#074f85;
+    padding:6px 15px;
+    border-radius:50px;
+    font-size:.8rem;
+    font-weight:700;
+}
+
+.employee-column{
+    width:20%;
+    padding:15px;
+}
+
+@media(max-width:992px){
+    .employee-column{
+        width:33.33%;
+    }
+}
+
+@media(max-width:768px){
+    .employee-column{
+        width:50%;
+    }
+}
+
+@media(max-width:576px){
+    .employee-column{
+        width:100%;
+    }
+}
+
+.employee-name,
+.employee-position{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.employee-date{
+    color:#e7f1ff;
+    font-size:.8rem;
+    margin-top:10px;
+    margin-bottom:0;
+}
+</style>
+
+</head>
+
+<body id="top">
+
+<div id="overlayer"></div>
+<div class="loader">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="site-wrap">
+
+<!-- Mobile Menu -->
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+
+<!-- NAVBAR -->
+<header class="site-navbar mt-3">
+<div class="container-fluid">
+<div class="row align-items-center">
+
+<div class="site-logo col-6">
+    <a href="{% url 'company_index' %}">
+        Career Bridge
+    </a>
+</div>
+
+<nav class="mx-auto site-navigation">
+<ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+
+    <li>
+        <a href="{% url 'company_index' %}">
+            Home
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'companypostview' company.id %}">
+            Job Post
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'company_candidates' %}">
+            Applicant
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'hiring_analytics' %}">
+            Hiring Analytic
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'companyprofile' company.id %}">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'companypost' %}">
+            <span class="mr-2 icon-add"></span>
+            Post Job
+        </a>
+    </li>
+
+    <li class="d-lg-none">
+        <a href="{% url 'companylogout' %}">
+            Log Out
+        </a>
+    </li>
+
+</ul>
+</nav>
+
+
+<div class="right-cta-menu text-right d-flex align-items-center col-6">
+
+<div class="ml-auto">
+    <a href="{% url 'companylogout' %}" 
+       class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+        <span class="mr-2 icon-lock_outline"></span>
+        Log Out
+    </a>
+</div>
+
+<a href="#" 
+class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+<span class="icon-menu h3 m-0 p-0 mt-2"></span>
+</a>
+
+</div>
+
+
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+
+<section class="section-hero overlay inner-page bg-image"
+style="background-image:url('{% static 'images/company1.jpg' %}');"
+id="home-section">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-7">
+
+<h1 class="text-white font-weight-bold">
+Company Employees
+</h1>
+
+
+<div class="custom-breadcrumbs">
+
+<a href="{% url 'company_index' %}" class="dec">
+Home
+</a>
+
+<span class="mx-2 slash">
+/
+</span>
+
+<span class="text-white">
+<strong>
+Employees
+</strong>
+</span>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- EMPLOYEE LIST -->
+<section class="site-section">
+    <div class="container">
+
+        <div class="row mb-5 justify-content-between align-items-center">
+            <div class="col-md-6">
+                <h2 class="section-title mb-0">Employees</h2>
+            </div>
+            <div class="col-md-6 text-md-right mt-3 mt-md-0">
+                <a href="{% url 'company_index' %}" class="btn btn-primary">
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+<div class="row d-flex">
+
+{% for i in page_obj %}
+
+<div class="employee-column">
+
+<a href="{% url 'employeeprofileview' i.employee.id %}"
+class="text-decoration-none">
+
+
+<div class="employee-card">
+
+
+{% if i.employee.employeeprofile.profile_image %}
+
+<img src="{{ i.employee.employeeprofile.profile_image.url }}"
+class="employee-img"
+alt="{{ i.employee.username }}">
+
+{% else %}
+
+<img src="{% static 'images/default-profile.jpg' %}"
+class="employee-img"
+alt="Default">
+
+{% endif %}
+
+
+
+<div class="employee-overlay">
+
+<h5 class="employee-name">
+{{ i.employee.username }}
+</h5>
+
+
+<p class="employee-position">
+{{ i.job.position }}
+</p>
+
+
+<span class="employee-badge">
+    Employee
+</span>
+
+<p class="employee-date">
+    <i class="icon-check mr-1"></i>
+    Accepted on: {{ i.applied_date|date:"M d, Y" }}
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</a>
+
+</div>
+
+
+{% empty %}
+
+<div class="col-12 text-center">
+<p>No employees yet.</p>
+</div>
+
+
+{% endfor %}
+
+</div>
+
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary mr-2">
+                        Previous
+                    </a>
+                {% endif %}
+
+                <span class="mx-3">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary ml-2">
+                        Next
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+
+    <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+    </a>
+
+    <div class="container">
+        <div class="row mb-5">
+
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4">
+                <h3>Quick Links</h3>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'company_index' %}">Dashboard</a></li>
+                    <li><a href="{% url 'companypostview' company.id %}">Job Posts</a></li>
+                    <li><a href="{% url 'company_candidates' %}">Applicants</a></li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4">
+                <h3>Company</h3>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'companyprofile' company.id %}">Profile</a></li>
+                    <li><a href="{% url 'hiring_analytics' %}">Hiring Analytics</a></li>
+                    <li><a href="{% url 'companypost' %}">Post Job</a></li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-4">
+                <h3>Contact</h3>
+                <p>Email: support@careerbridge.com</p>
+                <p>Phone: +95 9 123 456 789</p>
+            </div>
+
+        </div>
+
+        <div class="row text-center">
+            <div class="col-12">
+                <p class="copyright">
+                    <small>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved.
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+```
+
+</div>
+
+<!-- JS -->
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+</html>

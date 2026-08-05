@@ -141,38 +141,20 @@ value="{{ profile.date_of_birth|date:'Y-m-d' }}">
 
 {% if profile.profile_image %}
 
-
 <div>
 
 <p>Current Image</p>
-
-
 <img src="{{ profile.profile_image.url }}"
 class="preview-img">
-
-
 </div>
 
-
 {% endif %}
-
-
-
-
-
 <div>
-
-
 <p>New Image</p>
-
-
 <img id="new-image-preview"
 src="{% static 'images/default-profile.jpg' %}"
 class="preview-img">
-
-
 </div>
-
 
 
 </div>

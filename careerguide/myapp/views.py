@@ -651,23 +651,57 @@ def companyview(request):
 
     company = Company.objects.get(id=company_id)
 
-    job = Job.objects.filter(company=company)
-    job_applications = JobApplication.objects.filter(job__company=company).order_by('-id')[:5]
-    job_posted=Job.objects.filter(company=company).count()
-    applicant = JobApplication.objects.filter(
-    job__company=company
-).values('employee').distinct().count()
+    # Recent applications (all statuses)
+    recent_applications = (
+        JobApplication.objects
+        .filter(job__company=company)
+        .select_related('employee', 'employee__employeeprofile', 'job')
+        .order_by('-id')[:5]
+    )
+
+    # Only 5 accepted employees
+    employees = (
+        JobApplication.objects
+        .filter(job__company=company, status='Accepted')
+        .select_related('employee', 'employee__employeeprofile', 'job')
+        .order_by('-id')[:8]
+    )
+
+    job_posted = Job.objects.filter(company=company).count()
+    applicant = JobApplication.objects.filter(job__company=company).values('employee').distinct().count()
 
     context = {
         'company': company,
-        'job': job,
-        'job_applications': job_applications,
-        'job_posted' : job_posted,
-        'applicant' : applicant
+        'recent_applications': recent_applications,
+        'employees': employees,
+        'job_posted': job_posted,
+        'applicant': applicant,
     }
 
     return render(request, 'company_index.html', context)
 
+def company_employees(request):
+    company_id = request.session.get('company_id')
+
+    company = Company.objects.get(id=company_id)
+
+    employees = JobApplication.objects.filter(
+        job__company=company,
+        status="Accepted"
+    ).order_by('-applied_date')
+
+    # Show 10 employees per page
+    paginator = Paginator(employees, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'company': company,
+        'page_obj': page_obj,
+    }
+
+    return render(request, 'company_employees.html', context)
 
 def edit_employee_profile(request, id):
 
