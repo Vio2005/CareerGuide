@@ -76,6 +76,9 @@
               font-size: 18px;
           }
       }
+      .dec:hover{
+        text-decoration: none;
+      }
     </style>
   </head>
   <body id="top">
@@ -107,6 +110,7 @@
         </div>
       </div>
     </header>
+    <!-- Slide Section-->
 
     <section class="bg-light testimony-full">
       <section class="testimony-full">
@@ -266,6 +270,134 @@
         </div>
       </div>
     </section>
+
+    ```html
+<!-- ================================
+     CAREER BRIDGE SERVICES
+================================ -->
+
+<section class="careerbridge-services py-5">
+
+    <div class="container">
+
+        <!-- Section Title -->
+        <div class="row justify-content-center mb-5">
+
+            <div class="col-md-8 text-center">
+
+                <h2 class="section-title">
+                    Everything You Need to Move Forward
+                </h2>
+
+                <p class="section-subtitle">
+                    Whether you're hiring, searching for your next opportunity,
+                    or discovering your career path, Career Bridge is here to help.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Cards -->
+        <div class="row">
+
+
+            <!-- CARD 1 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="careerbridge-card">
+
+                    <div class="careerbridge-icon talent-icon">
+                        <span>👥</span>
+                    </div>
+
+                    <h3>
+                        Find the Right Talent
+                    </h3>
+
+                    <p>
+                        Connect with skilled candidates and discover
+                        professionals who match your company's needs
+                        through Career Bridge.
+                    </p>
+
+                    <a href="{% url 'companylogin' %}"
+                       class="careerbridge-btn">
+                        Search Candidates
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="careerbridge-card">
+
+                    <div class="careerbridge-icon career-icon">
+                        <span>💼</span>
+                    </div>
+
+                    <h3>
+                        Discover Better Career Opportunities
+                    </h3>
+
+                    <p>
+                        Explore trusted companies, connect with employers,
+                        and take the next step toward your professional growth.
+                    </p>
+
+                    <a href="{% url 'homeview' %}"
+                       class="careerbridge-btn">
+                        Search Companies
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 3 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="careerbridge-card">
+
+                    <div class="careerbridge-icon quiz-icon">
+                        <span>🎯</span>
+                    </div>
+
+                    <h3>
+                        Not Sure Which Career Fits You?
+                    </h3>
+
+                    <p>
+                        Let Career Bridge help you discover suitable career
+                        paths based on your skills, interests, and future goals.
+                    </p>
+
+                    <a href="{% url 'careerquiz' %}"
+                       class="careerbridge-btn">
+                        Find Your Career
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
     
 <footer class="site-footer">
   <a href="#top" class="smoothscroll scroll-top">

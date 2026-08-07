@@ -2149,3 +2149,221 @@ h1, h3, h4 {
 .spinner-border.text-primary {
   color: #074f85!important; 
 }
+
+
+/* =========================================
+   CAREER BRIDGE SERVICES
+========================================= */
+
+.careerbridge-services {
+    background: #f8fafc;
+    padding: 80px 0;
+}
+
+
+/* Section title */
+
+.careerbridge-services .section-title {
+    font-size: 34px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 15px;
+}
+
+.careerbridge-services .section-subtitle {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.careerbridge-card {
+    height: 100%;
+
+    background: #ffffff;
+
+    padding: 35px 30px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    border: 1px solid #e5eaf0;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+    display: flex;
+    flex-direction: column;
+
+    transition: all .3s ease;
+}
+
+
+/* Card hover */
+
+.careerbridge-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 20px 45px rgba(7, 79, 133, 0.15);
+
+    border-color: #074f85;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.careerbridge-icon {
+
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+}
+
+
+/* Icon backgrounds */
+
+.talent-icon {
+    background: #e7f3ff;
+}
+
+.career-icon {
+    background: #e9f8f0;
+}
+
+.quiz-icon {
+    background: #fff4df;
+}
+
+
+/* =========================================
+   CARD TITLE
+========================================= */
+
+.careerbridge-card h3 {
+
+    color: #1e293b;
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* =========================================
+   CARD DESCRIPTION
+========================================= */
+
+.careerbridge-card p {
+
+    color: #64748b;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    margin-bottom: 25px;
+
+    flex-grow: 1;
+
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.careerbridge-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    width: fit-content;
+
+    margin: 0 auto;
+
+    padding: 11px 22px;
+
+    border-radius: 50px;
+
+    background: #074f85;
+
+    color: white !important;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-decoration: none !important;
+
+    transition: all .3s ease;
+
+}
+
+
+.careerbridge-btn:hover {
+
+    background: #053b63;
+
+    color: white !important;
+
+    transform: translateX(3px);
+
+}
+
+
+.careerbridge-btn span {
+
+    font-size: 18px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .careerbridge-services {
+        padding: 60px 0;
+    }
+
+    .careerbridge-services .section-title {
+        font-size: 28px;
+    }
+
+    .careerbridge-card {
+        padding: 30px 25px;
+    }
+
+}
