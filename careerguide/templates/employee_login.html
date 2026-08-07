@@ -5,8 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Login</title>
+    
 
     <style>
 
@@ -123,6 +126,26 @@
             }
 
         }
+        .password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
 
     </style>
 
@@ -150,11 +173,25 @@
         placeholder="Enter Email"
         required>
 
+    ```html
+<div class="password-wrapper">
     <input
         type="password"
         name="password"
+        id="password"
         placeholder="Enter Password"
         required>
+
+    <button type="button"
+            class="toggle-password"
+            onclick="togglePassword()">
+        <i class="fa-solid fa-eye" id="eyeIcon"></i>
+    </button>
+</div>
+
+
+
+
 
     <button type="submit">
         Login
@@ -170,6 +207,22 @@
 </form>
 
 </div>
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    }
+}
+</script>
 
 </body>
 </html>

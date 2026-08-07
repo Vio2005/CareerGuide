@@ -136,34 +136,7 @@ value="{{ profile.date_of_birth|date:'Y-m-d' }}">
 
 
 
-<div class="image-preview-container">
-
-
-{% if profile.profile_image %}
-
-
-<div>
-
-<p>Current Image</p>
-
-
-<img src="{{ profile.profile_image.url }}"
-class="preview-img">
-
-
-</div>
-
-
-{% endif %}
-
-
-
-
-
-<div>
-
-
-<p>New Image</p>
+<p>Image</p>
 
 
 <img id="new-image-preview"
@@ -223,75 +196,40 @@ accept="image/*">
 
 <div id="education-container">
 
-{% for education in educations %}
 
-<div class="education-item">
+    <label>
+        Institution <span class="required">*</span>
+    </label>
+    <input type="text"
+           name="institution"
+           class="form-control"
+           required>
 
-<label>Institution</label>
-<input type="text" 
-       name="institution[]" 
-       value="{{ education.institution }}">
+    <label>Degree</label>
+    <input type="text"
+           name="degree"
+           class="form-control"
+           required>
 
+    <label>Field of Study</label>
+    <input type="text"
+           name="field_of_study"
+           class="form-control"
+           required>
 
-<label>Degree</label>
-<input type="text" 
-       name="degree[]" 
-       value="{{ education.degree }}">
+    <label>Start Year</label>
+    <input type="number"
+           name="start_year"
+           class="form-control"
+           required>
 
-
-<label>Field of Study</label>
-<input type="text" 
-       name="field_of_study[]" 
-       value="{{ education.field_of_study }}">
-
-
-<label>Start Year</label>
-<input type="number" 
-       name="start_year[]" 
-       value="{{ education.start_year }}">
-
-
-<label>End Year</label>
-<input type="number" 
-       name="end_year[]" 
-       value="{{ education.end_year }}">
-
-
-<button type="button"
-        class="remove-btn"
-        onclick="removeItem(this)">
-Remove
-</button>
+    <label>End Year</label>
+    <input type="number"
+           name="end_year"
+           class="form-control"
+           required>
 
 
-</div>
-
-{% empty %}
-
-<div class="education-item">
-
-<label>Institution</label>
-<input type="text" name="institution[]">
-
-
-<label>Degree</label>
-<input type="text" name="degree[]">
-
-
-<label>Field of Study</label>
-<input type="text" name="field_of_study[]">
-
-
-<label>Start Year</label>
-<input type="number" name="start_year[]">
-
-
-<label>End Year</label>
-<input type="number" name="end_year[]">
-
-</div>
-
-{% endfor %}
 
 </div>
 
@@ -316,60 +254,7 @@ Remove
 
 <div id="experience-container">
 
-{% for experience in experiences %}
 
-<div class="experience-item">
-
-
-<label>Company Name</label>
-
-<input type="text"
-name="company_name[]"
-value="{{ experience.company_name }}">
-
-
-
-<label>Position</label>
-
-<input type="text"
-name="position[]"
-value="{{ experience.position }}">
-
-
-
-<label>Start Date</label>
-
-<input type="date"
-name="start_date[]"
-value="{{ experience.start_date|date:'Y-m-d' }}">
-
-
-
-<label>End Date</label>
-
-<input type="date"
-name="end_date[]"
-value="{{ experience.end_date|date:'Y-m-d' }}">
-
-
-
-<label>Description</label>
-
-<textarea name="description[]">{{ experience.description }}</textarea>
-
-
-
-<button type="button"
-class="remove-btn"
-onclick="removeItem(this)">
-Remove
-</button>
-
-
-</div>
-
-
-{% empty %}
 
 
 <div class="experience-item">
@@ -396,7 +281,7 @@ Remove
 </div>
 
 
-{% endfor %}
+
 
 </div>
 
@@ -425,65 +310,6 @@ Skills
 <div id="skill-container">
 
 
-{% for skill in skills %}
-
-<div class="skill-item">
-
-
-<label>Skill Name</label>
-
-<input type="text"
-name="skill_name[]"
-value="{{ skill.skill_name }}">
-
-
-
-<label>Level</label>
-
-<select name="skill_level[]">
-
-
-<option value="Beginner"
-{% if skill.proficiency == "Beginner" %}
-selected
-{% endif %}>
-Beginner
-</option>
-
-
-
-<option value="Intermediate"
-{% if skill.proficiency == "Intermediate" %}
-selected
-{% endif %}>
-Intermediate
-</option>
-
-
-
-<option value="Advanced"
-{% if skill.proficiency == "Advanced" %}
-selected
-{% endif %}>
-Advanced
-</option>
-
-
-</select>
-
-
-
-<button type="button"
-class="remove-btn"
-onclick="removeItem(this)">
-Remove
-</button>
-
-
-</div>
-
-
-{% empty %}
 
 
 <div class="skill-item">
@@ -508,7 +334,7 @@ name="skill_name[]">
 </div>
 
 
-{% endfor %}
+
 
 
 </div>
@@ -545,16 +371,9 @@ Update Profile
 </button>
 
 
-
-
-
-<a href="{% url 'employeeprofile' %}"
-class="back-btn">
-
+<a href="javascript:history.back()" class="back-btn">
 Back
-
 </a>
-
 
 
 
