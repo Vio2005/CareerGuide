@@ -58,8 +58,8 @@ def homeview(request):
             job_type=job_type
         )
 
-    # Count filtered jobs
-    jobcount = jobs.count()
+    
+    jobcount = Job.objects.count()
 
     # Employee session
     employee = None

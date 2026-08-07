@@ -173,22 +173,44 @@ Profile
                 
                 <!-- Job Title Input -->
                 <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
-                  <input type="text" class="form-control form-control-lg" placeholder="Job title" name="position">
+                  <input type="text" class="form-control form-control-lg" placeholder="Job title" name="position" value="{{ position }}">
                 </div>
 
                 <!-- City Input -->
                 <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
-                  <input type="text" class="form-control form-control-lg" placeholder="City" name="city">
+                  <input type="text" class="form-control form-control-lg" placeholder="City" name="city" value="{{ city }}">
                 </div>
 
                 <!-- Job Type Select -->
                 <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
-                  <select class="selectpicker w-100" name="job_type" data-style="btn-white btn-lg" data-width="100%" data-live-search="true" title="Select Job Type">
-                    <option value="Full Time">Full Time</option>
-                    <option value="Part Time">Part Time</option>
-                    <option value="Internship">Internship</option>
-                    <option value="Remote">Remote</option>
-                  </select>
+                  <select class="selectpicker w-100"
+        name="job_type"
+        data-style="btn-white btn-lg"
+        data-width="100%"
+        data-live-search="true"
+        title="Select Job Type">
+
+    <option value="Full Time"
+        {% if job_type == "Full Time" %}selected{% endif %}>
+        Full Time
+    </option>
+
+    <option value="Part Time"
+        {% if job_type == "Part Time" %}selected{% endif %}>
+        Part Time
+    </option>
+
+    <option value="Internship"
+        {% if job_type == "Internship" %}selected{% endif %}>
+        Internship
+    </option>
+
+    <option value="Remote"
+        {% if job_type == "Remote" %}selected{% endif %}>
+        Remote
+    </option>
+
+</select>
                 </div>
 
                 <!-- Submit Button -->
