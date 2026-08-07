@@ -185,31 +185,45 @@ jQuery(function($) {
 OnePageNavigation();
 
   var counterInit = function() {
-		if ( $('.section-counter').length > 0 ) {
-			$('.section-counter').waypoint( function( direction ) {
+      if ( $('.section-counter').length > 0 ) {
+          
+          var runCounter = function(element) {
+              if (!$(element).hasClass('ftco-animated')) {
+                  $(element).addClass('ftco-animated');
+                  var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
+                  
+                  $(element).find('.number').each(function(){
+                      var $this = $(this),
+                          num = parseInt($this.data('number'), 10) || 0;
+                      
+                      console.log("Animating to: ", num);
+                      
+                      $this.animateNumber(
+                          {
+                              number: num,
+                              numberStep: comma_separator_number_step
+                          }, 2000
+                      );
+                  });
+              }
+          };
 
-				if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-
-					var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
-					$('.number').each(function(){
-						var $this = $(this),
-							num = $this.data('number');
-							console.log(num);
-						$this.animateNumber(
-						  {
-						    number: num,
-						    numberStep: comma_separator_number_step
-						  }, 2000
-						);
-					});
-					
-				}
-
-			} , { offset: '95%' } );
-		}
-
-	}
-	counterInit();
+          // Try using Waypoint if available
+          if (typeof $.fn.waypoint !== 'undefined') {
+              $('.section-counter').waypoint( function( direction ) {
+                  if( direction === 'down' ) {
+                      runCounter(this.element);
+                  }
+              } , { offset: '95%' } );
+          } else {
+              // Fallback if waypoints plugin fails to load: trigger immediately
+              $('.section-counter').each(function() {
+                  runCounter(this);
+              });
+          }
+      }
+  };
+  counterInit();
 
 	var selectPickerInit = function() {
 		$('.selectpicker').selectpicker();
