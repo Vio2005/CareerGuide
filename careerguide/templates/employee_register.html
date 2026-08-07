@@ -139,6 +139,35 @@
             }
 
         }
+        .password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding: 15px 50px 15px 15px !important;
+    margin-bottom: 20px;
+}
+
+.password-eye {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    color: #fff !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.password-eye i {
+    font-size: 17px;
+}
 
     </style>
 
@@ -165,18 +194,20 @@
         name="username"
         placeholder="Enter Username"
         required>
+    
 
     <input
         type="email"
         name="email"
         placeholder="Enter Email"
         required>
+    
+    <div class="password-wrapper"> 
+        <input type="password" name="password" id="password" placeholder="Create Password" required> 
+    <a href="javascript:void(0);" class="password-eye" onclick="togglePassword()"> 
+        <i class="fa-solid fa-eye" id="eyeIcon"></i> </a> </div>
 
-    <input
-        type="password"
-        name="password"
-        placeholder="Create Password"
-        required>
+  
 
     <button type="submit">
         Register
@@ -192,6 +223,22 @@
 </form>
 
 </div>
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    }
+}
+</script>
 
 </body>
 </html>
