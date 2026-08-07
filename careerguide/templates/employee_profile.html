@@ -12,7 +12,7 @@
 <title>Employee Profile Form</title>
 
 
-<link rel="stylesheet" href="{% static 'css/edit_employee_profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/fill_employee_profile.css' %}">
 
 </head>
 
@@ -146,10 +146,7 @@ class="preview-img">
 
 </div>
 
-<input type="file"
-name="profile_image"
-id="profile-image-input"
-accept="image/*">
+
 
 </div>
 
@@ -157,7 +154,10 @@ accept="image/*">
 
 
 
-
+<input type="file"
+name="profile_image"
+id="profile-image-input"
+accept="image/*">
 
 
 
@@ -179,311 +179,144 @@ accept="image/*">
 
 
 
-
-
 <!-- EDUCATION -->
-
-
-<div class="edit-card">
-
-<h2>
-    Education
-    <button type="button" class="add-btn" onclick="addEducation()">
-        +
-    </button>
-</h2>
-
-
 <div id="education-container">
 
-{% for education in educations %}
+    <div class="education-item">
 
-    <label>
-        Institution <span class="required">*</span>
-    </label>
-    <input type="text"
-           name="institution"
-           value="{{ education.institution }}"
-           class="form-control"
-           required>
+        <div class="form-group">
+            <label>
+                Institution <span class="required">*</span>
+            </label>
+            <input type="text"
+                   name="institution"
+                   class="form-control"
+                   required>
+        </div>
 
-    <label>Degree</label>
-    <input type="text"
-           name="degree"
-           value="{{ education.degree }}"
-           class="form-control">
+        <div class="form-row">
 
-    <label>Field of Study</label>
-    <input type="text"
-           name="field_of_study"
-           value="{{ education.field_of_study }}"
-           class="form-control">
+            <div class="form-group">
+                <label>Degree</label>
+                <input type="text"
+                       name="degree"
+                       class="form-control">
+            </div>
 
-    <label>Start Year</label>
-    <input type="number"
-           name="start_year"
-           value="{{ education.start_year }}"
-           class="form-control">
+            <div class="form-group">
+                <label>Field of Study</label>
+                <input type="text"
+                       name="field_of_study"
+                       class="form-control">
+            </div>
 
-    <label>End Year</label>
-    <input type="number"
-           name="end_year"
-           value="{{ education.end_year }}"
-           class="form-control">
+        </div>
 
-{% empty %}
+        <div class="form-row">
 
-    <label>
-        Institution <span class="required">*</span>
-    </label>
-    <input type="text"
-           name="institution"
-           class="form-control"
-           required>
+            <div class="form-group">
+                <label>Start Year</label>
+                <input type="number"
+                       name="start_year"
+                       class="form-control">
+            </div>
 
-    <label>Degree</label>
-    <input type="text"
-           name="degree"
-           class="form-control">
+            <div class="form-group">
+                <label>End Year</label>
+                <input type="number"
+                       name="end_year"
+                       class="form-control">
+            </div>
 
-    <label>Field of Study</label>
-    <input type="text"
-           name="field_of_study"
-           class="form-control">
+        </div>
 
-    <label>Start Year</label>
-    <input type="number"
-           name="start_year"
-           class="form-control">
-
-    <label>End Year</label>
-    <input type="number"
-           name="end_year"
-           class="form-control">
-
-{% endfor %}
-
-</div>
+    </div>
 
 </div>
 
 
-
-
-<div class="edit-card">
-
-<h2>
-    Experience
-
-    <button type="button" 
-            class="add-btn" 
-            onclick="addExperience()">
-        +
-    </button>
-
-</h2>
-
-
+<!-- EXPERIENCE -->
 <div id="experience-container">
 
-{% for experience in experiences %}
+    <div class="experience-item">
 
-<div class="experience-item">
+        <div class="form-row">
 
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text"
+                       name="company_name"
+                       class="form-control">
+            </div>
 
-<label>Company Name</label>
+            <div class="form-group">
+                <label>Position</label>
+                <input type="text"
+                       name="position"
+                       class="form-control">
+            </div>
 
-<input type="text"
-name="company_name[]"
-value="{{ experience.company_name }}">
+        </div>
 
+        <div class="form-row">
 
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date"
+                       name="start_date"
+                       class="form-control">
+            </div>
 
-<label>Position</label>
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date"
+                       name="end_date"
+                       class="form-control">
+            </div>
 
-<input type="text"
-name="position[]"
-value="{{ experience.position }}">
+        </div>
 
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description"
+                      class="form-control"></textarea>
+        </div>
 
-
-<label>Start Date</label>
-
-<input type="date"
-name="start_date[]"
-value="{{ experience.start_date|date:'Y-m-d' }}">
-
-
-
-<label>End Date</label>
-
-<input type="date"
-name="end_date[]"
-value="{{ experience.end_date|date:'Y-m-d' }}">
-
-
-
-<label>Description</label>
-
-<textarea name="description[]">{{ experience.description }}</textarea>
-
-
-
-<button type="button"
-class="remove-btn"
-onclick="removeItem(this)">
-Remove
-</button>
-
+    </div>
 
 </div>
 
 
-{% empty %}
-
-
-<div class="experience-item">
-
-<label>Company Name</label>
-<input type="text" name="company_name[]">
-
-
-<label>Position</label>
-<input type="text" name="position[]">
-
-
-<label>Start Date</label>
-<input type="date" name="start_date[]">
-
-
-<label>End Date</label>
-<input type="date" name="end_date[]">
-
-
-<label>Description</label>
-<textarea name="description[]"></textarea>
-
-</div>
-
-
-{% endfor %}
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-<!-- SKILL -->
-
-<div class="edit-card">
-
-<h2>
-Skills
-
-<button type="button" class="add-btn" onclick="addSkill()">
-+
-</button>
-
-</h2>
-
-
+<!-- SKILLS -->
 <div id="skill-container">
 
+    <div class="skill-item">
 
-{% for skill in skills %}
+        <div class="form-row">
 
-<div class="skill-item">
+            <div class="form-group">
+                <label>Skill Name</label>
+                <input type="text"
+                       name="skill_name"
+                       class="form-control">
+            </div>
 
+            <div class="form-group">
+                <label>Level</label>
+                <select name="level" class="form-control">
+                    <option value="">Select Level</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
 
-<label>Skill Name</label>
+        </div>
 
-<input type="text"
-name="skill_name[]"
-value="{{ skill.skill_name }}">
-
-
-
-<label>Level</label>
-
-<select name="skill_level[]">
-
-
-<option value="Beginner"
-{% if skill.proficiency == "Beginner" %}
-selected
-{% endif %}>
-Beginner
-</option>
-
-
-
-<option value="Intermediate"
-{% if skill.proficiency == "Intermediate" %}
-selected
-{% endif %}>
-Intermediate
-</option>
-
-
-
-<option value="Advanced"
-{% if skill.proficiency == "Advanced" %}
-selected
-{% endif %}>
-Advanced
-</option>
-
-
-</select>
-
-
-
-<button type="button"
-class="remove-btn"
-onclick="removeItem(this)">
-Remove
-</button>
-
+    </div>
 
 </div>
 
-
-{% empty %}
-
-
-<div class="skill-item">
-
-<label>Skill Name</label>
-
-<input type="text"
-name="skill_name[]">
-
-
-<label>Level</label>
-
-<select name="skill_level[]">
-
-<option>Beginner</option>
-<option>Intermediate</option>
-<option>Advanced</option>
-
-</select>
-
-
-</div>
-
-
-{% endfor %}
-
-
-</div>
-
-</div>
 
 
 

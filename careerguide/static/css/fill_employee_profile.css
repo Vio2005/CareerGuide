@@ -1,0 +1,544 @@
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800');
+
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+
+/* =========================
+   FORM CONTAINER
+========================= */
+
+form {
+    width: 90%;
+    max-width: 1200px;
+    margin: 80px auto;
+}
+
+
+/* =========================
+   TWO COLUMN LAYOUT
+========================= */
+
+.profile-edit-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    align-items: start;
+}
+
+.left-profile-section {
+    position: sticky;
+    top: 40px;
+}
+
+.right-profile-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-profile-section,
+.right-profile-section {
+    width: 100%;
+}
+
+.edit-card {
+    width: 100%;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.edit-card {
+    background: white;
+    padding: 45px;
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, .08);
+
+    position: relative;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+
+.edit-card::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 7px;
+
+    background: linear-gradient(
+        135deg,
+        #074f85,
+        #00c6ff
+    );
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.edit-card h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    color: #1e293b;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   LABELS
+========================= */
+
+label {
+    display: block;
+
+    font-weight: 700;
+    color: #334155;
+
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border-radius: 12px;
+    border: 1px solid #dbe3ee;
+
+    font-size: 15px;
+    outline: none;
+
+    transition: .3s;
+
+    font-family: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #074f85;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 123, 255, .15);
+}
+
+textarea {
+    height: 130px;
+    resize: none;
+}
+
+select {
+    background: white;
+}
+
+
+/* =========================
+   EDUCATION / EXPERIENCE / SKILL
+========================= */
+
+.education-item,
+.experience-item,
+.skill-item {
+    border: 1px solid #e2e8f0;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    background: #fafcff;
+}
+
+
+/* Two fields side by side */
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.form-group label {
+    margin-top: 15px;
+}
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+.image-preview-container {
+    display: flex;
+
+    gap: 40px;
+
+    align-items: center;
+
+    margin: 20px 0;
+}
+
+.image-preview-container div {
+    text-align: center;
+}
+
+.image-preview-container p {
+    font-weight: 700;
+    color: #334155;
+}
+
+.preview-img {
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 5px solid #074f85;
+
+    box-shadow:
+        0 8px 20px rgba(0, 123, 255, .2);
+}
+
+
+/* =========================
+   FILE INPUT
+========================= */
+
+input[type="file"] {
+    background: #f8fafc;
+    padding: 12px;
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-btn {
+    background: #074f85;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 50%;
+
+    width: 35px;
+    height: 35px;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .3s;
+}
+
+.add-btn:hover {
+    background: #053b63;
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   REMOVE BUTTON
+========================= */
+
+.remove-btn {
+    margin-top: 15px;
+
+    background: #dc3545;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 15px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.remove-btn:hover {
+    background: #bb2d3b;
+}
+
+
+/* =========================
+   UPDATE PROFILE BUTTON
+========================= */
+
+.profile-btn {
+    display: block;
+
+    margin: 30px auto 0;
+
+    padding: 14px 45px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background: linear-gradient(
+        135deg,
+        #074f85,
+        #00c6ff
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 10px 20px rgba(0, 123, 255, .25);
+
+    transition: .3s;
+
+    position: relative;
+    z-index: 2;
+}
+
+.profile-btn:hover {
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        135deg,
+        #053b63,
+        #0099cc
+    );
+
+    color: white;
+
+    box-shadow:
+        0 15px 30px rgba(0, 123, 255, .35);
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn {
+    display: block;
+
+    width: fit-content;
+
+    margin: 20px auto 0;
+
+    padding: 14px 45px;
+
+    border-radius: 50px;
+
+    background: #f1f5f9;
+
+    color: #074f85;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    border: 2px solid #074f85;
+
+    transition: .3s;
+
+    position: relative;
+    z-index: 2;
+}
+
+.back-btn:hover {
+    background: #074f85;
+
+    color: white;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 992px) {
+
+    .profile-edit-layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .left-profile-section {
+        position: static;
+    }
+
+    .edit-card {
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    form {
+        width: 95%;
+        margin: 30px auto;
+    }
+
+    .edit-card {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .edit-card h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        margin-top: 15px;
+    }
+
+    input,
+    textarea,
+    select {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    /* Stack left/right fields */
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .image-preview-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .preview-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-btn,
+    .back-btn {
+        width: 100%;
+
+        margin-top: 15px;
+
+        padding: 14px;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .edit-card {
+        padding: 15px;
+    }
+
+    .edit-card h2 {
+        font-size: 20px;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .preview-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .add-btn {
+        width: 30px;
+        height: 30px;
+
+        font-size: 18px;
+    }
+
+    .remove-btn {
+        width: 100%;
+    }
+}
+
