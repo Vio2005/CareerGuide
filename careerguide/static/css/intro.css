@@ -2210,18 +2210,6 @@ h1, h3, h4 {
 }
 
 
-/* =========================================
-   CARD HOVER
-========================================= */
-
-.careerbridge-card:hover {
-    transform: translateY(-8px);
-
-    box-shadow:
-        0 20px 45px rgba(7, 79, 133, 0.15);
-
-    border-color: #074f85;
-}
 
 
 /* =========================================
@@ -2318,6 +2306,7 @@ h1, h3, h4 {
     background: #074f85;
 
     color: #ffffff !important;
+    border:1px solid #074f85;
 
     font-size: 14px;
 
@@ -2332,9 +2321,10 @@ h1, h3, h4 {
 /* Button hover */
 
 .careerbridge-btn:hover {
-    background: #053b63;
+    background: #fff;
 
-    color: #ffffff !important;
+    color: #074f85 !important;
+    border-color:#074f85;
 
     transform: translateX(3px);
 }
