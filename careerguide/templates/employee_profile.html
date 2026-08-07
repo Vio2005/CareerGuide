@@ -20,343 +20,572 @@
 <body>
 
 
+
+
 <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
 
+    <div class="profile-edit-layout">
 
-{% csrf_token %}
+        <!-- =========================
+             LEFT SIDE - PROFILE
+        ========================== -->
+        <div class="left-profile-section">
 
+            <div class="edit-card">
 
+                <h2>Profile Information</h2>
 
-<div class="profile-edit-layout">
-
-
-
-<!-- ================= LEFT SIDE ================= -->
-
-
-<div class="left-profile-section">
-
-
-<div class="edit-card">
-
-
-<h2>Personal Information</h2>
-
-
-
-<label>Full Name</label>
-
-<input type="text"
-name="full_name"
-value="{{ profile.full_name }}"
-required>
-
-
-
-
-
-<label>Email</label>
-
-<input type="email"
-value="{{ employee.email }}"
-readonly>
-
-
-
-
-
-<label>Phone</label>
-
-<input type="text"
-name="phone"
-value="{{ profile.phone }}">
-
-
-
-
-
-<label>Gender</label>
-
-
-<select name="gender">
-
-
-<option value="Male"
-{% if profile.gender == "Male" %}selected{% endif %}>
-Male
-</option>
-
-
-<option value="Female"
-{% if profile.gender == "Female" %}selected{% endif %}>
-Female
-</option>
-
-
-</select>
-
-
-
-
-
-
-<label>Date of Birth</label>
-
-
-<input type="date"
-name="date_of_birth"
-value="{{ profile.date_of_birth|date:'Y-m-d' }}">
-
-
-
-
-<label>Address</label>
-
-
-<textarea name="address">
-{{ profile.address }}
-</textarea>
-
-
-
-
-
-<label>About Yourself</label>
-
-
-<textarea name="summary">
-{{ profile.summary }}
-</textarea>
-
-
-
-
-
-<label>Profile Image</label>
-
-
-
-<p>Image</p>
-
-
-<img id="new-image-preview"
-src="{% static 'images/default-profile.jpg' %}"
-class="preview-img">
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<input type="file"
-name="profile_image"
-id="profile-image-input"
-accept="image/*">
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- ================= RIGHT SIDE ================= -->
-
-
-<div class="right-profile-section">
-
-
-
-<!-- EDUCATION -->
-<div id="education-container">
-
-    <div class="education-item">
-
-        <div class="form-group">
-            <label>
-                Institution <span class="required">*</span>
-            </label>
-            <input type="text"
-                   name="institution"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Degree</label>
+                <label>Full Name</label>
                 <input type="text"
-                       name="degree"
+                       name="full_name"
+                       value="{{ profile.full_name }}"
                        class="form-control">
-            </div>
 
-            <div class="form-group">
-                <label>Field of Study</label>
+                <label>Email</label>
+                <input type="email"
+                       name="email"
+                       value="{{ profile.email }}"
+                       class="form-control">
+
+                <label>Phone</label>
                 <input type="text"
-                       name="field_of_study"
+                       name="phone"
+                       value="{{ profile.phone }}"
                        class="form-control">
-            </div>
 
-        </div>
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Start Year</label>
-                <input type="number"
-                       name="start_year"
-                       class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>End Year</label>
-                <input type="number"
-                       name="end_year"
-                       class="form-control">
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- EXPERIENCE -->
-<div id="experience-container">
-
-    <div class="experience-item">
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Company Name</label>
-                <input type="text"
-                       name="company_name"
-                       class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>Position</label>
-                <input type="text"
-                       name="position"
-                       class="form-control">
-            </div>
-
-        </div>
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date"
-                       name="start_date"
-                       class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>End Date</label>
-                <input type="date"
-                       name="end_date"
-                       class="form-control">
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <label>Description</label>
-            <textarea name="description"
-                      class="form-control"></textarea>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- SKILLS -->
-<div id="skill-container">
-
-    <div class="skill-item">
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Skill Name</label>
-                <input type="text"
-                       name="skill_name"
-                       class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>Level</label>
-                <select name="level" class="form-control">
-                    <option value="">Select Level</option>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
+                <label>Gender</label>
+                <select name="gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="Male"
+                        {% if profile.gender == "Male" %}selected{% endif %}>
+                        Male
+                    </option>
+                    <option value="Female"
+                        {% if profile.gender == "Female" %}selected{% endif %}>
+                        Female
+                    </option>
                 </select>
+
+                <label>Date of Birth</label>
+                <input type="date"
+                       name="date_of_birth"
+                       value="{{ profile.date_of_birth|date:'Y-m-d' }}"
+                       class="form-control">
+
+                <label>Address</label>
+                <textarea name="address"
+                          class="form-control">{{ profile.address }}</textarea>
+
+                <label>About Yourself</label>
+                <textarea name="about"
+                          class="form-control">{{ profile.about }}</textarea>
+
+
+                <!-- PROFILE IMAGE -->
+
+                <label>Profile Image</label>
+
+                <div class="image-preview-container">
+
+                    {% if profile.profile_image %}
+
+                        <div>
+                            <p>Current Image</p>
+
+                            <img src="{{ profile.profile_image.url }}"
+                                 class="preview-img"
+                                 alt="Profile Image">
+                        </div>
+
+                    {% endif %}
+
+                    <div>
+                        <p>Change Image</p>
+
+                        <input type="file"
+                               name="profile_image"
+                               accept="image/*">
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
+
+        <!-- =========================
+             RIGHT SIDE
+        ========================== -->
+        <div class="right-profile-section">
+
+
+            <!-- =========================
+                 EDUCATION
+            ========================== -->
+
+            <div class="edit-card">
+
+                <h2>
+                    Education
+
+                    <button type="button"
+                            class="add-btn"
+                            onclick="addEducation()">
+                        +
+                    </button>
+                </h2>
+
+                <div id="education-container">
+
+                    {% for education in educations %}
+
+                    <div class="education-item">
+
+                        <label>
+                            Institution
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="institution"
+                               value="{{ education.institution }}"
+                               class="form-control"
+                               required>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Degree</label>
+
+                                <input type="text"
+                                       name="degree"
+                                       value="{{ education.degree }}"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Field of Study</label>
+
+                                <input type="text"
+                                       name="field_of_study"
+                                       value="{{ education.field_of_study }}"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Start Year</label>
+
+                                <input type="number"
+                                       name="start_year"
+                                       value="{{ education.start_year }}"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Year</label>
+
+                                <input type="number"
+                                       name="end_year"
+                                       value="{{ education.end_year }}"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="button"
+                                class="remove-btn"
+                                onclick="this.parentElement.remove()">
+                            Remove
+                        </button>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="education-item">
+
+                        <label>
+                            Institution
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="institution"
+                               class="form-control"
+                               required>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Degree</label>
+
+                                <input type="text"
+                                       name="degree"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Field of Study</label>
+
+                                <input type="text"
+                                       name="field_of_study"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Start Year</label>
+
+                                <input type="number"
+                                       name="start_year"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Year</label>
+
+                                <input type="number"
+                                       name="end_year"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 EXPERIENCE
+            ========================== -->
+
+            <div class="edit-card">
+
+                <h2>
+                    Experience
+
+                    <button type="button"
+                            class="add-btn"
+                            onclick="addExperience()">
+                        +
+                    </button>
+                </h2>
+
+                <div id="experience-container">
+
+                    {% for experience in experiences %}
+
+                    <div class="experience-item">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Company Name</label>
+
+                                <input type="text"
+                                       name="company_name"
+                                       value="{{ experience.company_name }}"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Position</label>
+
+                                <input type="text"
+                                       name="position"
+                                       value="{{ experience.position }}"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Start Date</label>
+
+                                <input type="date"
+                                       name="start_date"
+                                       value="{{ experience.start_date|date:'Y-m-d' }}"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Date</label>
+
+                                <input type="date"
+                                       name="end_date"
+                                       value="{{ experience.end_date|date:'Y-m-d' }}"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <label>Description</label>
+
+                        <textarea name="description"
+                                  class="form-control">{{ experience.description }}</textarea>
+
+
+                        <button type="button"
+                                class="remove-btn"
+                                onclick="this.parentElement.remove()">
+                            Remove
+                        </button>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="experience-item">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Company Name</label>
+
+                                <input type="text"
+                                       name="company_name"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Position</label>
+
+                                <input type="text"
+                                       name="position"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Start Date</label>
+
+                                <input type="date"
+                                       name="start_date"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Date</label>
+
+                                <input type="date"
+                                       name="end_date"
+                                       class="form-control">
+
+                            </div>
+
+                        </div>
+
+
+                        <label>Description</label>
+
+                        <textarea name="description"
+                                  class="form-control"></textarea>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 SKILLS
+            ========================== -->
+
+            <div class="edit-card">
+
+                <h2>
+                    Skills
+
+                    <button type="button"
+                            class="add-btn"
+                            onclick="addSkill()">
+                        +
+                    </button>
+                </h2>
+
+                <div id="skill-container">
+
+                    {% for skill in skills %}
+
+                    <div class="skill-item">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Skill Name</label>
+
+                                <input type="text"
+                                       name="skill_name"
+                                       value="{{ skill.skill_name }}"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Level</label>
+
+                                <select name="level"
+                                        class="form-control">
+
+                                    <option value="">Select Level</option>
+
+                                    <option value="Beginner"
+                                        {% if skill.level == "Beginner" %}selected{% endif %}>
+                                        Beginner
+                                    </option>
+
+                                    <option value="Intermediate"
+                                        {% if skill.level == "Intermediate" %}selected{% endif %}>
+                                        Intermediate
+                                    </option>
+
+                                    <option value="Advanced"
+                                        {% if skill.level == "Advanced" %}selected{% endif %}>
+                                        Advanced
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="button"
+                                class="remove-btn"
+                                onclick="this.parentElement.remove()">
+                            Remove
+                        </button>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="skill-item">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label>Skill Name</label>
+
+                                <input type="text"
+                                       name="skill_name"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Level</label>
+
+                                <select name="level"
+                                        class="form-control">
+
+                                    <option value="">Select Level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================== -->
+
+            <button type="submit"
+                    class="profile-btn">
+                Update Profile
+            </button>
+
+            <a href="javascript:history.back()"
+               class="back-btn">
+                ← Back
+            </a>
+
+        </div>
+
     </div>
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- BUTTONS -->
-
-
-<button type="submit" class="profile-btn">
-
-Update Profile
-
-</button>
-
-
-<a href="javascript:history.back()" class="back-btn">
-Back
-</a>
-
-
-
-
 
 </form>
+
+
 
 
 
