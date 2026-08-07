@@ -1264,7 +1264,7 @@ def employeelist(request):
         status='Accepted'
     ).count()
     reject=JobApplication.objects.filter(
-        status='Reject'
+        status='Rejected'
     ).count()
     short=JobApplication.objects.filter(
         status='Shortlisted'
