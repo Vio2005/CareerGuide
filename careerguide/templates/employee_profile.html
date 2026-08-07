@@ -63,9 +63,13 @@
                        class="form-control"
                        required>
 
-                <label>Gender</label>
-                <select name="gender" class="form-control">
-                    <option value="">Select Gender</option>
+                <label>Gender
+                    <span class="required">*</span>
+                </label>
+                <select name="gender" class="form-control" required>
+                    <option value="">Select Gender
+
+                    </option>
                     <option value="Male"
                         {% if profile.gender == "Male" %}selected{% endif %}>
                         Male
