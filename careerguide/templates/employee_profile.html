@@ -85,30 +85,30 @@
                 <!-- PROFILE IMAGE -->
 
                 <label>Profile Image</label>
-
                 <div class="image-preview-container">
 
-                    {% if profile.profile_image %}
 
-                        <div>
-                            <p>Current Image</p>
 
-                            <img src="{{ profile.profile_image.url }}"
-                                 class="preview-img"
-                                 alt="Profile Image">
-                        </div>
+<div>
+<p>Add Image</p>
+<img id="new-image-preview"
+src="{% static 'images/default-profile.jpg' %}"
+class="preview-img">
+</div>
 
-                    {% endif %}
 
-                    <div>
-                        <p>Change Image</p>
+</div>
 
-                        <input type="file"
-                               name="profile_image"
-                               accept="image/*">
-                    </div>
 
-                </div>
+
+
+
+<input type="file"
+name="profile_image"
+id="profile-image-input"
+accept="image/*">
+
+                
 
             </div>
 
