@@ -196,7 +196,8 @@ OnePageNavigation();
                       var $this = $(this),
                           num = parseInt($this.data('number'), 10) || 0;
                       
-                      console.log("Animating to: ", num);
+                      // Explicitly set text to 0 before starting the animation
+                      $this.text('0');
                       
                       $this.animateNumber(
                           {
