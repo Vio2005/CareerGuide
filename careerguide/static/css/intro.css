@@ -2330,9 +2330,10 @@ h1, h3, h4 {
 
 .careerbridge-btn:hover {
 
-    background: #053b63;
+    background: #fff;
 
-    color: white !important;
+    color: #074f85 !important;
+    border-color: #074f85;
 
     transform: translateX(3px);
 
