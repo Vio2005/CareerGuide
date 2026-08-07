@@ -126,31 +126,38 @@
             }
 
         }
-        .password-wrapper {
+
+.password-wrapper {
     position: relative;
     width: 100%;
 }
 
 .password-wrapper input {
     width: 100%;
-    padding-right: 45px;
-    box-sizing: border-box;
+    padding: 15px 50px 15px 15px !important;
+    margin-bottom: 20px;
 }
 
 .password-eye {
     position: absolute;
     right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #777;
-    text-decoration: none;
+    top: 0;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    color: #fff !important;
+    text-decoration: none !important;
     cursor: pointer;
     z-index: 10;
 }
 
-.password-eye:hover {
-    color: #333;
+.password-eye i {
+    font-size: 17px;
 }
+
+
 
     </style>
 
