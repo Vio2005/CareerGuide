@@ -36,23 +36,32 @@
 
                 <h2>Profile Information</h2>
 
-                <label>Full Name</label>
+                <label>Full Name
+                    <span class="required">*</span>
+                </label>
                 <input type="text"
                        name="full_name"
                        value="{{ profile.full_name }}"
-                       class="form-control">
+                       class="form-control"
+                       required>
 
-                <label>Email</label>
+                <label>Email
+                    <span class="required">*</span>
+                </label>
                 <input type="email"
                        name="email"
                        value="{{ profile.email }}"
-                       class="form-control">
+                       class="form-control"
+                       required>
 
-                <label>Phone</label>
+                <label>Phone
+                    <span class="required">*</span>
+                </label>
                 <input type="text"
                        name="phone"
                        value="{{ profile.phone }}"
-                       class="form-control">
+                       class="form-control"
+                       required>
 
                 <label>Gender</label>
                 <select name="gender" class="form-control">
@@ -67,15 +76,20 @@
                     </option>
                 </select>
 
-                <label>Date of Birth</label>
+                <label>Date of Birth
+                    <span class="required">*</span>
+                </label>
                 <input type="date"
                        name="date_of_birth"
                        value="{{ profile.date_of_birth|date:'Y-m-d' }}"
-                       class="form-control">
+                       class="form-control"
+                       required>
 
-                <label>Address</label>
+                <label>Address
+                    <span class="required">*</span>
+                </label>
                 <textarea name="address"
-                          class="form-control">{{ profile.address }}</textarea>
+                          class="form-control" required>{{ profile.address }}</textarea>
 
                 <label>About Yourself</label>
                 <textarea name="about"
