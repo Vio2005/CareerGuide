@@ -219,21 +219,22 @@ def employee_profile(request):
     if not employee_id:
         return redirect('employeelogin')
 
-
     employee = Employee.objects.get(
         id=employee_id
     )
 
-
+    # =========================
+    # POST - SAVE PROFILE
+    # =========================
 
     if request.method == "POST":
-
 
         # =========================
         # EMPLOYEE PROFILE
         # =========================
 
         full_name = request.POST.get('full_name')
+        email = request.POST.get('email')
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
         date_of_birth = request.POST.get('date_of_birth')
@@ -244,7 +245,16 @@ def employee_profile(request):
             'profile_image'
         )
 
+        # =========================
+        # SAVE EMAIL TO EMPLOYEE
+        # =========================
 
+        employee.email = email
+        employee.save()
+
+        # =========================
+        # SAVE EMPLOYEE PROFILE
+        # =========================
 
         profile, created = EmployeeProfile.objects.update_or_create(
             employee=employee,
@@ -258,25 +268,21 @@ def employee_profile(request):
             }
         )
 
+        # =========================
+        # PROFILE IMAGE
+        # =========================
 
         if profile_image:
             profile.profile_image = profile_image
             profile.save()
 
-
-
-
-
         # =========================
-        # EDUCATION MULTIPLE SAVE
+        # EDUCATION
         # =========================
-
 
         Education.objects.filter(
             employee=employee
         ).delete()
-
-
 
         institutions = request.POST.getlist(
             'institution[]'
@@ -298,39 +304,41 @@ def employee_profile(request):
             'end_year[]'
         )
 
-
-
         for i in range(len(institutions)):
-
 
             if institutions[i].strip():
 
-
                 Education.objects.create(
                     employee=employee,
+
                     institution=institutions[i],
-                    degree=degrees[i] if i < len(degrees) else "",
-                    field_of_study=fields[i] if i < len(fields) else "",
-                    start_year=start_years[i] if i < len(start_years) and start_years[i] else None,
-                    end_year=end_years[i] if i < len(end_years) and end_years[i] else None,
+
+                    degree=degrees[i]
+                    if i < len(degrees)
+                    else "",
+
+                    field_of_study=fields[i]
+                    if i < len(fields)
+                    else "",
+
+                    start_year=start_years[i]
+                    if i < len(start_years)
+                    and start_years[i]
+                    else None,
+
+                    end_year=end_years[i]
+                    if i < len(end_years)
+                    and end_years[i]
+                    else None,
                 )
 
-
-
-
-
-
-
         # =========================
-        # EXPERIENCE MULTIPLE SAVE
+        # EXPERIENCE
         # =========================
-
 
         Experience.objects.filter(
             employee=employee
         ).delete()
-
-
 
         company_names = request.POST.getlist(
             'company_name[]'
@@ -352,30 +360,27 @@ def employee_profile(request):
             'description[]'
         )
 
-
-
-
         for i in range(len(company_names)):
 
-
             if company_names[i].strip():
-
 
                 Experience.objects.create(
                     employee=employee,
 
                     company_name=company_names[i],
 
-                    position=positions[i] 
-                    if i < len(positions) 
+                    position=positions[i]
+                    if i < len(positions)
                     else "",
 
                     start_date=start_dates[i]
-                    if i < len(start_dates) and start_dates[i]
+                    if i < len(start_dates)
+                    and start_dates[i]
                     else None,
 
                     end_date=end_dates[i]
-                    if i < len(end_dates) and end_dates[i]
+                    if i < len(end_dates)
+                    and end_dates[i]
                     else None,
 
                     description=descriptions[i]
@@ -383,68 +388,45 @@ def employee_profile(request):
                     else "",
                 )
 
-
-
-
-
-
-
-
         # =========================
-        # SKILL MULTIPLE SAVE
+        # SKILLS
         # =========================
-
 
         Skill.objects.filter(
             employee=employee
         ).delete()
 
-
-
         skill_names = request.POST.getlist(
             'skill_name[]'
         )
-
 
         skill_levels = request.POST.getlist(
             'skill_level[]'
         )
 
-
-
-
         for i in range(len(skill_names)):
-
 
             if skill_names[i].strip():
 
-
                 Skill.objects.create(
-
                     employee=employee,
 
                     skill_name=skill_names[i],
 
                     proficiency=skill_levels[i]
                     if i < len(skill_levels)
+                    and skill_levels[i]
                     else "Beginner"
-
                 )
-
-
-
-
 
         # =========================
         # RETURN TO APPLY JOB
         # =========================
 
-
         job_id = request.session.pop(
             "apply_job_id",
             None
         )
-
 
         if job_id:
 
@@ -455,29 +437,31 @@ def employee_profile(request):
                 id=job_id
             )
 
-
-
         return redirect(
             'employeeprofile'
         )
 
-
-
-
-
-
     # =========================
-    # CHECK EXISTING PROFILE
+    # GET - LOAD PROFILE
     # =========================
-
 
     try:
-
 
         profile = EmployeeProfile.objects.get(
             employee=employee
         )
 
+        educations = Education.objects.filter(
+            employee=employee
+        )
+
+        experiences = Experience.objects.filter(
+            employee=employee
+        )
+
+        skills = Skill.objects.filter(
+            employee=employee
+        )
 
         return render(
             request,
@@ -485,13 +469,13 @@ def employee_profile(request):
             {
                 'profile': profile,
                 'employee': employee,
+                'educations': educations,
+                'experiences': experiences,
+                'skills': skills,
             }
         )
 
-
-
     except EmployeeProfile.DoesNotExist:
-
 
         return render(
             request,
@@ -500,7 +484,7 @@ def employee_profile(request):
                 'employee': employee
             }
         )
-
+    
 def applyjob(request, id):
 
     employee_id = request.session.get("employee_id")
