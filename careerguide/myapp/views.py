@@ -239,7 +239,7 @@ def employee_profile(request):
         gender = request.POST.get('gender')
         date_of_birth = request.POST.get('date_of_birth')
         address = request.POST.get('address')
-        about = request.POST.get('about')
+        summary = request.POST.get('summary')
 
         profile_image = request.FILES.get(
             'profile_image'
@@ -264,7 +264,7 @@ def employee_profile(request):
                 'gender': gender,
                 'date_of_birth': date_of_birth,
                 'address': address,
-                'about': about,
+                'summary': summary,
             }
         )
 
