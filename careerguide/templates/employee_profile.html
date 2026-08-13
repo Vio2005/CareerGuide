@@ -50,7 +50,7 @@
                 </label>
                 <input type="email"
                        name="email"
-                       value="{{ profile.email }}"
+                       value="{{ employee.email }}"
                        class="form-control"
                        required>
 
@@ -167,7 +167,7 @@ accept="image/*">
                         </label>
 
                         <input type="text"
-                               name="institution"
+                               name="institution[]"
                                value="{{ education.institution }}"
                                class="form-control"
                                required>
@@ -182,7 +182,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="text"
-                                       name="degree"
+                                       name="degree[]"
                                        value="{{ education.degree }}"
                                        class="form-control"
                                        required>
@@ -196,7 +196,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="text"
-                                       name="field_of_study"
+                                       name="field_of_study[]"
                                        value="{{ education.field_of_study }}"
                                        class="form-control"
                                        required>
@@ -215,7 +215,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="number"
-                                       name="start_year"
+                                       name="start_year[]"
                                        value="{{ education.start_year }}"
                                        class="form-control"
                                        required>
@@ -229,7 +229,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="number"
-                                       name="end_year"
+                                       name="end_year[]"
                                        value="{{ education.end_year }}"
                                        class="form-control"
                                        required>
@@ -257,7 +257,7 @@ accept="image/*">
                         </label>
 
                         <input type="text"
-                               name="institution"
+                               name="institution[]"
                                class="form-control"
                                required>
 
@@ -271,7 +271,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="text"
-                                       name="degree"
+                                       name="degree[]"
                                        class="form-control"
                                        required>
 
@@ -302,7 +302,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="number"
-                                       name="start_year"
+                                       name="start_year[]"
                                        class="form-control"
                                        required>
 
@@ -315,7 +315,7 @@ accept="image/*">
                                 </label>
 
                                 <input type="number"
-                                       name="end_year"
+                                       name="end_year[]"
                                        class="form-control"
                                        required>
 
@@ -361,7 +361,7 @@ accept="image/*">
                                 <label>Company Name</label>
 
                                 <input type="text"
-                                       name="company_name"
+                                       name="company_name[]"
                                        value="{{ experience.company_name }}"
                                        class="form-control">
 
@@ -372,7 +372,7 @@ accept="image/*">
                                 <label>Position</label>
 
                                 <input type="text"
-                                       name="position"
+                                       name="position[]"
                                        value="{{ experience.position }}"
                                        class="form-control">
 
@@ -388,7 +388,7 @@ accept="image/*">
                                 <label>Start Date</label>
 
                                 <input type="date"
-                                       name="start_date"
+                                       name="start_date[]"
                                        value="{{ experience.start_date|date:'Y-m-d' }}"
                                        class="form-control">
 
@@ -399,7 +399,7 @@ accept="image/*">
                                 <label>End Date</label>
 
                                 <input type="date"
-                                       name="end_date"
+                                       name="end_date[]"
                                        value="{{ experience.end_date|date:'Y-m-d' }}"
                                        class="form-control">
 
@@ -410,7 +410,7 @@ accept="image/*">
 
                         <label>Description</label>
 
-                        <textarea name="description"
+                        <textarea name="description[]"
                                   class="form-control">{{ experience.description }}</textarea>
 
 
@@ -433,7 +433,7 @@ accept="image/*">
                                 <label>Company Name</label>
 
                                 <input type="text"
-                                       name="company_name"
+                                       name="company_name[]"
                                        class="form-control">
 
                             </div>
@@ -443,7 +443,7 @@ accept="image/*">
                                 <label>Position</label>
 
                                 <input type="text"
-                                       name="position"
+                                       name="position[]"
                                        class="form-control">
 
                             </div>
@@ -458,7 +458,7 @@ accept="image/*">
                                 <label>Start Date</label>
 
                                 <input type="date"
-                                       name="start_date"
+                                       name="start_date[]"
                                        class="form-control">
 
                             </div>
@@ -468,7 +468,7 @@ accept="image/*">
                                 <label>End Date</label>
 
                                 <input type="date"
-                                       name="end_date"
+                                       name="end_date[]"
                                        class="form-control">
 
                             </div>
@@ -478,7 +478,7 @@ accept="image/*">
 
                         <label>Description</label>
 
-                        <textarea name="description"
+                        <textarea name="description[]"
                                   class="form-control"></textarea>
 
                     </div>
@@ -519,7 +519,7 @@ accept="image/*">
                                 <label>Skill Name</label>
 
                                 <input type="text"
-                                       name="skill_name"
+                                       name="skill_name[]"
                                        value="{{ skill.skill_name }}"
                                        class="form-control">
 
@@ -529,7 +529,7 @@ accept="image/*">
 
                                 <label>Level</label>
 
-                                <select name="level"
+                                <select name="skill_level[]"
                                         class="form-control">
 
                                     <option value="">Select Level</option>
@@ -575,7 +575,7 @@ accept="image/*">
                                 <label>Skill Name</label>
 
                                 <input type="text"
-                                       name="skill_name"
+                                       name="skill_name[]"
                                        class="form-control">
 
                             </div>
@@ -584,7 +584,7 @@ accept="image/*">
 
                                 <label>Level</label>
 
-                                <select name="level"
+                                <select name="skill_level[]"
                                         class="form-control">
 
                                     <option value="">Select Level</option>
