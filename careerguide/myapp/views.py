@@ -1235,7 +1235,7 @@ def result_history(request):
 
 def employeelist(request):
     employee=Employee.objects.all()
-    paginator = Paginator(employee, 5) 
+    paginator = Paginator(employee, 10) 
 
     page_number = request.GET.get("page")
     obj = paginator.get_page(page_number)
@@ -1261,7 +1261,7 @@ def employeelist(request):
 
 def companylist(request):
     company=Company.objects.all()
-    paginator = Paginator(company, 5) 
+    paginator = Paginator(company, 10) 
 
     page_number = request.GET.get("page")
     obj = paginator.get_page(page_number)
@@ -1307,7 +1307,7 @@ def application(request):
         'job__position'
     ).all()
 
-    paginator = Paginator(app, 5)
+    paginator = Paginator(app, 10)
 
     page_number = request.GET.get("page")
     obj = paginator.get_page(page_number)
