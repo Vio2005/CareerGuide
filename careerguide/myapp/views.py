@@ -17,7 +17,7 @@ def intro(request):
     jobcount=Job.objects.count()
     companycount=Company.objects.count()
     fillcount=JobApplication.objects.filter(status='Accepted').count()
-    employeecount= JobApplication.objects.values('employee').distinct().count()
+    employeecount = Employee.objects.count()
     context = {
         
         'jobcount':jobcount,
@@ -83,9 +83,7 @@ def homeview(request):
         status='Accepted'
     ).count()
 
-    employeecount = JobApplication.objects.values(
-        'employee'
-    ).distinct().count()
+    employeecount = Employee.objects.count()
 
     # Trending positions
     popular_positions = (
