@@ -55,6 +55,6 @@ urlpatterns = [
     path('showpost/<int:id>/', show_post,name='showpost'),
     path('send-application-email/<int:id>/<str:status>/',send_application_email,name='send_application_email'),
     path('company/employees/', company_employees, name='company_employees'),
-
+    path('employee_left/<int:application_id>/', employee_left, name='employee_left'),
 
 ]
