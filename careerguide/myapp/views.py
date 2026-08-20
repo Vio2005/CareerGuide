@@ -645,7 +645,7 @@ def companyview(request):
     # Only 5 accepted employees
     employees = (
         JobApplication.objects
-        .filter(job__company=company, status='Accepted')
+        .filter(job__company=company, status='Accepted', employment_status="Active" )
         .select_related('employee', 'employee__employeeprofile', 'job')
         .order_by('-id')[:8]
     )
@@ -671,6 +671,7 @@ def company_employees(request):
     employees = JobApplication.objects.filter(
         job__company=company,
         status="Accepted",
+        employment_status="Active"
         
     ).order_by('-applied_date')
 
@@ -1890,6 +1891,13 @@ def employee_profile_view(request, id):
 
     if company_id:
         company = Company.objects.filter(id=company_id).first()
+        if company:
+            application = JobApplication.objects.filter(
+                employee=employee,
+                job__company=company,
+                status="Accepted"
+            ).first()
+
 
        
 
@@ -2308,9 +2316,13 @@ Best regards,
     )
 
 def employee_left(request, application_id):
+    company_id = request.session.get('company_id')
     application = get_object_or_404(
         JobApplication,
-        id=application_id
+        id=application_id,
+        job__company_id=company_id,
+        status="Accepted",
+        
     )
 
     application.employment_status = 'Left'

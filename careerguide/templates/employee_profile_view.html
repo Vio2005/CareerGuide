@@ -427,11 +427,29 @@ onclick="showImage(this.src)">
 
 </div>
 
+{% if application and application.employment_status == "Active" %}
+
 <div class="row justify-content-center">
     <a href="{% url 'company_index' %}" class="profile-btn text-center">
         Back
     </a>
-    </div>
+
+    <a href="{% url 'employee_left' application.id %}"
+       class="profile-btn text-center"
+       onclick="return confirm('Are you sure this employee has left the company?');">
+        Employee Left
+    </a>
+</div>
+
+{% else %}
+
+<div class="row justify-content-center">
+    <a href="{% url 'company_index' %}" class="profile-btn text-center">
+        Back
+    </a>
+</div>
+
+{% endif %}
     
 <!-- CLOSE PROFILE CARD / CONTAINER BEFORE FOOTER -->
 
