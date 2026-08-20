@@ -671,7 +671,7 @@ def company_employees(request):
     employees = JobApplication.objects.filter(
         job__company=company,
         status="Accepted",
-        employment_status="Active"
+        
     ).order_by('-applied_date')
 
     # Show 10 employees per page
@@ -1891,12 +1891,7 @@ def employee_profile_view(request, id):
     if company_id:
         company = Company.objects.filter(id=company_id).first()
 
-        if company:
-            application = JobApplication.objects.filter(
-                employee=employee,
-                job__company=company,
-                status="Accepted"
-            ).first()
+       
 
     context = {
         "employee": employee,
