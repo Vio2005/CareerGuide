@@ -165,7 +165,7 @@ class JobApplication(models.Model):
         ],
         default='Pending'
     )
-
+    
     def __str__(self):
         return f"{self.employee} - {self.job}"
     

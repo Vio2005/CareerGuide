@@ -645,7 +645,7 @@ def companyview(request):
     # Only 5 accepted employees
     employees = (
         JobApplication.objects
-        .filter(job__company=company, status='Accepted',employment_status='Active')
+        .filter(job__company=company, status='Accepted')
         .select_related('employee', 'employee__employeeprofile', 'job')
         .order_by('-id')[:8]
     )
