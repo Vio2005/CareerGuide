@@ -165,7 +165,15 @@ class JobApplication(models.Model):
         ],
         default='Pending'
     )
-    
+    employment_status = models.CharField(
+        max_length=20,
+        choices=[
+            ('Active', 'Active'),
+            ('Left', 'Left'),
+        ],
+        default='Active'
+    )
+
     def __str__(self):
         return f"{self.employee} - {self.job}"
     
