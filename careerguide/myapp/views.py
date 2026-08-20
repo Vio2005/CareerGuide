@@ -1884,10 +1884,19 @@ def employee_profile_view(request, id):
 
     # Get logged-in company
     company = None
+    application = None
+
     company_id = request.session.get("company_id")
 
     if company_id:
         company = Company.objects.filter(id=company_id).first()
+
+        if company:
+            application = JobApplication.objects.filter(
+                employee=employee,
+                job__company=company,
+                status="Accepted"
+            ).first()
 
     context = {
         "employee": employee,
@@ -1896,6 +1905,7 @@ def employee_profile_view(request, id):
         "experience": experience,
         "skills": skills,
         "company": company,
+        "application": application,
     }
 
     return render(request, "employee_profile_view.html", context)

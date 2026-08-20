@@ -432,11 +432,14 @@ onclick="showImage(this.src)">
         Back
     </a>
     </div>
+    {% if application and application.employment_status == "Active" %}
 <div class="row justify-content-center">
-    <a href="{% url 'employee_left' application.id %}" class="profile-btn text-center">
+    <a href="{% url 'employee_left' application.id %}" class="profile-btn text-center"
+    onclick="return confirm('Are you sure this employee remove from the company?');">
         Remove
     </a>
     </div>
+    {% endif %}
 
 <!-- CLOSE PROFILE CARD / CONTAINER BEFORE FOOTER -->
 
